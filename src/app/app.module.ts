@@ -8,10 +8,15 @@ import {AngularFireModule} from "@angular/fire";
 import {environment} from "../environments/environment";
 import {AngularFireDatabaseModule} from "@angular/fire/database";
 import {AngularFirestore} from "@angular/fire/firestore";
+import {AngularFireAuth} from "@angular/fire/auth";
+import { LoginComponent } from './login/login.component';
+import { RankingComponent } from './ranking/ranking.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    RankingComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +25,10 @@ import {AngularFirestore} from "@angular/fire/firestore";
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule
   ],
-  providers: [AngularFirestore],
+  providers: [
+    AngularFirestore,
+    AngularFireAuth
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

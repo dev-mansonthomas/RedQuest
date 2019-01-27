@@ -6,17 +6,17 @@ import {AngularFirestore} from "@angular/fire/firestore";
 })
 export class FirestoreRankingService {
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(private firestoreDB: AngularFirestore) {
   }
 
   getUlRankingByAmount(ul: string) {
-    return this.firestore.collection('ul_queteur_stats_per_year',
+    return this.firestoreDB.collection('ul_queteur_stats_per_year',
       ref => ref.where('ul_id', '==', ul))
       .snapshotChanges();
   }
 
   getAllUlRankingByAmount() {
-    return this.firestore.collection('ul_queteur_stats_per_year')
+    return this.firestoreDB.collection('ul_queteur_stats_per_year')
       .snapshotChanges();
   }
 }
