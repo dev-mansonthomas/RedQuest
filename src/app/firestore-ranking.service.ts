@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from "@angular/fire/firestore";
+import {UlRankingByAmount} from "./model/UlRankingByAmount";
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,6 @@ export class FirestoreRankingService {
 
   getAllUlRankingByAmount() {
     return this.firestoreDB.collection('ul_queteur_stats_per_year')
-      .snapshotChanges();
+      .get();
   }
 }

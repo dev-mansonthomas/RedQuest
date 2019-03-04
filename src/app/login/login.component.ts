@@ -21,10 +21,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.authService.logout();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    this.login()
   }
 
-  login() {
+  loginWithGoogle() {
     this.loading = true;
     this.authService.signInGoogleLogin()
       .then(() => this.zone.run(() => this.router.navigate([this.returnUrl])));
