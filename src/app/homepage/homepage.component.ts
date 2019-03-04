@@ -12,7 +12,7 @@ export class HomepageComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    this.connected = this.authService.isLoggedIn()
+    this.authService.isLoggedIn().subscribe(result => this.connected = result)
   }
 
   logout() {

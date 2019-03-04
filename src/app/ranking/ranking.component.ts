@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FirestoreRankingService} from "../firestore-ranking.service";
 import {UlRankingByAmount} from "../model/UlRankingByAmount";
 import {ActivatedRoute} from "@angular/router";
+import {CloudFunctionServiceService} from "../cloud-function-service.service";
 
 @Component({
   selector: 'app-ranking',
@@ -13,7 +14,8 @@ export class RankingComponent implements OnInit {
   rankings: UlRankingByAmount[] = [];
 
   constructor(private firestoreRankingService: FirestoreRankingService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private functionsService: CloudFunctionServiceService) {
   }
 
   ngOnInit(): void {
@@ -28,6 +30,11 @@ export class RankingComponent implements OnInit {
           return e.data() as UlRankingByAmount
         })
       })
+  }
+
+  callFunction(){
+    const data = {text: "coucou le texte", firstNumber: 3, secondNumber: 4};
+    this.functionsService.findQueteurById(data);
   }
 
 }

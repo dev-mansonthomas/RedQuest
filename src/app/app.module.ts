@@ -11,6 +11,8 @@ import {AngularFireAuth} from "@angular/fire/auth";
 import {LoginComponent} from './login/login.component';
 import {RankingComponent} from './ranking/ranking.component';
 import {HomepageComponent} from './homepage/homepage.component';
+import {CloudFunctionServiceService} from "./cloud-function-service.service";
+import {AngularFireFunctions, FunctionsRegionToken} from "@angular/fire/functions";
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import {HomepageComponent} from './homepage/homepage.component';
   ],
   providers: [
     AngularFirestore,
-    AngularFireAuth
+    AngularFireAuth,
+    AngularFireFunctions,
+    { provide: FunctionsRegionToken, useValue: 'europe-west1' }
   ],
   bootstrap: [AppComponent]
 })
