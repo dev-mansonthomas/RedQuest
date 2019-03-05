@@ -13,16 +13,20 @@ import {RankingComponent} from './ranking/ranking.component';
 import {HomepageComponent} from './homepage/homepage.component';
 import {CloudFunctionServiceService} from "./cloud-function-service.service";
 import {AngularFireFunctions, FunctionsRegionToken} from "@angular/fire/functions";
+import { RegistrationComponent } from './registration/registration.component';
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RankingComponent,
-    HomepageComponent
+    HomepageComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule

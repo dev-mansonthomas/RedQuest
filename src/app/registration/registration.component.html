@@ -1,0 +1,5 @@
+<p *ngIf="ulDetails">
+  Bienvenue dans l'UL de {{ulDetails.name}}
+  <span *ngIf="isBenevole1j()">Merci de nous aider pour la quête</span>
+  <span *ngIf="!isBenevole1j()">Vous êtes déjà bénévole de l'UL</span>
+</p>
