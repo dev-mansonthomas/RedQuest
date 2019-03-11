@@ -1,8 +1,8 @@
-import {Injectable, OnInit} from '@angular/core';
-import {AngularFireAuth} from "@angular/fire/auth";
+import {Injectable} from '@angular/core';
+import {AngularFireAuth} from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +11,11 @@ export class AuthService {
   private user: Observable<firebase.User>;
   private userDetails: firebase.User;
 
-
   constructor(private angularFireAuth: AngularFireAuth) {
     this.user = this.angularFireAuth.user;
+    this.angularFireAuth.auth.getRedirectResult().then(result => {
+      this.userDetails = result.user;
+    });
   }
 
   signInGoogleLogin() {
@@ -26,9 +28,19 @@ export class AuthService {
       );
   }
 
+  getConnectedUser() {
+    return this.user;
+  }
+
   isLoggedIn(): Observable<boolean> {
     return this.user.pipe(map((user, isLoggedIn) => {
       return user != null;
+    }));
+  }
+
+  getEmailOfConnectedUser(): Observable<firebase.User> {
+    return this.user.pipe(map((user, isLoggedIn) => {
+      return user;
     }));
   }
 

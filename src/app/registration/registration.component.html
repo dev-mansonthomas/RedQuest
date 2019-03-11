@@ -1,5 +1,110 @@
-<p *ngIf="ulDetails">
-  Bienvenue dans l'UL de {{ulDetails.name}}
-  <span *ngIf="isBenevole1j()">Merci de nous aider pour la quête</span>
-  <span *ngIf="!isBenevole1j()">Vous êtes déjà bénévole de l'UL</span>
-</p>
+<!--<p *ngIf="ulDetails">-->
+  <!--Bienvenue dans l'UL de {{ulDetails.name}}-->
+  <!--<span *ngIf="isBenevole1j()">Merci de nous aider pour la quête</span>-->
+  <!--<span *ngIf="!isBenevole1j()">Vous êtes déjà bénévole de l'UL</span>-->
+<!--</p>-->
+
+<div class="container">
+
+  <div class="login">
+    <h3 class="authTitle">S'enregistrer</h3>
+    <div class="row row-sm-offset-3 socialButtons">
+      <div class="col-xs-2 col-sm-2">
+        <a href="#" class="btn btn-lg btn-block btn-facebook disabled" data-toggle="tooltip" data-placement="top"
+           title="Facebook">
+          <i class="fa fa-facebook fa-2x"></i>
+          <span class="hidden-xs"></span>
+        </a>
+      </div>
+      <div class="col-xs-2 col-sm-2">
+        <a href="#" class="btn btn-lg btn-block btn-twitter disabled" data-toggle="tooltip" data-placement="top"
+           title="Twitter">
+          <i class="fa fa-twitter fa-2x"></i>
+          <span class="hidden-xs"></span>
+        </a>
+      </div>
+      <div class="col-xs-2 col-sm-2">
+        <a href="javascript:void(0)" class="btn btn-lg btn-block btn-google-plus" data-toggle="tooltip"
+           data-placement="top"
+           title="Google" (click)="loginWithGoogle()">
+          <i class="fa fa-google fa-2x"></i>
+          <span class="hidden-xs"></span>
+        </a>
+      </div>
+    </div>
+    <br>
+
+    <div class="row row-sm-offset-3 loginOr">
+      <div class="col-xs-12 col-sm-6">
+        <hr class="hrOr">
+        <span class="spanOr">ou</span>
+      </div>
+    </div>
+
+    <div class="row row-sm-offset-3">
+      <div class="col-xs-12 col-sm-6">
+        <form class="loginForm" action="" autocomplete="off" method="POST">
+          <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-user"></span></span>
+            <input type="text" class="form-control" name="username" placeholder="Username">
+          </div>
+          <hr/>
+
+          <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-key"></span></span>
+            <input type="password" class="form-control" name="password" placeholder="Password">
+          </div>
+          <hr/>
+          <button class="btn btn-lg btn-outline-primary btn-block" type="button"><i class="fa fa-sign-in"></i> Login
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="subscribed">
+    <div class="login">
+      <h3 class="authTitle">S'identifier</h3>
+      <br>
+      <div class="row row-sm-offset-3">
+        <div class="col-xs-12 col-sm-6">
+          <form class="loginForm" action="" autocomplete="off" method="POST">
+            <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-user"></span></span>
+              <input type="text" class="form-control" name="name" placeholder="Nom">
+            </div>
+            <hr/>
+            <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-user"></span></span>
+              <input type="text" class="form-control" name="firstname" placeholder="Prénom">
+            </div>
+            <hr/>
+            <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-user"></span></span>
+              <select class="form-control" name="gender">
+                <option>Femme</option>
+                <option>Homme</option>
+                <option>Autre</option>
+              </select>
+            </div>
+            <hr/>
+            <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-user"></span></span>
+              <input type="text" class="form-control" name="birthdate" placeholder="Date de naissance (JJ/MM/AAAA)"/>
+            </div>
+            <hr/>
+            <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-user"></span></span>
+              <input type="text" class="form-control" name="phonenumber" placeholder="Numéro de téléphone portable" value="{{user.phoneNumber}}"/>
+            </div>
+            <hr/>
+            
+            <button class="btn btn-lg btn-outline-primary btn-block" type="button"><i class="fa fa-sign-in"></i> Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

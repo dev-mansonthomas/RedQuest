@@ -11,7 +11,8 @@ export const environment = {
     projectId: 'PROJECT_ID',
     storageBucket: 'STORAGE_BUCKET',
     messagingSenderId: 'MESSAGING_SENDER_ID'
-  }
+  },
+  cloudFunctionsBaseUrl: 'CLOUD_FUNCTIONS_BASE_URL'
 };
 
 /*

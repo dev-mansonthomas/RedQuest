@@ -1,6 +1,6 @@
 import {Component, NgZone, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {AuthService} from "../auth.service";
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -25,8 +25,7 @@ export class LoginComponent implements OnInit {
 
   loginWithGoogle() {
     this.loading = true;
-    this.authService.signInGoogleLogin()
-      .then(() => this.zone.run(() => this.router.navigate([this.returnUrl])));
+    this.authService.signInGoogleLogin().then(() => this.zone.run(() => this.router.navigate([this.returnUrl])));
   }
 
 }
