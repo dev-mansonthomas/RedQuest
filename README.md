@@ -39,6 +39,13 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 install firebase tools:
 `npm install -g firebase-tools`
+`firebase login`
+To test authentication:
+`firebase list`
+`firebase use --add {project-id}`
+
+
+To deploy project:
 
 run `ng build --prod` to generate sources to be deployed
 run `firebase deploy` and follow instructions

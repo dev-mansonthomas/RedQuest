@@ -16,7 +16,7 @@ export class AuthService {
     this.angularFireAuth.auth.getRedirectResult().then(result => {
       this.userDetails = result.user;
     });
-    this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
   }
 
   signInGoogleLogin() {
@@ -61,21 +61,22 @@ export class AuthService {
     return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {
           this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
+            .then(user => user.user.sendEmailVerification());
         }
       );
   }
 
-  getConnectedUser() {
-    return this.user;
-  }
-
   isLoggedIn(): Observable<boolean> {
     return this.user.pipe(map((user, isLoggedIn) => {
-      return user != null;
+      if (user === null) {
+        return false;
+      }
+      console.log(user);
+      return user.emailVerified;
     }));
   }
 
-  getEmailOfConnectedUser(): Observable<firebase.User> {
+  getConnectedUser(): Observable<firebase.User> {
     return this.user.pipe(map((user, isLoggedIn) => {
       return user;
     }));

@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FirestoreRankingService } from './firestore-ranking.service';
+import { FirestoreService } from './firestore-ranking.service';
 
 describe('FirestoreService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: FirestoreRankingService = TestBed.get(FirestoreRankingService);
+    const service: FirestoreService = TestBed.get(FirestoreService);
     expect(service).toBeTruthy();
   });
 });

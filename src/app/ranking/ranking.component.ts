@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FirestoreRankingService} from '../firestore-ranking.service';
+import {FirestoreService} from '../firestore.service';
 import {UlRankingByAmount} from '../model/UlRankingByAmount';
 import {ActivatedRoute} from '@angular/router';
 import {CloudFunctionServiceService} from '../cloud-function-service.service';
@@ -13,27 +13,27 @@ export class RankingComponent implements OnInit {
 
   rankings: UlRankingByAmount[] = [];
 
-  constructor(private firestoreRankingService: FirestoreRankingService,
+  constructor(private firestoreService: FirestoreService,
               private route: ActivatedRoute,
               private functionsService: CloudFunctionServiceService) {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(() => this.getRanking())
+    this.route.paramMap.subscribe(() => this.getRanking());
   }
 
 
   private getRanking() {
-    this.firestoreRankingService.getAllUlRankingByAmount()
+    this.firestoreService.getAllUlRankingByAmount()
       .subscribe(doc => {
         this.rankings = doc.docs.map(e => {
-          return e.data() as UlRankingByAmount
-        })
-      })
+          return e.data() as UlRankingByAmount;
+        });
+      });
   }
 
-  callFunction(){
-    const data = {text: "coucou le texte", firstNumber: 3, secondNumber: 4};
+  callFunction() {
+    const data = {text: 'coucou le texte', firstNumber: 3, secondNumber: 4};
     this.functionsService.findQueteurById2(data);
   }
 

@@ -1,11 +1,11 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CloudFunctionServiceService} from '../cloud-function-service.service';
-import {ObserveOnMessage} from 'rxjs/internal/operators/observeOn';
 import {ULDetails} from '../model/ULDetails';
 import {Observable} from 'rxjs';
 import {AuthService} from '../auth.service';
-import {User} from "../model/user";
+import {User} from '../model/user';
+import {FirestoreService} from '../firestore.service';
 
 @Component({
   selector: 'app-registration',
@@ -13,8 +13,8 @@ import {User} from "../model/user";
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  UNKNOWN = "unknown";
-  REGISTERING = "registering";
+  UNKNOWN = 'unknown';
+  REGISTERING = 'registering';
 
   step = this.UNKNOWN;
 
@@ -29,8 +29,11 @@ export class RegistrationComponent implements OnInit {
   email: string;
   password: string;
 
+  userAuthId: string;
+
   constructor(private route: ActivatedRoute,
               private functions: CloudFunctionServiceService,
+              private firestore: FirestoreService,
               private router: Router,
               private authService: AuthService) {
   }
@@ -40,15 +43,26 @@ export class RegistrationComponent implements OnInit {
     this.route.queryParamMap.subscribe(queryParams => {
       this.uuid = queryParams.get('uuid');
       this.getULDetails(this.uuid)
-        .subscribe(details => this.ulDetails = details);
+        .subscribe(details => {
+          this.ulDetails = details;
+          this.updateUser();
+        });
     });
-    this.authService.getEmailOfConnectedUser().subscribe(user => {
+    this.authService.getConnectedUser().subscribe(user => {
       if (user) {
         this.step = this.REGISTERING;
         this.user = user;
         this.registeredUser.email = this.user.email;
+        this.userAuthId = user.uid;
       }
     });
+  }
+
+  private updateUser() {
+    if (this.isBenevole1j()) {
+      this.registeredUser.nivol = 'benevol1j';
+    }
+    this.registeredUser.ul_registration_token = this.uuid;
   }
 
   getULDetails(token: string): Observable<ULDetails> {
@@ -72,10 +86,11 @@ export class RegistrationComponent implements OnInit {
   }
 
   signingUpWithEmailAndPassword() {
-    this.authService.createUserWithEmaiPassword(this.email, this.password)
+    this.authService.createUserWithEmaiPassword(this.email, this.password);
   }
 
   registerUser() {
-    console.log(this.registeredUser);
+    this.firestore.registerQueteur(this.userAuthId, this.registeredUser).then(doc => console.log(doc));
+    this.functions.registerQueteur(this.registeredUser).subscribe(value => console.log(value));
   }
 }

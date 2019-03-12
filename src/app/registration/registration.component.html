@@ -71,33 +71,45 @@
           <form class="loginForm" action="" autocomplete="off" method="POST">
             <div class="input-group">
               <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <input type="text" class="form-control" name="name" placeholder="Nom" [(ngModel)]="registeredUser.name">
+              <input type="text" class="form-control" name="name" placeholder="Nom" [(ngModel)]="registeredUser.last_name">
             </div>
             <hr/>
             <div class="input-group">
               <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <input type="text" class="form-control" name="firstname" placeholder="Prénom" [(ngModel)]="registeredUser.firstname">
+              <input type="text" class="form-control" name="firstname" placeholder="Prénom" [(ngModel)]="registeredUser.first_name">
             </div>
             <hr/>
             <div class="input-group">
               <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <select class="form-control" name="gender" [(ngModel)]="registeredUser.gender">
-                <option>Femme</option>
-                <option>Homme</option>
-                <option>Autre</option>
-              </select>
+              <input type="checkbox" aria-label="gender" [(checked)]="registeredUser.man">
             </div>
             <hr/>
             <div class="input-group">
               <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <input type="text" class="form-control" name="birthdate" placeholder="Date de naissance (JJ/MM/AAAA)" [(ngModel)]="registeredUser.birthdate"/>
+              <input type="text" class="form-control" name="birthdate" placeholder="Date de naissance (AAAA-MM-JJ)" [(ngModel)]="registeredUser.birth_date"/>
             </div>
             <hr/>
             <div class="input-group">
               <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <input type="text" class="form-control" name="phonenumber" placeholder="Numéro de téléphone portable" [(ngModel)]="registeredUser.phoneNumber"/>
+              <input type="text" class="form-control" name="phonenumber" placeholder="Numéro de téléphone portable" [(ngModel)]="registeredUser.mobile"/>
             </div>
             <hr/>
+
+            <div *ngIf="!isBenevole1j()">
+              <div class="input-group">
+                <span class="input-group-addon"><span class="fa fa-user"></span></span>
+                <input type="text" class="form-control" name="nivol" placeholder="Nivol" [(ngModel)]="registeredUser.nivol"/>
+              </div>
+              <hr/>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="fa fa-user"></span></span>
+                <select class="form-control" name="secteur" [(ngModel)]="registeredUser.secteur">
+                  <option [value]="1">social</option>
+                  <option [value]="2">secours</option>
+                </select>
+              </div>
+              <hr/>
+            </div>
             
             <button class="btn btn-lg btn-outline-primary btn-block" type="button" (click)="registerUser()"><i class="fa fa-sign-in"></i> S'enregistrer
             </button>

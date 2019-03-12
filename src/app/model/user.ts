@@ -2,15 +2,19 @@ export class User {
 
 
   constructor(
-    public name: string,
-    public firstname: string,
-    public gender: string,
-    public birthdate: string,
+    public last_name: string,
+    public first_name: string,
+    public man: number,
+    public birth_date: string,
     public email: string,
-    public phoneNumber: string
-  ) {  }
+    public mobile: string,
+    public secteur: number,
+    public nivol: string,
+    public ul_registration_token: string
+  ) {
+  }
 
   static aUser(): User {
-    return new User("", "", "", "", "", "")
+    return new User('', '', 1, '', '', '', 3, '', '');
   }
 }
