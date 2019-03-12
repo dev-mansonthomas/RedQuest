@@ -15,6 +15,9 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
 
+  resetPasswordEmailSent: boolean = false;
+  errorMessage: string;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private authService: AuthService,
@@ -51,6 +54,17 @@ export class LoginComponent implements OnInit {
   handleEmailPasswordLoginError(errorCode, errorMessage) {
     console.log(errorCode);
     console.log(errorMessage);
+  }
+
+  sendResetPwdEmail(email: string) {
+    this.errorMessage = "";
+    this.resetPasswordEmailSent = false;
+    this.authService.sendResetPasswordEmail(email)
+      .then(() => this.resetPasswordEmailSent = true)
+      .catch(error => {
+        console.log(error);
+        this.errorMessage = this.authService.handleAuthError(error)
+      });
   }
 
 }

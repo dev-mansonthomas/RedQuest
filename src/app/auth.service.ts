@@ -8,7 +8,12 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private user: Observable<firebase.User>;
+  private AUTH_USER_NOT_FOUND = 'auth/user-not-found'; // l'utilisateur n'existe pas dans la base de données
+  private AUTH_INVALID_EMAIL = 'auth/invalid-email'; // le texte entré par l'utilisateur n'est pas une adresse email
+  private AUTH_INVALID_PASSWORD = ''; // Le password n'est pas correct
+
+  private
+  user: Observable<firebase.User>;
   private userDetails: firebase.User;
 
   constructor(private angularFireAuth: AngularFireAuth) {
@@ -86,5 +91,20 @@ export class AuthService {
     this.angularFireAuth.auth.signOut()
       .then((res => {
       }));
+  }
+
+  sendResetPasswordEmail(email: string): Promise<void> {
+    return this.angularFireAuth.auth.sendPasswordResetEmail(email);
+  }
+
+  public handleAuthError(error): string {
+    switch (error.code) {
+      case this.AUTH_INVALID_EMAIL:
+        return "l'email entré n'est pas une adresse email valide";
+      case this.AUTH_USER_NOT_FOUND:
+        return "l'utilisateur n'existe pas dans l'application";
+      default:
+        return "erreur inconnue";
+    }
   }
 }
