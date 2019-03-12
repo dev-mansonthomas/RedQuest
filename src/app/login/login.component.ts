@@ -12,6 +12,9 @@ export class LoginComponent implements OnInit {
   loading = false;
   returnUrl: string;
 
+  email: string;
+  password: string;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private authService: AuthService,
@@ -26,6 +29,28 @@ export class LoginComponent implements OnInit {
   loginWithGoogle() {
     this.loading = true;
     this.authService.signInGoogleLogin().then(() => this.zone.run(() => this.router.navigate([this.returnUrl])));
+  }
+
+  loginWithTwitter() {
+    this.authService.signInTwitterLogin().then(() => this.zone.run(() => this.router.navigate([this.returnUrl])));
+  }
+
+  loginWithFacebook() {
+    this.authService.signInFacebookLogin().then(() => this.zone.run(() => this.router.navigate([this.returnUrl])));
+  }
+
+  loginWithEmailPassword() {
+    this.authService.signInWithEmailPassword(this.email, this.password)
+      .catch((error) => {
+        this.handleEmailPasswordLoginError(error.code, error.message)
+        throw error.message
+      })
+      .then(() => this.zone.run(() => this.router.navigate([this.returnUrl])));
+  }
+
+  handleEmailPasswordLoginError(errorCode, errorMessage) {
+    console.log(errorCode);
+    console.log(errorMessage);
   }
 
 }

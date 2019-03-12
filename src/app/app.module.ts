@@ -15,6 +15,7 @@ import {CloudFunctionServiceService} from "./cloud-function-service.service";
 import {AngularFireFunctions, FunctionsRegionToken} from "@angular/fire/functions";
 import { RegistrationComponent } from './registration/registration.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule
   ],

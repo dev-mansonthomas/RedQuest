@@ -16,6 +16,7 @@ export class AuthService {
     this.angularFireAuth.auth.getRedirectResult().then(result => {
       this.userDetails = result.user;
     });
+    this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
   }
 
   signInGoogleLogin() {
@@ -24,6 +25,42 @@ export class AuthService {
           this.angularFireAuth.auth.signInWithRedirect(
             new firebase.auth.GoogleAuthProvider()
           );
+        }
+      );
+  }
+
+  signInTwitterLogin() {
+    return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(() => {
+          this.angularFireAuth.auth.signInWithRedirect(
+            new firebase.auth.TwitterAuthProvider()
+          );
+        }
+      );
+  }
+
+  signInFacebookLogin() {
+    return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(() => {
+          this.angularFireAuth.auth.signInWithRedirect(
+            new firebase.auth.FacebookAuthProvider()
+          );
+        }
+      );
+  }
+
+  signInWithEmailPassword(email: string, password: string) {
+    return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(() => {
+          return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
+        }
+      );
+  }
+
+  createUserWithEmaiPassword(email: string, password: string) {
+    return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(() => {
+          this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
         }
       );
   }

@@ -6,19 +6,19 @@
 
 <div class="container">
 
-  <div class="login">
+  <div class="login" *ngIf="step === UNKNOWN">
     <h3 class="authTitle">S'enregistrer</h3>
     <div class="row row-sm-offset-3 socialButtons">
       <div class="col-xs-2 col-sm-2">
-        <a href="#" class="btn btn-lg btn-block btn-facebook disabled" data-toggle="tooltip" data-placement="top"
-           title="Facebook">
+        <a href="javascript:void(0)" class="btn btn-lg btn-block btn-facebook" data-toggle="tooltip" data-placement="top"
+           title="Facebook" (click)="loginWithFacebook()">
           <i class="fa fa-facebook fa-2x"></i>
           <span class="hidden-xs"></span>
         </a>
       </div>
       <div class="col-xs-2 col-sm-2">
-        <a href="#" class="btn btn-lg btn-block btn-twitter disabled" data-toggle="tooltip" data-placement="top"
-           title="Twitter">
+        <a href="javascript:void(0)" class="btn btn-lg btn-block btn-twitter" data-toggle="tooltip" data-placement="top"
+           title="Twitter" (click)="loginWithTwitter()">
           <i class="fa fa-twitter fa-2x"></i>
           <span class="hidden-xs"></span>
         </a>
@@ -46,23 +46,23 @@
         <form class="loginForm" action="" autocomplete="off" method="POST">
           <div class="input-group">
             <span class="input-group-addon"><span class="fa fa-user"></span></span>
-            <input type="text" class="form-control" name="username" placeholder="Username">
+            <input type="text" class="form-control" name="email" placeholder="Email" [(ngModel)]="email">
           </div>
           <hr/>
 
           <div class="input-group">
             <span class="input-group-addon"><span class="fa fa-key"></span></span>
-            <input type="password" class="form-control" name="password" placeholder="Password">
+            <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="password">
           </div>
           <hr/>
-          <button class="btn btn-lg btn-outline-primary btn-block" type="button"><i class="fa fa-sign-in"></i> Login
+          <button class="btn btn-lg btn-outline-primary btn-block" type="button" (click)="signingUpWithEmailAndPassword()"><i class="fa fa-sign-in"></i> Se connecter
           </button>
         </form>
       </div>
     </div>
   </div>
 
-  <div *ngIf="subscribed">
+  <div *ngIf="step === REGISTERING">
     <div class="login">
       <h3 class="authTitle">S'identifier</h3>
       <br>
@@ -71,17 +71,17 @@
           <form class="loginForm" action="" autocomplete="off" method="POST">
             <div class="input-group">
               <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <input type="text" class="form-control" name="name" placeholder="Nom">
+              <input type="text" class="form-control" name="name" placeholder="Nom" [(ngModel)]="registeredUser.name">
             </div>
             <hr/>
             <div class="input-group">
               <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <input type="text" class="form-control" name="firstname" placeholder="Prénom">
+              <input type="text" class="form-control" name="firstname" placeholder="Prénom" [(ngModel)]="registeredUser.firstname">
             </div>
             <hr/>
             <div class="input-group">
               <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <select class="form-control" name="gender">
+              <select class="form-control" name="gender" [(ngModel)]="registeredUser.gender">
                 <option>Femme</option>
                 <option>Homme</option>
                 <option>Autre</option>
@@ -90,16 +90,16 @@
             <hr/>
             <div class="input-group">
               <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <input type="text" class="form-control" name="birthdate" placeholder="Date de naissance (JJ/MM/AAAA)"/>
+              <input type="text" class="form-control" name="birthdate" placeholder="Date de naissance (JJ/MM/AAAA)" [(ngModel)]="registeredUser.birthdate"/>
             </div>
             <hr/>
             <div class="input-group">
               <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <input type="text" class="form-control" name="phonenumber" placeholder="Numéro de téléphone portable" value="{{user.phoneNumber}}"/>
+              <input type="text" class="form-control" name="phonenumber" placeholder="Numéro de téléphone portable" [(ngModel)]="registeredUser.phoneNumber"/>
             </div>
             <hr/>
             
-            <button class="btn btn-lg btn-outline-primary btn-block" type="button"><i class="fa fa-sign-in"></i> Login
+            <button class="btn btn-lg btn-outline-primary btn-block" type="button" (click)="registerUser()"><i class="fa fa-sign-in"></i> S'enregistrer
             </button>
           </form>
         </div>
