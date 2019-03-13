@@ -24,4 +24,12 @@ export class FirestoreService {
   registerQueteur(userId: string, user: User) {
     return this.firestoreDB.collection('queteurs').doc(userId).set(Object.assign({}, user));
   }
+
+  getQueteur(authId: string): Promise<User> {
+    return this.firestoreDB.firestore
+      .collection('queteurs')
+      .doc(authId)
+      .get()
+      .then(doc => doc.data() as User);
+  }
 }

@@ -3,6 +3,7 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {FirestoreService} from './firestore.service';
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +63,7 @@ export class AuthService {
       );
   }
 
-  createUserWithEmaiPassword(email: string, password: string) {
+  createUserWithEmailPassword(email: string, password: string) {
     return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {
           this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
@@ -73,18 +74,12 @@ export class AuthService {
 
   isLoggedIn(): Observable<boolean> {
     return this.user.pipe(map((user, isLoggedIn) => {
-      if (user === null) {
-        return false;
-      }
-      console.log(user);
-      return user.emailVerified;
+      return user !== null && user.emailVerified;
     }));
   }
 
   getConnectedUser(): Observable<firebase.User> {
-    return this.user.pipe(map((user, isLoggedIn) => {
-      return user;
-    }));
+    return this.user;
   }
 
   logout() {

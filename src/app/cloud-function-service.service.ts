@@ -16,8 +16,8 @@ export class CloudFunctionServiceService {
   constructor(private firebaseFunctions: AngularFireFunctions, private http: HttpClient) {
   }
 
-  findQueteurById2(data: any) {
-    const func = this.firebaseFunctions.httpsCallable('findQueteurById2');
+  findQueteurById(data: any) {
+    const func = this.firebaseFunctions.httpsCallable('findQueteurById');
     return func(data).subscribe(result => console.log(result));
   }
 
@@ -27,6 +27,7 @@ export class CloudFunctionServiceService {
   }
 
   registerQueteur(user: User): Observable<any> {
-    return this.firebaseFunctions.httpsCallable('registerQueteur')(user);
+    return this.firebaseFunctions.httpsCallable('registerQueteur')(user)
+      .pipe(map(value => JSON.parse(value)));
   }
 }

@@ -61,6 +61,9 @@ export class RegistrationComponent implements OnInit {
   private updateUser() {
     if (this.isBenevole1j()) {
       this.registeredUser.nivol = 'benevol1j';
+      this.registeredUser.secteur = 3;
+    } else {
+      this.registeredUser.secteur = 1;
     }
     this.registeredUser.ul_registration_token = this.uuid;
   }
@@ -86,11 +89,18 @@ export class RegistrationComponent implements OnInit {
   }
 
   signingUpWithEmailAndPassword() {
-    this.authService.createUserWithEmaiPassword(this.email, this.password);
+    this.authService.createUserWithEmailPassword(this.email, this.password);
   }
 
   registerUser() {
-    this.firestore.registerQueteur(this.userAuthId, this.registeredUser).then(doc => console.log(doc));
-    this.functions.registerQueteur(this.registeredUser).subscribe(value => console.log(value));
+    // this.firestore.registerQueteur(this.userAuthId, this.registeredUser).then(doc => console.log(doc));
+    this.functions.registerQueteur(this.registeredUser)
+      .subscribe(
+        value => {
+          this.registeredUser.queteurId = value.queteur_registration_token;
+          this.registeredUser.accountActivated = true;
+          this.firestore.registerQueteur(this.userAuthId, this.registeredUser).then(doc => console.log(doc));
+        }
+      );
   }
 }

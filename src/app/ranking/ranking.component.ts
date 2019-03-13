@@ -33,8 +33,8 @@ export class RankingComponent implements OnInit {
   }
 
   callFunction() {
-    const data = {text: 'coucou le texte', firstNumber: 3, secondNumber: 4};
-    this.functionsService.findQueteurById2(data);
+    const data = {id: 12345};
+    this.functionsService.findQueteurById(data);
   }
 
 }

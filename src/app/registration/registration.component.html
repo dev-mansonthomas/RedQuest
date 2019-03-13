@@ -103,9 +103,10 @@
               <hr/>
               <div class="input-group">
                 <span class="input-group-addon"><span class="fa fa-user"></span></span>
-                <select class="form-control" name="secteur" [(ngModel)]="registeredUser.secteur">
+                <select class="form-control" name="secteur" [(ngModel)]="registeredUser.secteur" [disabled]="isBenevole1j()">
                   <option [value]="1">social</option>
                   <option [value]="2">secours</option>
+                  <option [value]="3" [disabled]="!isBenevole1j()">Bénévole d'un jour</option>
                 </select>
               </div>
               <hr/>

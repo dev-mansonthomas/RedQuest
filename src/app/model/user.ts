@@ -10,11 +10,13 @@ export class User {
     public mobile: string,
     public secteur: number,
     public nivol: string,
-    public ul_registration_token: string
+    public ul_registration_token: string,
+    public queteurId: string,
+    public accountActivated: boolean
   ) {
   }
 
   static aUser(): User {
-    return new User('', '', 1, '', '', '', 3, '', '');
+    return new User('', '', 1, '', '', '', 3, '', '', '', false);
   }
 }
