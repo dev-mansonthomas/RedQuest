@@ -1,32 +1,26 @@
-<button type="button" (click)="callFunction()">call function</button>
-
-<table class="table">
-  <thead>
-  <tr>
-    <th scope="col">ul_id</th>
-    <th scope="col">queteur_id</th>
-    <th scope="col">tronc_count</th>
-    <th scope="col">amount</th>
-    <th scope="col">weight</th>
-    <th scope="col">time_spent_in_minutes</th>
-    <th scope="col">unique_point_quete_count</th>
-    <th scope="col">first_name</th>
-    <th scope="col">last_name</th>
-    <th scope="col">year</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let ranking of rankings">
-    <td>{{ranking.ul_id}}</td>
-    <td>{{ranking.queteur_id}}</td>
-    <td>{{ranking.tronc_count}}</td>
-    <td>{{ranking.amount}}</td>
-    <td>{{ranking.weight}}</td>
-    <td>{{ranking.time_spent_in_minutes}}</td>
-    <td>{{ranking.unique_point_quete_count}}</td>
-    <td>{{ranking.first_name}}</td>
-    <td>{{ranking.last_name}}</td>
-    <td>{{ranking.year}}</td>
-  </tr>
-  </tbody>
-</table>
+<div class="container">
+  <table class="table" sortable-table (sorted)="onSorted($event)">
+    <thead>
+    <tr>
+      <th sortable-column="name" scope="col">Queteur</th>
+      <th sortable-column="tronc_count" scope="col">Nombre de tronc</th>
+      <th sortable-column="amount" scope="col">Montant total</th>
+      <th sortable-column="weight" scope="col">poids</th>
+      <th sortable-column="time_spent_in_minutes" scope="col">Temps total</th>
+      <th sortable-column="unique_point_quete_count" scope="col">Lieux de quête</th>
+      <th sortable-column="year" scope="col">Année</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ranking of rankings">
+      <td>{{ranking.first_name}} {{ranking.last_name.toUpperCase()}}</td>
+      <td>{{ranking.tronc_count}}</td>
+      <td>{{ranking.amount | number: '1.0-2'}}€</td>
+      <td>{{ranking.weight | number: '1.0-2'}}</td>
+      <td>{{ranking.time_spent_in_minutes}}</td>
+      <td>{{ranking.unique_point_quete_count}}</td>
+      <td>{{ranking.year}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

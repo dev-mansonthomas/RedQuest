@@ -37,4 +37,25 @@ export class RankingComponent implements OnInit {
     this.functionsService.findQueteurById(data);
   }
 
+  onSorted(event: { sortColumn: string, sortDirection: "asc" | "desc" }) {
+    if (event.sortColumn === 'name') {
+      this.rankings.sort((rankA, rankB) => {
+        const nameA = `${rankA.first_name.toLowerCase()} ${rankA.last_name.toLowerCase()}`;
+        const nameB = `${rankB.first_name.toLowerCase()} ${rankB.last_name.toLowerCase()}`;
+        if (nameA < nameB) //sort string ascending
+          return event.sortDirection === 'asc' ? -1 : 1;
+        if (nameA > nameB)
+          return event.sortDirection === 'asc' ? 1 : -1;
+        return 0; //default return value (no sorting)
+      });
+    }
+    else {
+      this.rankings.sort((rankA, rankB) => {
+        return event.sortDirection === 'asc'
+          ? rankA[event.sortColumn] - rankB[event.sortColumn]
+          : rankB[event.sortColumn] - rankA[event.sortColumn]
+      });
+    }
+  }
+
 }

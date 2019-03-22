@@ -15,6 +15,9 @@ import {AngularFireFunctions, FunctionsRegionToken} from '@angular/fire/function
 import {RegistrationComponent} from './registration/registration.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import { SortableColumnComponent } from './sort-utils/sortable-column/sortable-column.component';
+import { SortableTableDirective } from './sort-utils/sortable-table.directive';
+import {SortService} from "./sort-utils/sort.service";
 
 @NgModule({
   declarations: [
@@ -22,7 +25,9 @@ import {FormsModule} from '@angular/forms';
     LoginComponent,
     RankingComponent,
     HomepageComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    SortableColumnComponent,
+    SortableTableDirective
   ],
   imports: [
     BrowserModule,
@@ -36,7 +41,8 @@ import {FormsModule} from '@angular/forms';
     AngularFirestore,
     AngularFireAuth,
     AngularFireFunctions,
-    {provide: FunctionsRegionToken, useValue: 'europe-west1'}
+    {provide: FunctionsRegionToken, useValue: 'europe-west1'},
+    SortService
   ],
   bootstrap: [AppComponent]
 })
