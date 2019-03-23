@@ -14,10 +14,11 @@ import {HomepageComponent} from './homepage/homepage.component';
 import {AngularFireFunctions, FunctionsRegionToken} from '@angular/fire/functions';
 import {RegistrationComponent} from './registration/registration.component';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SortableColumnComponent } from './sort-utils/sortable-column/sortable-column.component';
 import { SortableTableDirective } from './sort-utils/sortable-table.directive';
 import {SortService} from "./sort-utils/sort.service";
+import {RegistrationStep2Component} from './registration-step-2/registration-step-2.component';
 
 @NgModule({
   declarations: [
@@ -27,13 +28,15 @@ import {SortService} from "./sort-utils/sort.service";
     HomepageComponent,
     RegistrationComponent,
     SortableColumnComponent,
-    SortableTableDirective
+    SortableTableDirective,
+    RegistrationStep2Component
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule
   ],

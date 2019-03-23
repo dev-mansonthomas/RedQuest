@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {AuthService} from '../auth.service';
 import {User} from '../model/user';
 import {FirestoreService} from '../firestore.service';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-registration',
@@ -21,13 +22,28 @@ export class RegistrationComponent implements OnInit {
   uuid: string;
   ulDetails: ULDetails;
 
-  subscribed = false;
   user: firebase.User;
 
   registeredUser: User = User.aUser();
 
   email: string;
   password: string;
+  confirmPassword: string;
+
+  loginForm: FormGroup;
+
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
+
+  get confirmPassword() {
+    return this.loginForm.get('confirmPassword');
+  }
+
 
   userAuthId: string;
 
@@ -39,17 +55,21 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subscribed = false;
+    this.loginForm = new FormGroup({
+      'email': new FormControl('', [Validators.required, Validators.email]),
+      'password': new FormControl('', Validators.required),
+      'confirmPassword': new FormControl('', Validators.required)
+    }, [this.checkPasswords]);
     this.route.queryParamMap.subscribe(queryParams => {
       this.uuid = queryParams.get('uuid');
       this.getULDetails(this.uuid)
         .subscribe(details => {
           this.ulDetails = details;
-          this.updateUser();
         });
     });
     this.authService.getConnectedUser().subscribe(user => {
       if (user) {
+        this.registeredUser = this.initUser();
         this.step = this.REGISTERING;
         this.user = user;
         this.registeredUser.email = this.user.email;
@@ -58,14 +78,16 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
-  private updateUser() {
+  private initUser(): User {
+    let user = User.aUser();
     if (this.isBenevole1j()) {
-      this.registeredUser.nivol = 'benevol1j';
-      this.registeredUser.secteur = 3;
+      user.nivol = 'benevol1j';
+      user.secteur = 3;
     } else {
-      this.registeredUser.secteur = 1;
+      user.secteur = 1;
     }
-    this.registeredUser.ul_registration_token = this.uuid;
+    user.ul_registration_token = this.uuid;
+    return user;
   }
 
   getULDetails(token: string): Observable<ULDetails> {
@@ -73,7 +95,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   isBenevole1j() {
-    return this.uuid === this.ulDetails.token_benevole_1j;
+    return this.ulDetails && this.uuid === this.ulDetails.token_benevole_1j;
   }
 
   loginWithGoogle() {
@@ -89,18 +111,15 @@ export class RegistrationComponent implements OnInit {
   }
 
   signingUpWithEmailAndPassword() {
-    this.authService.createUserWithEmailPassword(this.email, this.password);
+    if (this.loginForm.valid) {
+      this.authService.createUserWithEmailPassword(this.loginForm.get('email').value, this.loginForm.get('password').value);
+    }
   }
 
-  registerUser() {
-    // this.firestore.registerQueteur(this.userAuthId, this.registeredUser).then(doc => console.log(doc));
-    this.functions.registerQueteur(this.registeredUser)
-      .subscribe(
-        value => {
-          this.registeredUser.queteurId = value.queteur_registration_token;
-          this.registeredUser.accountActivated = true;
-          this.firestore.registerQueteur(this.userAuthId, this.registeredUser).then(doc => console.log(doc));
-        }
-      );
+  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+    let pass = group.get('password').value;
+    let confirmPass = group.get('confirmPassword').value;
+
+    return pass === confirmPass ? null : {notSame: true}
   }
 }

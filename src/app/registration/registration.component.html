@@ -1,16 +1,24 @@
-<!--<p *ngIf="ulDetails">-->
-  <!--Bienvenue dans l'UL de {{ulDetails.name}}-->
-  <!--<span *ngIf="isBenevole1j()">Merci de nous aider pour la quête</span>-->
-  <!--<span *ngIf="!isBenevole1j()">Vous êtes déjà bénévole de l'UL</span>-->
-<!--</p>-->
-
 <div class="container">
+
+  <div class="jumbotron">
+    <h2 class="display-5">Merci!</h2>
+    <p class="lead">
+      Vous vous apprêtez à donner de votre temps pour la quête.
+      ...
+    </p>
+    <hr class="my-4">
+    <p>Vous pouvez vous connecter avec votre réseau social favori, ou bien vous créer un compte tout neuf.</p>
+    <!--<p class="lead">
+      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+    </p>-->
+  </div>
 
   <div class="login" *ngIf="step === UNKNOWN">
     <h3 class="authTitle">S'enregistrer</h3>
     <div class="row row-sm-offset-3 socialButtons">
       <div class="col-xs-2 col-sm-2">
-        <a href="javascript:void(0)" class="btn btn-lg btn-block btn-facebook" data-toggle="tooltip" data-placement="top"
+        <a href="javascript:void(0)" class="btn btn-lg btn-block btn-facebook" data-toggle="tooltip"
+           data-placement="top"
            title="Facebook" (click)="loginWithFacebook()">
           <i class="fa fa-facebook fa-2x"></i>
           <span class="hidden-xs"></span>
@@ -43,81 +51,57 @@
 
     <div class="row row-sm-offset-3">
       <div class="col-xs-12 col-sm-6">
-        <form class="loginForm" action="" autocomplete="off" method="POST">
-          <div class="input-group">
-            <span class="input-group-addon"><span class="fa fa-user"></span></span>
-            <input type="text" class="form-control" name="email" placeholder="Email" [(ngModel)]="email">
+        <form class="loginForm" autocomplete="off" method="POST" [formGroup]="loginForm">
+          <div class="form-group">
+            <input type="text" class="form-control" name="email" placeholder="Email" formControlName="email" required>
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text text-danger">
+              <div *ngIf="email.errors.required">
+                L'email est requis.
+              </div>
+              <div *ngIf="email.errors.email">
+                L'email n'est pas valide
+              </div>
+            </div>
           </div>
           <hr/>
 
-          <div class="input-group">
-            <span class="input-group-addon"><span class="fa fa-key"></span></span>
-            <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="password">
+          <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Mot de passe"
+                   formControlName="password" required>
+            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text text-danger">
+
+              <span *ngIf="password.errors.required">
+                Le mot de passe est requis.
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Confirmez le mot de passe"
+                   formControlName="confirmPassword" required>
+            <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)"
+                 class="text text-danger">
+
+              <span *ngIf="confirmPassword.errors.required">
+                Veuillez confirmer le mot de passe.
+              </span>
+            </div>
+          </div>
+          <div *ngIf="loginForm.invalid && (confirmPassword.dirty || confirmPassword.touched)"
+               class="text text-danger">
+
+              <span *ngIf="loginForm.hasError('notSame')">
+                Les mots de passe sont différents.
+              </span>
           </div>
           <hr/>
-          <button class="btn btn-lg btn-outline-primary btn-block" type="button" (click)="signingUpWithEmailAndPassword()"><i class="fa fa-sign-in"></i> Se connecter
+          <button class="btn btn-lg btn-outline-primary btn-block" type="button"
+                  (click)="signingUpWithEmailAndPassword()"><i class="fa fa-sign-in"></i> Se connecter
           </button>
         </form>
       </div>
     </div>
   </div>
 
-  <div *ngIf="step === REGISTERING">
-    <div class="login">
-      <h3 class="authTitle">S'identifier</h3>
-      <br>
-      <div class="row row-sm-offset-3">
-        <div class="col-xs-12 col-sm-6">
-          <form class="loginForm" action="" autocomplete="off" method="POST">
-            <div class="input-group">
-              <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <input type="text" class="form-control" name="name" placeholder="Nom" [(ngModel)]="registeredUser.last_name">
-            </div>
-            <hr/>
-            <div class="input-group">
-              <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <input type="text" class="form-control" name="firstname" placeholder="Prénom" [(ngModel)]="registeredUser.first_name">
-            </div>
-            <hr/>
-            <div class="input-group">
-              <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <input type="checkbox" aria-label="gender" [(checked)]="registeredUser.man">
-            </div>
-            <hr/>
-            <div class="input-group">
-              <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <input type="text" class="form-control" name="birthdate" placeholder="Date de naissance (AAAA-MM-JJ)" [(ngModel)]="registeredUser.birth_date"/>
-            </div>
-            <hr/>
-            <div class="input-group">
-              <span class="input-group-addon"><span class="fa fa-user"></span></span>
-              <input type="text" class="form-control" name="phonenumber" placeholder="Numéro de téléphone portable" [(ngModel)]="registeredUser.mobile"/>
-            </div>
-            <hr/>
-
-            <div *ngIf="!isBenevole1j()">
-              <div class="input-group">
-                <span class="input-group-addon"><span class="fa fa-user"></span></span>
-                <input type="text" class="form-control" name="nivol" placeholder="Nivol" [(ngModel)]="registeredUser.nivol"/>
-              </div>
-              <hr/>
-              <div class="input-group">
-                <span class="input-group-addon"><span class="fa fa-user"></span></span>
-                <select class="form-control" name="secteur" [(ngModel)]="registeredUser.secteur" [disabled]="isBenevole1j()">
-                  <option [value]="1">social</option>
-                  <option [value]="2">secours</option>
-                  <option [value]="3" [disabled]="!isBenevole1j()">Bénévole d'un jour</option>
-                </select>
-              </div>
-              <hr/>
-            </div>
-            
-            <button class="btn btn-lg btn-outline-primary btn-block" type="button" (click)="registerUser()"><i class="fa fa-sign-in"></i> S'enregistrer
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-registration-step-2 *ngIf="step === REGISTERING" [registeredUser]="registeredUser" [isBenevole1j]="ulDetails && isBenevole1j()" [userAuthId]="userAuthId"></app-registration-step-2>
 
 </div>

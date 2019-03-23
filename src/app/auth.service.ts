@@ -13,8 +13,7 @@ export class AuthService {
   private AUTH_INVALID_EMAIL = 'auth/invalid-email'; // le texte entré par l'utilisateur n'est pas une adresse email
   private AUTH_INVALID_PASSWORD = ''; // Le password n'est pas correct
 
-  private
-  user: Observable<firebase.User>;
+  private user: Observable<firebase.User>;
   private userDetails: firebase.User;
 
   constructor(private angularFireAuth: AngularFireAuth) {
@@ -74,7 +73,7 @@ export class AuthService {
 
   isLoggedIn(): Observable<boolean> {
     return this.user.pipe(map((user, isLoggedIn) => {
-      return user !== null && user.emailVerified;
+      return user !== null;
     }));
   }
 
