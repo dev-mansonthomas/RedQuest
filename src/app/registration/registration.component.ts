@@ -26,10 +26,6 @@ export class RegistrationComponent implements OnInit {
 
   registeredUser: User = User.aUser();
 
-  email: string;
-  password: string;
-  confirmPassword: string;
-
   loginForm: FormGroup;
 
   get email() {
@@ -43,6 +39,7 @@ export class RegistrationComponent implements OnInit {
   get confirmPassword() {
     return this.loginForm.get('confirmPassword');
   }
+
 
 
   userAuthId: string;

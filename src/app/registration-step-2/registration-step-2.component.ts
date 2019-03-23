@@ -1,15 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {User} from "../model/user";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CloudFunctionServiceService} from "../cloud-function-service.service";
 import {FirestoreService} from "../firestore.service";
+import * as $ from "jquery";
 
 @Component({
   selector: 'app-registration-step-2',
   templateUrl: './registration-step-2.component.html',
   styleUrls: ['./registration-step-2.component.css']
 })
-export class RegistrationStep2Component implements OnInit {
+export class RegistrationStep2Component implements OnInit, AfterViewInit {
 
   @Input() registeredUser: User;
   @Input() isBenevole1j: boolean;
@@ -27,7 +28,7 @@ export class RegistrationStep2Component implements OnInit {
       'last_name': new FormControl(this.registeredUser.last_name, Validators.required),
       'first_name': new FormControl(this.registeredUser.first_name, Validators.required),
       'man': new FormControl('1', Validators.required),
-      'birth_date': new FormControl(this.registeredUser.birth_date, Validators.required),
+      'birth_date': new FormControl(this.registeredUser.birth_date, [Validators.required, Validators.pattern('[1-2](9|0)[0-9][0-9]-(10|11|12|0[1-9])-((0[1-9])|((1|2)[0-9])|30|31)')]),
       'mobile': new FormControl(this.registeredUser.mobile, [Validators.required, Validators.pattern('[0-9]{9}')]),
       'nivol': new FormControl(this.registeredUser.nivol, Validators.required),
       'secteur': new FormControl({value: this.registeredUser.secteur, disabled: this.isBenevole1j}, Validators.required)
@@ -60,6 +61,10 @@ export class RegistrationStep2Component implements OnInit {
 
   get secteur() {
     return this.registrationForm.get('secteur');
+  }
+
+  ngAfterViewInit(): void {
+    $('[data-toggle="tooltip"]').tooltip()
   }
 
   registerUser() {
