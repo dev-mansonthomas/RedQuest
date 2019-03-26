@@ -22,6 +22,6 @@ export class ULDetails {
     this.address = json.address;
     this.postal_code = json.postal_code;
     this.city = json.city;
-    this.email = json.mail;
+    this.email = json.email;
   }
 }
