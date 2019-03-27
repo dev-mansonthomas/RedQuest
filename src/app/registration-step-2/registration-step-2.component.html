@@ -1,7 +1,23 @@
 <div class="container">
   <div class="login">
-    <h3 class="authTitle">S'identifier</h3>
+    <h3 class="authTitle">Inscription</h3>
     <br>
+
+    <div class="jumbotron">
+      <h2 class="display-5">Merci!</h2>
+      <p class="lead">
+        Vous voilà connecté! Pour finaliser votre inscription, nous avons besoin de quelques informations
+        supplémentaires.
+
+      </p>
+      <hr class="my-4">
+      <p>
+        Aucune de ces informations ne sera transmise à des tiers, elles ne nous sont utiles que pour la quête, et pour
+        vous contacter en cas de problème.
+        Une fois ce formulaire validé, votre inscription devra être validée par un cadre de la quête.
+      </p>
+    </div>
+
     <div class="row row-sm-offset-3">
       <div class="col-xs-12 col-sm-6">
         <form class="loginForm" action="" autocomplete="off" method="POST" [formGroup]="registrationForm">
@@ -31,7 +47,7 @@
             ne sont pas envoyés sur des lieux de quêtes dans des conditions inadaptées.
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" name="birthdate" placeholder="Date de naissance (AAAA-MM-JJ)"
+            <input type="text" class="form-control" name="birthdate" placeholder="Date de naissance (JJ/MM/AAAA)"
                    formControlName="birth_date"/>
             <div *ngIf="birth_date.invalid && (birth_date.dirty || birth_date.touched)"
                  class="text text-danger">
@@ -57,8 +73,8 @@
                 +33
               </div>
             </div>
-            <input id="mobile" type="text" class="form-control" name="mobile" placeholder="Numéro de téléphone portable"
-                   formControlName="mobile" data-toggle="tooltip" data-placement="top" title="Tooltip on top"/>
+            <input id="mobile" type="number" class="form-control" name="mobile" placeholder="Numéro de téléphone portable"
+                   formControlName="mobile"/>
           </div>
           <div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)"
                class="text text-danger">
@@ -76,11 +92,11 @@
           <div *ngIf="!isBenevole1j">
             <div class="form-group">
               <input type="text" class="form-control" name="nivol" placeholder="Nivol"
-                     formControlName="nivol"/>
+                     [formControlName]="'nivol'"/>
             </div>
             <hr/>
             <div class="form-group">
-              <select class="form-control" name="secteur" [formControlName]="secteur">
+              <select class="form-control" name="secteur" [formControlName]="'secteur'">
                 <option [value]="1">social</option>
                 <option [value]="2">secours</option>
                 <option [value]="3" [disabled]="!isBenevole1j">Bénévole d'un jour</option>
@@ -89,11 +105,21 @@
             <hr/>
           </div>
 
-          <button class="btn btn-lg btn-outline-primary btn-block" type="button" (click)="registerUser()"><i
-            class="fa fa-sign-in"></i> S'enregistrer
+          <div *ngIf="error" class="alert alert-danger" role="alert">
+            {{error}}
+          </div>
+          <button class="btn btn-lg btn-outline-primary btn-block" type="button" (click)="registerUser()"
+                  data-toggle="modal" data-target="#waiting" data-backdrop="static" data-keyboard="false"
+                  style="margin-bottom: 5%;">
+            <i class="fa fa-sign-in"></i> S'inscrire
           </button>
         </form>
       </div>
     </div>
   </div>
+
+  <app-waiting-modal></app-waiting-modal>
+
 </div>
+
+

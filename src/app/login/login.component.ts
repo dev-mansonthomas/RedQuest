@@ -45,8 +45,8 @@ export class LoginComponent implements OnInit {
   loginWithEmailPassword() {
     this.authService.signInWithEmailPassword(this.email, this.password)
       .catch((error) => {
-        this.handleEmailPasswordLoginError(error.code, error.message)
-        throw error.message
+        this.handleEmailPasswordLoginError(error.code, error.message);
+        throw error.message;
       })
       .then(() => this.zone.run(() => this.router.navigate([this.returnUrl])));
   }
@@ -57,13 +57,13 @@ export class LoginComponent implements OnInit {
   }
 
   sendResetPwdEmail(email: string) {
-    this.errorMessage = "";
+    this.errorMessage = '';
     this.resetPasswordEmailSent = false;
     this.authService.sendResetPasswordEmail(email)
       .then(() => this.resetPasswordEmailSent = true)
       .catch(error => {
         console.log(error);
-        this.errorMessage = this.authService.handleAuthError(error)
+        this.errorMessage = this.authService.handleAuthError(error);
       });
   }
 

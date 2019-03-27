@@ -3,7 +3,6 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {FirestoreService} from './firestore.service';
 
 @Injectable({
   providedIn: 'root'
@@ -77,8 +76,12 @@ export class AuthService {
     }));
   }
 
-  getConnectedUser(): Observable<firebase.User> {
+  onUserConnected(): Observable<firebase.User> {
     return this.user;
+  }
+
+  getConnectedUser(): firebase.User {
+    return this.userDetails;
   }
 
   logout() {
@@ -94,11 +97,11 @@ export class AuthService {
   public handleAuthError(error): string {
     switch (error.code) {
       case this.AUTH_INVALID_EMAIL:
-        return "l'email entré n'est pas une adresse email valide";
+        return 'l\'email entré n\'est pas une adresse email valide';
       case this.AUTH_USER_NOT_FOUND:
-        return "l'utilisateur n'existe pas dans l'application";
+        return 'l\'utilisateur n\'existe pas dans l\'application';
       default:
-        return "erreur inconnue";
+        return 'erreur inconnue';
     }
   }
 }

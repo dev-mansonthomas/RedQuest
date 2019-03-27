@@ -11,11 +11,12 @@ export class User {
     public nivol: string,
     public ul_registration_token: string,
     public queteur_id: number,
-    public registration_approved: boolean
+    public registration_approved: boolean,
+    public reject_reaseon: string
   ) {
   }
 
   static aUser(): User {
-    return new User('', '', 1, '', '', '', 3, '', '', 0, false);
+    return new User('', '', 1, '', '', '', 3, '', '', 0, null, '');
   }
 }

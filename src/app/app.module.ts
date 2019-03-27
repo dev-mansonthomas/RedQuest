@@ -19,6 +19,8 @@ import { SortableColumnComponent } from './sort-utils/sortable-column/sortable-c
 import { SortableTableDirective } from './sort-utils/sortable-table.directive';
 import {SortService} from "./sort-utils/sort.service";
 import {RegistrationStep2Component} from './registration-step-2/registration-step-2.component';
+import { WaitingModalComponent } from './waiting-modal/waiting-modal.component';
+import { RegistrationConfirmationComponent } from './registration-confirmation/registration-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import {RegistrationStep2Component} from './registration-step-2/registration-ste
     RegistrationComponent,
     SortableColumnComponent,
     SortableTableDirective,
-    RegistrationStep2Component
+    RegistrationStep2Component,
+    WaitingModalComponent,
+    RegistrationConfirmationComponent
   ],
   imports: [
     BrowserModule,

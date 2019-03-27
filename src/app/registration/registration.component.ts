@@ -64,7 +64,7 @@ export class RegistrationComponent implements OnInit {
           this.ulDetails = details;
         });
     });
-    this.authService.getConnectedUser().subscribe(user => {
+    this.authService.onUserConnected().subscribe(user => {
       if (user) {
         this.registeredUser = this.initUser();
         this.step = this.REGISTERING;
