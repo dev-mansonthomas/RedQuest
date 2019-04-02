@@ -73,7 +73,8 @@
                 +33
               </div>
             </div>
-            <input id="mobile" type="number" class="form-control" name="mobile" placeholder="Numéro de téléphone portable"
+            <input id="mobile" type="number" class="form-control" name="mobile"
+                   placeholder="Numéro de téléphone portable"
                    formControlName="mobile"/>
           </div>
           <div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)"
@@ -90,25 +91,40 @@
           <hr/>
 
           <div *ngIf="!isBenevole1j">
+            <div class="alert alert-warning" role="alert">
+              Veuillez entrer votre NIVOL sans les 0 au début.
+            </div>
             <div class="form-group">
               <input type="text" class="form-control" name="nivol" placeholder="Nivol"
                      [formControlName]="'nivol'"/>
             </div>
-            <hr/>
-            <div class="form-group">
-              <select class="form-control" name="secteur" [formControlName]="'secteur'">
-                <option [value]="1">social</option>
-                <option [value]="2">secours</option>
-                <option [value]="3" [disabled]="!isBenevole1j">Bénévole d'un jour</option>
-              </select>
+            <div *ngIf="nivol.invalid && (nivol.dirty || nivol.touched)"
+                 class="text text-danger">
+
+              <span *ngIf="nivol.errors.required">
+               Le nivol est requis.
+              </span>
+
+              <span *ngIf="nivol.errors.pattern">
+                Le nivol n'est pas correct
+              </span>
             </div>
-            <hr/>
           </div>
+          <hr/>
+          <div class="form-group">
+            <select class="form-control" name="secteur" [formControlName]="'secteur'">
+              <option [value]="1" [disabled]="isBenevole1j">social</option>
+              <option [value]="2" [disabled]="isBenevole1j">secours</option>
+              <option [value]="3" [disabled]="!isBenevole1j">Bénévole d'un jour</option>
+            </select>
+          </div>
+          <hr/>
 
           <div *ngIf="error" class="alert alert-danger" role="alert">
             {{error}}
           </div>
-          <button class="btn btn-lg btn-outline-primary btn-block" type="button" (click)="registerUser()"
+          <button [disabled]="registrationForm.invalid" class="btn btn-lg btn-outline-primary btn-block" type="button"
+                  (click)="registerUser()"
                   data-toggle="modal" data-target="#waiting" data-backdrop="static" data-keyboard="false"
                   style="margin-bottom: 5%;">
             <i class="fa fa-sign-in"></i> S'inscrire

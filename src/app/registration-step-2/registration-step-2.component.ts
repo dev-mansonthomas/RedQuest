@@ -65,7 +65,9 @@ export class RegistrationStep2Component implements OnInit {
       'birth_date': new FormControl(this.registeredUser.birth_date, [Validators.required,
         Validators.pattern('((0[1-9])|((1|2)[0-9])|30|31)\/(10|11|12|0[1-9])\/[1-2](9|0)[0-9][0-9]')]),
       'mobile': new FormControl(this.registeredUser.mobile, [Validators.required, Validators.pattern('[0-9]{9}')]),
-      'nivol': new FormControl(this.registeredUser.nivol, Validators.required),
+      'nivol': !this.isBenevole1j
+        ? new FormControl(this.registeredUser.nivol, [Validators.required, Validators.pattern('[1-9][0-9]{3,11}[A-Z]')])
+        : new FormControl(),
       'secteur': new FormControl({value: this.registeredUser.secteur, disabled: this.isBenevole1j}, Validators.required)
     });
   }

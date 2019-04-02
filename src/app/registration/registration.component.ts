@@ -84,7 +84,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   private initUser(): User {
-    let user = User.aUser();
+    const user = User.aUser();
     if (this.isBenevole1j()) {
       user.nivol = 'benevol1j';
       user.secteur = 3;
