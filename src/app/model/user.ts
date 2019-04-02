@@ -12,11 +12,12 @@ export class User {
     public ul_registration_token: string,
     public queteur_id: number,
     public registration_approved: boolean,
-    public reject_reaseon: string
+    public reject_reaseon: string,
+    public queteur_registration_token: string
   ) {
   }
 
   static aUser(): User {
-    return new User('', '', 1, '', '', '', 3, '', '', 0, null, '');
+    return new User('', '', 1, '', '', '', 3, '', '', 0, null, '', '');
   }
 }

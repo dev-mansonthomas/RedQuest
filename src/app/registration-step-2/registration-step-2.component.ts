@@ -74,14 +74,15 @@ export class RegistrationStep2Component implements OnInit {
     Object.assign(this.registeredUser, this.registrationForm.value);
     this.registeredUser.mobile = '+33' + this.registeredUser.mobile;
     this.functions.registerQueteur(this.registeredUser)
-      .subscribe(() =>
+      .subscribe(token => {
+        this.registeredUser.queteur_registration_token = token.queteur_registration_token;
         this.firestore.registerQueteur(this.userAuthId, this.registeredUser)
           .then(() => this.closeModalAndConfirmRegistration())
           .catch(onrejected => {
             this.closeModalAndDisplayError();
             throw onrejected;
-          })
-      );
+          });
+      });
   }
 
   closeModalAndConfirmRegistration() {
