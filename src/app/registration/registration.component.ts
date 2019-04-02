@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CloudFunctionServiceService} from '../cloud-function-service.service';
 import {ULDetails} from '../model/ULDetails';
@@ -40,18 +40,26 @@ export class RegistrationComponent implements OnInit {
     return this.loginForm.get('confirmPassword');
   }
 
-
-
   userAuthId: string;
 
   constructor(private route: ActivatedRoute,
               private functions: CloudFunctionServiceService,
               private firestore: FirestoreService,
               private router: Router,
+              private zone: NgZone,
               private authService: AuthService) {
   }
 
   ngOnInit() {
+    this.authService.onUserConnected().subscribe(user => {
+      if (user != null) {
+        this.firestore.getQueteur(user.uid).then(queteur => {
+          if (queteur) {
+            this.zone.run(() => this.router.navigate(['registration-confirmation']));
+          }
+        });
+      }
+    });
     this.loginForm = new FormGroup({
       'email': new FormControl('', [Validators.required, Validators.email]),
       'password': new FormControl('', Validators.required),
