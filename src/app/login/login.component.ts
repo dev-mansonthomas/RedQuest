@@ -1,6 +1,7 @@
 import {Component, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../auth.service';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-login',
@@ -12,11 +13,21 @@ export class LoginComponent implements OnInit {
   loading = false;
   returnUrl: string;
 
-  email: string;
-  password: string;
-
   resetPasswordEmailSent: boolean = false;
   errorMessage: string;
+
+  loginForm = new FormGroup({
+    'email': new FormControl('', [Validators.required, Validators.email]),
+    'password': new FormControl('', Validators.required)
+  });
+
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -43,7 +54,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithEmailPassword() {
-    this.authService.signInWithEmailPassword(this.email, this.password)
+    this.authService.signInWithEmailPassword(this.email.value, this.password.value)
       .catch((error) => {
         this.handleEmailPasswordLoginError(error.code, error.message);
         throw error.message;
