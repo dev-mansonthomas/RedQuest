@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore, FirestoreSettingsToken} from '@angular/fire/firestore';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {LoginComponent} from './login/login.component';
 import {RankingComponent} from './ranking/ranking.component';
@@ -49,6 +49,7 @@ import { RegistrationConfirmationComponent } from './registration-confirmation/r
     AngularFireAuth,
     AngularFireFunctions,
     {provide: FunctionsRegionToken, useValue: 'europe-west1'},
+    { provide: FirestoreSettingsToken, useValue: {} },
     SortService
   ],
   bootstrap: [AppComponent]
