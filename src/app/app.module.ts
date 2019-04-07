@@ -15,12 +15,17 @@ import {AngularFireFunctions, FunctionsRegionToken} from '@angular/fire/function
 import {RegistrationComponent} from './registration/registration.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { SortableColumnComponent } from './sort-utils/sortable-column/sortable-column.component';
-import { SortableTableDirective } from './sort-utils/sortable-table.directive';
+import {SortableColumnComponent} from './sort-utils/sortable-column/sortable-column.component';
+import {SortableTableDirective} from './sort-utils/sortable-table.directive';
 import {SortService} from "./sort-utils/sort.service";
 import {RegistrationStep2Component} from './registration-step-2/registration-step-2.component';
-import { WaitingModalComponent } from './waiting-modal/waiting-modal.component';
-import { RegistrationConfirmationComponent } from './registration-confirmation/registration-confirmation.component';
+import {WaitingModalComponent} from './waiting-modal/waiting-modal.component';
+import {RegistrationConfirmationComponent} from './registration-confirmation/registration-confirmation.component';
+import {QueteurHistoryComponent} from './queteur-history/queteur-history.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {TimePipe} from './pipes/time.pipe';
+import {WeightPipe} from './pipes/weight.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,10 @@ import { RegistrationConfirmationComponent } from './registration-confirmation/r
     SortableTableDirective,
     RegistrationStep2Component,
     WaitingModalComponent,
-    RegistrationConfirmationComponent
+    RegistrationConfirmationComponent,
+    QueteurHistoryComponent,
+    TimePipe,
+    WeightPipe
   ],
   imports: [
     BrowserModule,
@@ -42,14 +50,16 @@ import { RegistrationConfirmationComponent } from './registration-confirmation/r
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    NgxChartsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AngularFirestore,
     AngularFireAuth,
     AngularFireFunctions,
     {provide: FunctionsRegionToken, useValue: 'europe-west1'},
-    { provide: FirestoreSettingsToken, useValue: {} },
+    {provide: FirestoreSettingsToken, useValue: {}},
     SortService
   ],
   bootstrap: [AppComponent]
