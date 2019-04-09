@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {User} from './model/user';
+import {AuthService} from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
 
-  constructor(private firestoreDB: AngularFirestore) {
+  constructor(private authService: AuthService, private firestoreDB: AngularFirestore) {
   }
 
   getUlRankingByAmount(ul: string) {
@@ -25,7 +26,20 @@ export class FirestoreService {
     return this.firestoreDB.collection('queteurs').doc(userId).set(Object.assign({}, user));
   }
 
-  getQueteur(authId: string): Promise<User> {
+  getQueteur(): Promise<User> {
+    return new Promise<User>((resolve) => {
+      const user = this.authService.getConnectedUser();
+      if (user) {
+        this.getQueteurFromFirestore(this.authService.getConnectedUser().uid).then(queteur => resolve(queteur));
+      } else {
+        this.authService.onUserConnected().subscribe(
+          connectedUser => this.getQueteurFromFirestore(connectedUser.uid).then(queteur => resolve(queteur))
+        );
+      }
+    });
+  }
+
+  private getQueteurFromFirestore(authId: string): Promise<User> {
     return this.firestoreDB.firestore
       .collection('queteurs')
       .doc(authId)

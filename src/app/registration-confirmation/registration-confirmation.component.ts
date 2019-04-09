@@ -12,19 +12,11 @@ export class RegistrationConfirmationComponent implements OnInit {
 
   queteur: User;
 
-  constructor(private authService: AuthService,
-              private firestore: FirestoreService) {
+  constructor(private firestore: FirestoreService) {
   }
 
   ngOnInit() {
-    const user = this.authService.getConnectedUser();
-    if (user) {
-      this.firestore.getQueteur(this.authService.getConnectedUser().uid).then(queteur => this.queteur = queteur);
-    } else {
-      this.authService.onUserConnected().subscribe(
-        connectedUser => this.firestore.getQueteur(connectedUser.uid).then(queteur => this.queteur = queteur)
-      );
-    }
+    this.firestore.getQueteur().then(queteur => this.queteur = queteur);
   }
 
   queteurRegistrationNotApprovedYet(): boolean {

@@ -26,6 +26,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TimePipe} from './pipes/time.pipe';
 import {WeightPipe} from './pipes/weight.pipe';
 import {TipsComponent} from './tips/tips.component';
+import { MyQuestComponent } from './my-quest/my-quest.component';
+import { MySlotsComponent } from './my-slots/my-slots.component';
+import { MyDataComponent } from './my-data/my-data.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import {TipsComponent} from './tips/tips.component';
     QueteurHistoryComponent,
     TimePipe,
     WeightPipe,
-    TipsComponent
+    TipsComponent,
+    MyQuestComponent,
+    MySlotsComponent,
+    MyDataComponent
   ],
   imports: [
     BrowserModule,

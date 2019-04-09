@@ -1,0 +1,19 @@
+<div class="container mt-3">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" href="javascript:void(0)" [class.active]="activeTab===mySlotTab"
+         (click)="changeTab(mySlotTab)">{{mySlotTab}}</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="javascript:void(0)" [class.active]="activeTab===myHistoryTab"
+         (click)="changeTab(myHistoryTab)">{{myHistoryTab}}</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="javascript:void(0)" [class.active]="activeTab===myDataTab"
+         (click)="changeTab(myDataTab)">{{myDataTab}}</a>
+    </li>
+  </ul>
+  <app-my-slots *ngIf="activeTab===mySlotTab"></app-my-slots>
+  <app-queteur-history *ngIf="activeTab===myHistoryTab"></app-queteur-history>
+  <app-my-data *ngIf="activeTab===myDataTab"></app-my-data>
+</div>
