@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, Input, NgZone, OnInit, ViewChild} from '@angular/core';
-import {User} from '../model/user';
+import {Queteur} from '../../model/queteur';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CloudFunctionServiceService} from '../cloud-function-service.service';
-import {FirestoreService} from '../firestore.service';
+import {CloudFunctionServiceService} from '../../services/cloud-functions/cloud-function-service.service';
+import {FirestoreService} from '../../services/firestore/firestore.service';
 import {WaitingModalComponent} from '../waiting-modal/waiting-modal.component';
 import {Router} from '@angular/router';
 
@@ -13,7 +13,7 @@ import {Router} from '@angular/router';
 })
 export class RegistrationStep2Component implements OnInit {
 
-  @Input() registeredUser: User;
+  @Input() registeredUser: Queteur;
   @Input() isBenevole1j: boolean;
   @Input() userAuthId: string;
   @ViewChild(WaitingModalComponent) waitingModal;

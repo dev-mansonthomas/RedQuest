@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {User} from './model/user';
-import {AuthService} from './auth.service';
+import {Queteur} from '../../model/queteur';
+import {AuthService} from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,28 +22,15 @@ export class FirestoreService {
       .get();
   }
 
-  registerQueteur(userId: string, user: User) {
+  registerQueteur(userId: string, user: Queteur) {
     return this.firestoreDB.collection('queteurs').doc(userId).set(Object.assign({}, user));
   }
 
-  getQueteur(): Promise<User> {
-    return new Promise<User>((resolve) => {
-      const user = this.authService.getConnectedUser();
-      if (user) {
-        this.getQueteurFromFirestore(this.authService.getConnectedUser().uid).then(queteur => resolve(queteur));
-      } else {
-        this.authService.onUserConnected().subscribe(
-          connectedUser => this.getQueteurFromFirestore(connectedUser.uid).then(queteur => resolve(queteur))
-        );
-      }
-    });
-  }
-
-  private getQueteurFromFirestore(authId: string): Promise<User> {
+  getStoredQueteur(authId: string): Promise<Queteur> {
     return this.firestoreDB.firestore
       .collection('queteurs')
       .doc(authId)
       .get()
-      .then(doc => doc.data() as User);
+      .then(doc => doc.data() as Queteur);
   }
 }

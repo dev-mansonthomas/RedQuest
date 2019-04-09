@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {AngularFireFunctions} from '@angular/fire/functions';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../environments/environment';
+import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
-import {ULDetails} from './model/ULDetails';
+import {ULDetails} from '../../model/ULDetails';
 import {map} from 'rxjs/operators';
-import {User} from './model/user';
+import {Queteur} from '../../model/queteur';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class CloudFunctionServiceService {
       .pipe(map(result => new ULDetails(result[0])));
   }
 
-  registerQueteur(user: User): Observable<any> {
+  registerQueteur(user: Queteur): Observable<any> {
     return this.firebaseFunctions.httpsCallable('registerQueteur')(user)
       .pipe(map(value => JSON.parse(value)));
   }

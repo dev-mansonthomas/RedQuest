@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FirestoreService} from '../firestore.service';
+import {QueteurService} from '../../services/queteur/queteur.service';
 
 @Component({
   selector: 'app-my-data',
@@ -11,11 +11,11 @@ export class MyDataComponent implements OnInit {
   mailto: string;
   ul_email = 'monul@croix-rouge.fr';
 
-  constructor(private firestore: FirestoreService) {
+  constructor(private queteurService: QueteurService) {
   }
 
   ngOnInit() {
-    this.firestore.getQueteur().then(queteur =>
+    this.queteurService.getQueteur().then(queteur =>
       this.mailto = `mailto:${this.ul_email}?subject=[RedQuest, ID=${queteur.queteur_id}] Anonymiser mes données`
     );
   }

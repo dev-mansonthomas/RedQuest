@@ -1,4 +1,4 @@
-export class User {
+export class Queteur {
 
   constructor(
     public last_name: string,
@@ -17,7 +17,7 @@ export class User {
   ) {
   }
 
-  static aUser(): User {
-    return new User('', '', 1, '', '', '', 3, '', '', 0, null, '', '');
+  static aUser(): Queteur {
+    return new Queteur('', '', 1, '', '', '', 3, '', '', 0, null, '', '');
   }
 }

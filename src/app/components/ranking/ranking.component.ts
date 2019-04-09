@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FirestoreService} from '../firestore.service';
-import {UlRankingByAmount} from '../model/UlRankingByAmount';
+import {FirestoreService} from '../../services/firestore/firestore.service';
+import {UlRankingByAmount} from '../../model/UlRankingByAmount';
 import {ActivatedRoute} from '@angular/router';
-import {CloudFunctionServiceService} from '../cloud-function-service.service';
+import {CloudFunctionServiceService} from '../../services/cloud-functions/cloud-function-service.service';
 
 @Component({
   selector: 'app-ranking',

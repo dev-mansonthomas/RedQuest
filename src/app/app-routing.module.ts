@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {LoginComponent} from './login/login.component';
-import {RankingComponent} from './ranking/ranking.component';
+import {LoginComponent} from './components/login/login.component';
+import {RankingComponent} from './components/ranking/ranking.component';
 import {AuthGuard} from './auth-guard';
-import {HomepageComponent} from './homepage/homepage.component';
-import {RegistrationComponent} from './registration/registration.component';
-import {RegistrationConfirmationComponent} from './registration-confirmation/registration-confirmation.component';
-import {QueteurHistoryComponent} from './queteur-history/queteur-history.component';
-import {TipsComponent} from './tips/tips.component';
-import {MyQuestComponent} from './my-quest/my-quest.component';
+import {HomepageComponent} from './components/homepage/homepage.component';
+import {RegistrationComponent} from './components/registration/registration.component';
+import {RegistrationConfirmationComponent} from './components/registration-confirmation/registration-confirmation.component';
+import {QueteurHistoryComponent} from './components/queteur-history/queteur-history.component';
+import {TipsComponent} from './components/tips/tips.component';
+import {MyQuestComponent} from './components/my-quest/my-quest.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/homepage', pathMatch: 'full'},

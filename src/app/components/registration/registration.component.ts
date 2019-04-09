@@ -1,12 +1,13 @@
 import {Component, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CloudFunctionServiceService} from '../cloud-function-service.service';
-import {ULDetails} from '../model/ULDetails';
+import {CloudFunctionServiceService} from '../../services/cloud-functions/cloud-function-service.service';
+import {ULDetails} from '../../model/ULDetails';
 import {Observable} from 'rxjs';
-import {AuthService} from '../auth.service';
-import {User} from '../model/user';
-import {FirestoreService} from '../firestore.service';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthService} from '../../services/auth/auth.service';
+import {Queteur} from '../../model/queteur';
+import {FirestoreService} from '../../services/firestore/firestore.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {QueteurService} from '../../services/queteur/queteur.service';
 
 @Component({
   selector: 'app-registration',
@@ -24,7 +25,7 @@ export class RegistrationComponent implements OnInit {
 
   user: firebase.User;
 
-  registeredUser: User = User.aUser();
+  registeredUser: Queteur = Queteur.aUser();
 
   loginForm: FormGroup;
 
@@ -44,7 +45,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private functions: CloudFunctionServiceService,
-              private firestore: FirestoreService,
+              private queteurService: QueteurService,
               private router: Router,
               private zone: NgZone,
               private authService: AuthService) {
@@ -53,7 +54,7 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {
     this.authService.onUserConnected().subscribe(user => {
       if (user != null) {
-        this.firestore.getQueteur(user.uid).then(queteur => {
+        this.queteurService.getQueteur().then(queteur => {
           if (queteur) {
             this.zone.run(() => this.router.navigate(['registration-confirmation']));
           }
@@ -83,8 +84,8 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
-  private initUser(): User {
-    const user = User.aUser();
+  private initUser(): Queteur {
+    const user = Queteur.aUser();
     if (this.isBenevole1j()) {
       user.nivol = 'benevol1j';
       user.secteur = 3;
@@ -122,9 +123,9 @@ export class RegistrationComponent implements OnInit {
   }
 
   checkPasswords(group: FormGroup) { // here we have the 'passwords' group
-    let pass = group.get('password').value;
-    let confirmPass = group.get('confirmPassword').value;
+    const pass = group.get('password').value;
+    const confirmPass = group.get('confirmPassword').value;
 
-    return pass === confirmPass ? null : {notSame: true}
+    return pass === confirmPass ? null : {notSame: true};
   }
 }

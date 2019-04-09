@@ -1,6 +1,6 @@
 import {Component, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AuthService} from '../auth.service';
+import {AuthService} from '../../services/auth/auth.service';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
