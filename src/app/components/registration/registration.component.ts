@@ -1,4 +1,4 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CloudFunctionServiceService} from '../../services/cloud-functions/cloud-function-service.service';
 import {ULDetails} from '../../model/ULDetails';
@@ -8,6 +8,7 @@ import {Queteur} from '../../model/queteur';
 import {FirestoreService} from '../../services/firestore/firestore.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {QueteurService} from '../../services/queteur/queteur.service';
+import {WaitingModalComponent} from "../waiting-modal/waiting-modal.component";
 
 @Component({
   selector: 'app-registration',
@@ -17,6 +18,8 @@ import {QueteurService} from '../../services/queteur/queteur.service';
 export class RegistrationComponent implements OnInit {
   UNKNOWN = 'unknown';
   REGISTERING = 'registering';
+
+  @ViewChild(WaitingModalComponent) waitingModal;
 
   step = this.UNKNOWN;
 
@@ -105,7 +108,10 @@ export class RegistrationComponent implements OnInit {
   }
 
   loginWithGoogle() {
-    this.authService.signInGoogleLogin();
+    this.authService.signInGoogleLogin().then(() => {
+      console.log('connected with google');
+      this.waitingModal.close();
+    });
   }
 
   loginWithTwitter() {

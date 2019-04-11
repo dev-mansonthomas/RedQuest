@@ -20,8 +20,8 @@
     <div class="my-2 my-lg-0">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a *ngIf="!connected" class="nav-link" href="/login"> <i class="fa fa-sign-in"></i> Se connecter</a>
-          <a *ngIf="connected" href="javascript:void(0)" (click)="logout()" class="navbar-text" >Connecté</a>
+          <a *ngIf="!authentified" class="nav-link" href="/login"> <i class="fa fa-sign-in"></i> Se connecter</a>
+          <a *ngIf="authentified" href="javascript:void(0)" (click)="logout()" class="navbar-text" >Connecté</a>
         </li>
       </ul>
     </div>

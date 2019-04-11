@@ -1,10 +1,11 @@
-import {AfterViewInit, Component, Input, NgZone, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, NgZone, OnInit, ViewChild} from '@angular/core';
 import {Queteur} from '../../model/queteur';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CloudFunctionServiceService} from '../../services/cloud-functions/cloud-function-service.service';
 import {FirestoreService} from '../../services/firestore/firestore.service';
 import {WaitingModalComponent} from '../waiting-modal/waiting-modal.component';
 import {Router} from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-registration-step-2',
@@ -32,8 +33,8 @@ export class RegistrationStep2Component implements OnInit {
     return this.registrationForm.get('man');
   }
 
-  get birth_date() {
-    return this.registrationForm.get('birth_date');
+  get birthdate() {
+    return this.registrationForm.get('birthdate');
   }
 
   get mobile() {
@@ -62,7 +63,7 @@ export class RegistrationStep2Component implements OnInit {
       'last_name': new FormControl(this.registeredUser.last_name, Validators.required),
       'first_name': new FormControl(this.registeredUser.first_name, Validators.required),
       'man': new FormControl('1', Validators.required),
-      'birth_date': new FormControl(this.registeredUser.birth_date, [Validators.required,
+      'birthdate': new FormControl(this.registeredUser.birthdate, [Validators.required,
         Validators.pattern('((0[1-9])|((1|2)[0-9])|30|31)\/(10|11|12|0[1-9])\/[1-2](9|0)[0-9][0-9]')]),
       'mobile': new FormControl(this.registeredUser.mobile, [Validators.required, Validators.pattern('[0-9]{9}')]),
       'nivol': !this.isBenevole1j
@@ -74,6 +75,7 @@ export class RegistrationStep2Component implements OnInit {
 
   registerUser() {
     Object.assign(this.registeredUser, this.registrationForm.value);
+    this.registeredUser.birthdate = moment(this.registeredUser.birthdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
     this.registeredUser.mobile = '+33' + this.registeredUser.mobile;
     this.functions.registerQueteur(this.registeredUser)
       .subscribe(token => {
@@ -82,6 +84,7 @@ export class RegistrationStep2Component implements OnInit {
           .then(() => this.closeModalAndConfirmRegistration())
           .catch(onrejected => {
             this.closeModalAndDisplayError();
+            console.log(onrejected);
             throw onrejected;
           });
       });

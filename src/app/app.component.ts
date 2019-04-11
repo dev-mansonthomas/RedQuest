@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from './services/auth/auth.service';
+import {QueteurService} from "./services/queteur/queteur.service";
 
 @Component({
   selector: 'app-root',
@@ -9,12 +10,22 @@ import {AuthService} from './services/auth/auth.service';
 })
 export class AppComponent implements OnInit {
   connected = false;
+  authentified = false;
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private router: Router,
+              private authService: AuthService,
+              private queteurService: QueteurService) {
   }
 
   ngOnInit(): void {
-    this.authService.isLoggedIn().subscribe(loggedIn => this.connected = loggedIn);
+    this.authService.isLoggedIn().subscribe(() => this.authentified = true);
+    this.authService.onUserConnected().subscribe(user => {
+      if (user) {
+        this.queteurService.getQueteur()
+          .then(() => this.connected = true)
+          .catch(() => this.connected = false);
+      }
+    });
   }
 
   logout() {

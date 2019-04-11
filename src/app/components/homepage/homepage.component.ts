@@ -19,11 +19,13 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit() {
     this.authService.onUserConnected().subscribe(user => this.connected = user != null);
-    this.queteurService.getQueteur().then(queteur => {
-      if (queteur.registration_approved !== true) {
-        this.zone.run(() => this.router.navigate(['registration-confirmation']));
-      }
-    });
+    this.queteurService.getQueteur()
+      .then(queteur => {
+        if (queteur.registration_approved !== true) {
+          this.zone.run(() => this.router.navigate(['registration-confirmation']));
+        }
+      })
+      .catch(() => this.zone.run(() => this.router.navigate(['registration-needed'])));
   }
 
   logout() {

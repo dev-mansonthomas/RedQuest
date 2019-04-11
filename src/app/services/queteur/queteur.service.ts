@@ -15,19 +15,40 @@ export class QueteurService {
   }
 
   getQueteur(): Promise<Queteur> {
-    return new Promise(resolve => {
+    return new Promise((resolve, error) => {
         if (this.currentQueteur) {
           resolve(this.currentQueteur);
         } else {
-          const user = this.authService.getConnectedUser();
-          if (user) {
-            this.firestore.getStoredQueteur(this.authService.getConnectedUser().uid).then(queteur => resolve(queteur));
-          } else {
-            this.authService.onUserConnected().subscribe(
-              connectedUser => this.firestore.getStoredQueteur(connectedUser.uid).then(queteur => resolve(queteur))
-            );
-          }
+          this.retrieveQueteur(resolve, error);
         }
+      }
+    );
+  }
+
+  private retrieveQueteur(resolve, error) {
+    const user = this.authService.getConnectedUser();
+    if (user) {
+      console.log(user);
+      this.firestore.getStoredQueteur(this.authService.getConnectedUser().uid)
+        .then(queteur => resolve(queteur))
+        .catch(error());
+    } else {
+      this.waitForAuthentication(resolve, error);
+    }
+  }
+
+  private waitForAuthentication(resolve, error) {
+    this.authService.onUserConnected().subscribe(
+      connectedUser => {
+        console.log(connectedUser);
+        console.log(this.authService.getConnectedUser());
+        this.firestore.getStoredQueteur(connectedUser.uid).then(queteur => {
+          if (queteur) {
+            resolve(queteur)
+          } else {
+            error()
+          }
+        })
       }
     );
   }

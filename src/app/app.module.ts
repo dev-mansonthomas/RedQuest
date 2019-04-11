@@ -29,6 +29,7 @@ import {TipsComponent} from './components/tips/tips.component';
 import { MyQuestComponent } from './components/my-quest/my-quest.component';
 import { MySlotsComponent } from './components/my-slots/my-slots.component';
 import { MyDataComponent } from './components/my-data/my-data.component';
+import { RegistrationNeededComponent } from './components/registration-needed/registration-needed.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { MyDataComponent } from './components/my-data/my-data.component';
     TipsComponent,
     MyQuestComponent,
     MySlotsComponent,
-    MyDataComponent
+    MyDataComponent,
+    RegistrationNeededComponent
   ],
   imports: [
     BrowserModule,

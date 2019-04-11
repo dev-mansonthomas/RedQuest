@@ -42,7 +42,10 @@ export class LoginComponent implements OnInit {
 
   loginWithGoogle() {
     this.loading = true;
-    this.authService.signInGoogleLogin().then(() => this.zone.run(() => this.router.navigate([this.returnUrl])));
+    this.authService.signInGoogleLogin()
+      .then(() => {
+        this.zone.run(() => this.router.navigate([this.returnUrl]));
+      });
   }
 
   loginWithTwitter() {

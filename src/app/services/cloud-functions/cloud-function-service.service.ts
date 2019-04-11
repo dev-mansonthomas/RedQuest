@@ -23,7 +23,7 @@ export class CloudFunctionServiceService {
 
   findULDetailsByToken(token: string): Observable<ULDetails> {
     return this.http.get(this.baseUrl + 'findULDetailsByToken?token=' + token)
-      .pipe(map(result => new ULDetails(result[0])));
+      .pipe(map(result => new ULDetails(result)));
   }
 
   registerQueteur(user: Queteur): Observable<any> {

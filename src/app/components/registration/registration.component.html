@@ -17,25 +17,22 @@
       <h3 class="authTitle">S'enregistrer</h3>
       <div class="row row-sm-offset-3 socialButtons">
         <div class="col-xs-2 col-sm-2">
-          <a href="javascript:void(0)" class="btn btn-lg btn-block btn-facebook" data-toggle="tooltip"
-             data-placement="top"
-             title="Facebook" (click)="loginWithFacebook()">
+          <a href="javascript:void(0)" class="btn btn-lg btn-block btn-facebook" title="Facebook" (click)="loginWithFacebook()"
+             data-toggle="modal" data-target="#waiting" data-backdrop="static" data-keyboard="false">
             <i class="fa fa-facebook fa-2x"></i>
             <span class="hidden-xs"></span>
           </a>
         </div>
         <div class="col-xs-2 col-sm-2">
-          <a href="javascript:void(0)" class="btn btn-lg btn-block btn-twitter" data-toggle="tooltip"
-             data-placement="top"
-             title="Twitter" (click)="loginWithTwitter()">
+          <a href="javascript:void(0)" class="btn btn-lg btn-block btn-twitter" title="Twitter" (click)="loginWithTwitter()"
+             data-toggle="modal" data-target="#waiting" data-backdrop="static" data-keyboard="false">
             <i class="fa fa-twitter fa-2x"></i>
             <span class="hidden-xs"></span>
           </a>
         </div>
         <div class="col-xs-2 col-sm-2">
-          <a href="javascript:void(0)" class="btn btn-lg btn-block btn-google-plus" data-toggle="tooltip"
-             data-placement="top"
-             title="Google" (click)="loginWithGoogle()">
+          <a href="javascript:void(0)" class="btn btn-lg btn-block btn-google-plus" title="Google" (click)="loginWithGoogle()"
+             data-toggle="modal" data-target="#waiting" data-backdrop="static" data-keyboard="false">
             <i class="fa fa-google fa-2x"></i>
             <span class="hidden-xs"></span>
           </a>
@@ -103,6 +100,8 @@
       </div>
     </div>
   </div>
+
+  <app-waiting-modal></app-waiting-modal>
 
   <app-registration-step-2 *ngIf="step === REGISTERING" [registeredUser]="registeredUser"
                            [isBenevole1j]="ulDetails && isBenevole1j()"

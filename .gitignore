@@ -41,3 +41,11 @@ Thumbs.db
 /src/environments/environment.prod.ts
 /.firebaserc
 /.firebase/
+/deploy.sh
+/serviceAccount.json
+/src/environments/environment.dev.ts
+/src/environments/environment.test.ts
+/firestore.rules
+/scripts/deploy-prod.sh
+/scripts/deploy.sh
+/scripts/deploy-test.sh

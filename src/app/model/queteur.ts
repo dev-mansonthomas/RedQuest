@@ -4,7 +4,7 @@ export class Queteur {
     public last_name: string,
     public first_name: string,
     public man: number,
-    public birth_date: string,
+    public birthdate: string,
     public email: string,
     public mobile: string,
     public secteur: number,

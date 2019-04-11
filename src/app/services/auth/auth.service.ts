@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -71,13 +71,15 @@ export class AuthService {
   }
 
   isLoggedIn(): Observable<boolean> {
-    return this.user.pipe(map((user, isLoggedIn) => {
+    return this.user.pipe(map((user) => {
       return user !== null;
     }));
   }
 
   onUserConnected(): Observable<firebase.User> {
-    return this.user;
+    return this.user.pipe(filter(user => {
+      return user != null
+    }));
   }
 
   getConnectedUser(): firebase.User {
