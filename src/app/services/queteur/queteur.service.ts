@@ -52,6 +52,5 @@ export class QueteurService {
         }
       }
     );
-    error();
   }
 }
