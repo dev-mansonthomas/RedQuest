@@ -28,10 +28,9 @@ export class QueteurService {
   private retrieveQueteur(resolve, error) {
     const user = this.authService.getConnectedUser();
     if (user) {
-      console.log(user);
       this.firestore.getStoredQueteur(this.authService.getConnectedUser().uid)
         .then(queteur => resolve(queteur))
-        .catch(error());
+        .catch(() => error());
     } else {
       this.waitForAuthentication(resolve, error);
     }
@@ -40,16 +39,19 @@ export class QueteurService {
   private waitForAuthentication(resolve, error) {
     this.authService.onUserConnected().subscribe(
       connectedUser => {
-        console.log(connectedUser);
-        console.log(this.authService.getConnectedUser());
-        this.firestore.getStoredQueteur(connectedUser.uid).then(queteur => {
-          if (queteur) {
-            resolve(queteur)
-          } else {
-            error()
-          }
-        })
+        if(connectedUser) {
+          this.firestore.getStoredQueteur(connectedUser.uid).then(queteur => {
+            if (queteur) {
+              resolve(queteur)
+            } else {
+              error()
+            }
+          })
+        } else {
+          error()
+        }
       }
     );
+    error();
   }
 }

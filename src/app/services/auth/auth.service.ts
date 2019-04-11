@@ -17,6 +17,7 @@ export class AuthService {
 
   constructor(private angularFireAuth: AngularFireAuth) {
     this.user = this.angularFireAuth.user;
+    this.user.subscribe(user => this.userDetails = user);
     this.angularFireAuth.auth.getRedirectResult().then(result => {
       this.userDetails = result.user;
     });
@@ -77,9 +78,7 @@ export class AuthService {
   }
 
   onUserConnected(): Observable<firebase.User> {
-    return this.user.pipe(filter(user => {
-      return user != null
-    }));
+    return this.user;
   }
 
   getConnectedUser(): firebase.User {
