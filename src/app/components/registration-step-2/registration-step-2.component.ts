@@ -62,7 +62,7 @@ export class RegistrationStep2Component implements OnInit {
     this.registrationForm = new FormGroup({
       'last_name': new FormControl(this.registeredUser.last_name, Validators.required),
       'first_name': new FormControl(this.registeredUser.first_name, Validators.required),
-      'man': new FormControl('1', Validators.required),
+      'man': new FormControl(1, Validators.required),
       'birthdate': new FormControl(this.registeredUser.birthdate, [Validators.required,
         Validators.pattern('((0[1-9])|((1|2)[0-9])|30|31)\/(10|11|12|0[1-9])\/[1-2](9|0)[0-9][0-9]')]),
       'mobile': new FormControl(this.registeredUser.mobile, [Validators.required, Validators.pattern('[0-9]{9}')]),
