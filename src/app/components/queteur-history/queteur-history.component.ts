@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {FirestoreService} from '../../services/firestore/firestore.service';
+import {QueteurService} from '../../services/queteur/queteur.service';
+import {QueteurStats} from '../../model/queteur-stats';
 
 @Component({
   selector: 'app-queteur-history',
@@ -7,30 +10,31 @@ import {Component, OnInit} from '@angular/core';
 })
 export class QueteurHistoryComponent implements OnInit {
 
-  data = [
-    {
-      year: 2018,
-      amount: 68.81,
-      weight: 559.1,
-      time: 91
-    },
-    {
-      year: 2017,
-      amount: 275.32,
-      weight: 1899.66,
-      time: 339
-    }, {
-      year: 2016,
-      amount: 228.69,
-      weight: 1692.26,
-      time: 250
-    }
-  ];
+  data: QueteurStats[];
+  selectedYear: number;
 
-  constructor() {
+  constructor(private firestoreService: FirestoreService,
+              private queteurService: QueteurService) {
   }
 
   ngOnInit() {
+    this.queteurService.getQueteur().then(queteur => this.retrieveStats(queteur.queteur_id));
+  }
+
+  private retrieveStats(queteurId) {
+    this.firestoreService.getQueteurStats(queteurId).subscribe(doc => {
+      this.data = doc.docs.map(e => {
+        return e.data() as QueteurStats;
+      });
+    });
+  }
+
+  selectYear(year: number) {
+    if (this.selectedYear === year) {
+      this.selectedYear = undefined;
+    } else {
+      this.selectedYear = year;
+    }
   }
 
 }

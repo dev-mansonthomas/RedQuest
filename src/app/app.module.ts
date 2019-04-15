@@ -30,6 +30,8 @@ import { MyQuestComponent } from './components/my-quest/my-quest.component';
 import { MySlotsComponent } from './components/my-slots/my-slots.component';
 import { MyDataComponent } from './components/my-data/my-data.component';
 import { RegistrationNeededComponent } from './components/registration-needed/registration-needed.component';
+import { CustomPaginationComponent } from './components/custom-pagination/custom-pagination.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import { RegistrationNeededComponent } from './components/registration-needed/re
     MyQuestComponent,
     MySlotsComponent,
     MyDataComponent,
-    RegistrationNeededComponent
+    RegistrationNeededComponent,
+    CustomPaginationComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,8 @@ import { RegistrationNeededComponent } from './components/registration-needed/re
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxPaginationModule
   ],
   providers: [
     AngularFirestore,

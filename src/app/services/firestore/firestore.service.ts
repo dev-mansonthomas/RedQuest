@@ -22,6 +22,11 @@ export class FirestoreService {
       .get();
   }
 
+  getQueteurStats(queteur_id: string) {
+    return this.firestoreDB.collection('ul_queteur_stats_per_year', ref => ref.where('queteur_id', '==', queteur_id))
+      .get();
+  }
+
   registerQueteur(userId: string, user: Queteur) {
     return this.firestoreDB.collection('queteurs').doc(userId).set(Object.assign({}, user));
   }

@@ -1,31 +1,35 @@
 <div class="container">
-  <div *ngFor="let year of data" class="card-deck mt-3 mb-2">
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-        <div class="year-centered">
-          <h1 class="card-title text-primary">{{year.year}}</h1>
+  <div *ngIf="data.length > 0">
+    <div *ngFor="let year of data" class="card-deck mt-3 mb-2">
+      <button class="btn" (click)="selectYear(year.year)">
+        <div class="card history-card">
+          <div class="card-body">
+            <div class="year-centered">
+              <h1 class="card-title text-primary">{{year.year}}</h1>
+            </div>
+          </div>
+        </div>
+      </button>
+      <div class="card history-card" [hidden]="year.year!==selectedYear">
+        <div class="card-body">
+          <h2 class="card-title text-primary">{{year.amount | number }}€</h2>
+          <h6 class="card-subtitle mb-2 text-muted">Récoltés</h6>
+          <p class="card-text">Soit x sacs de couchages, x repas ou x% d'une ambulance neuve</p>
+        </div>
+      </div>
+      <div class="card history-card" [hidden]="year.year!==selectedYear">
+        <div class="card-body">
+          <h2 class="card-title text-danger">{{year.time_spent_in_minutes | time}}</h2>
+          <h6 class="card-subtitle mb-2 text-muted">de quête</h6>
+        </div>
+      </div>
+      <div class="card history-card" [hidden]="year.year!==selectedYear">
+        <div class="card-body">
+          <h2 class="card-title text-secondary">{{year.weight | weight}}</h2>
+          <h6 class="card-subtitle mb-2 text-muted">Récoltés</h6>
         </div>
       </div>
     </div>
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-        <h2 class="card-title text-primary">{{year.amount}}€</h2>
-        <h6 class="card-subtitle mb-2 text-muted">Récoltés</h6>
-        <p class="card-text">Soit x sacs de couchages, x repas ou x% d'une ambulance neuve</p>
-      </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-        <h2 class="card-title text-danger">{{year.time | time}}</h2>
-        <h6 class="card-subtitle mb-2 text-muted">de quête</h6>
-      </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-        <h2 class="card-title text-secondary">{{year.weight | weight}}</h2>
-        <h6 class="card-subtitle mb-2 text-muted">Récoltés</h6>
-      </div>
-    </div>
+    <p>*un sac de couchage coute x €</p>
   </div>
-  <p>*un sac de couchage coute x €</p>
 </div>

@@ -39,16 +39,16 @@ export class QueteurService {
   private waitForAuthentication(resolve, error) {
     this.authService.onUserConnected().subscribe(
       connectedUser => {
-        if(connectedUser) {
+        if (connectedUser) {
           this.firestore.getStoredQueteur(connectedUser.uid).then(queteur => {
             if (queteur) {
-              resolve(queteur)
+              resolve(queteur);
             } else {
-              error()
+              error();
             }
-          })
+          });
         } else {
-          error()
+          error();
         }
       }
     );

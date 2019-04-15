@@ -3,7 +3,7 @@ import {FirestoreService} from '../../services/firestore/firestore.service';
 import {UlRankingByAmount} from '../../model/UlRankingByAmount';
 import {ActivatedRoute} from '@angular/router';
 import {CloudFunctionServiceService} from '../../services/cloud-functions/cloud-function-service.service';
-import {QueteurService} from "../../services/queteur/queteur.service";
+import {QueteurService} from '../../services/queteur/queteur.service';
 
 @Component({
   selector: 'app-ranking',
@@ -11,6 +11,8 @@ import {QueteurService} from "../../services/queteur/queteur.service";
   styleUrls: ['./ranking.component.css']
 })
 export class RankingComponent implements OnInit {
+
+  page = 1;
 
   rankings: UlRankingByAmount[] = [];
 
@@ -41,7 +43,7 @@ export class RankingComponent implements OnInit {
     });
   }
 
-  onSorted(event: { sortColumn: string, sortDirection: "asc" | "desc" }) {
+  onSorted(event: { sortColumn: string, sortDirection: 'asc' | 'desc' }) {
     if (event.sortColumn === 'name') {
       this.rankings.sort((rankA, rankB) => {
         const nameA = `${rankA.first_name.toLowerCase()} ${rankA.last_name.toLowerCase()}`;
@@ -57,7 +59,7 @@ export class RankingComponent implements OnInit {
       this.rankings.sort((rankA, rankB) => {
         return event.sortDirection === 'asc'
           ? rankA[event.sortColumn] - rankB[event.sortColumn]
-          : rankB[event.sortColumn] - rankA[event.sortColumn]
+          : rankB[event.sortColumn] - rankA[event.sortColumn];
       });
     }
   }

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
+import {QueteurService} from '../../services/queteur/queteur.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-registration-needed',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationNeededComponent implements OnInit {
 
-  constructor() { }
+  constructor(private queteurService: QueteurService,
+              private router: Router) {
+  }
 
   ngOnInit() {
+    this.queteurService.getQueteur()
+      .then(() => this.router.navigateByUrl('/homepage'))
+      .catch(() => {
+      });
   }
 
 }

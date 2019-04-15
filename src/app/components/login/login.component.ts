@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   returnUrl: string;
 
-  resetPasswordEmailSent: boolean = false;
+  resetPasswordEmailSent = false;
   errorMessage: string;
 
   loginForm = new FormGroup({
@@ -46,10 +46,6 @@ export class LoginComponent implements OnInit {
       .then(() => {
         this.zone.run(() => this.router.navigate([this.returnUrl]));
       });
-  }
-
-  loginWithTwitter() {
-    this.authService.signInTwitterLogin().then(() => this.zone.run(() => this.router.navigate([this.returnUrl])));
   }
 
   loginWithFacebook() {

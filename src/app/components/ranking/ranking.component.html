@@ -1,5 +1,4 @@
 <div class="container">
-  <button class="btn" (click)="callFunction()">call function</button>
   <table class="table" sortable-table (sorted)="onSorted($event)">
     <thead>
     <tr>
@@ -13,15 +12,16 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let ranking of rankings">
+    <tr *ngFor="let ranking of rankings | paginate: {itemsPerPage: 10, currentPage: page }">
       <td>{{ranking.first_name}} {{ranking.last_name.toUpperCase()}}</td>
       <td>{{ranking.tronc_count}}</td>
-      <td>{{ranking.amount | number: '1.0-2'}}€</td>
-      <td>{{ranking.weight | number: '1.0-2'}}</td>
-      <td>{{ranking.time_spent_in_minutes}}</td>
+      <td>{{ranking.amount | number}}€</td>
+      <td>{{ranking.weight | weight}}</td>
+      <td>{{ranking.time_spent_in_minutes | time: {small: true} }}</td>
       <td>{{ranking.unique_point_quete_count}}</td>
       <td>{{ranking.year}}</td>
     </tr>
     </tbody>
   </table>
+  <pagination-controls (pageChange)="page = $event" previousLabel="Précédent" nextLabel="Suivant" [autoHide]="true" [responsive]="true"></pagination-controls>
 </div>

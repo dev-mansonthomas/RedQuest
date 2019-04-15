@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {QueteurService} from "./services/queteur/queteur.service";
+import {QueteurService} from './services/queteur/queteur.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,8 @@ export class RegisteredGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     return this.queteurService.getQueteur()
       .then(queteur => {
-        if(queteur.registration_approved) {
-          return true
+        if (queteur.registration_approved) {
+          return true;
         } else {
           this.router.navigateByUrl('registration-confirmation');
           return true;
@@ -22,7 +22,7 @@ export class RegisteredGuard implements CanActivate {
       })
       .catch(() => {
         this.router.navigateByUrl('registration-needed');
-        return false
+        return false;
       });
   }
 }
