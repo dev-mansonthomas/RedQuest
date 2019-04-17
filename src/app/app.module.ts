@@ -32,6 +32,7 @@ import { MyDataComponent } from './components/my-data/my-data.component';
 import { RegistrationNeededComponent } from './components/registration-needed/registration-needed.component';
 import { CustomPaginationComponent } from './components/custom-pagination/custom-pagination.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { BadgesComponent } from './components/badges/badges.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     MySlotsComponent,
     MyDataComponent,
     RegistrationNeededComponent,
-    CustomPaginationComponent
+    CustomPaginationComponent,
+    BadgesComponent
   ],
   imports: [
     BrowserModule,
