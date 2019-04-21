@@ -26,13 +26,15 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TimePipe} from './pipes/time.pipe';
 import {WeightPipe} from './pipes/weight.pipe';
 import {TipsComponent} from './components/tips/tips.component';
-import { MyQuestComponent } from './components/my-quest/my-quest.component';
-import { MySlotsComponent } from './components/my-slots/my-slots.component';
-import { MyDataComponent } from './components/my-data/my-data.component';
-import { RegistrationNeededComponent } from './components/registration-needed/registration-needed.component';
-import { CustomPaginationComponent } from './components/custom-pagination/custom-pagination.component';
+import {MySlotsComponent} from './components/my-slots/my-slots.component';
+import {MyDataComponent} from './components/my-data/my-data.component';
+import {RegistrationNeededComponent} from './components/registration-needed/registration-needed.component';
+import {CustomPaginationComponent} from './components/custom-pagination/custom-pagination.component';
 import {NgxPaginationModule} from 'ngx-pagination';
-import { BadgesComponent } from './components/badges/badges.component';
+import {BadgesComponent} from './components/badges/badges.component';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {TimepickerModule} from 'ngx-bootstrap/timepicker';
+import {RegisterTroncStateComponent} from "./components/my-slots/register-tronc-state/register-tronc-state.component";
 
 @NgModule({
   declarations: [
@@ -50,12 +52,12 @@ import { BadgesComponent } from './components/badges/badges.component';
     TimePipe,
     WeightPipe,
     TipsComponent,
-    MyQuestComponent,
     MySlotsComponent,
     MyDataComponent,
     RegistrationNeededComponent,
     CustomPaginationComponent,
-    BadgesComponent
+    BadgesComponent,
+    RegisterTroncStateComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +68,9 @@ import { BadgesComponent } from './components/badges/badges.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     BrowserAnimationsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot()
   ],
   providers: [
     AngularFirestore,

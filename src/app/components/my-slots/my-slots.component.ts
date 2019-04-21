@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Tronc} from '../../model/tronc';
+
+export type TroncState = 'departure' | 'arrival';
 
 @Component({
   selector: 'app-my-slots',
@@ -7,9 +10,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MySlotsComponent implements OnInit {
 
-  constructor() { }
+  registerState: TroncState = 'departure';
+
+  constructor() {
+
+  }
 
   ngOnInit() {
+
+  }
+
+  switchStateTo(state: TroncState) {
+    console.log(state);
+    this.registerState = state;
+  }
+
+  handleTroncDeparture(tronc: Tronc) {
+    console.log(tronc);
+  }
+
+  handleTroncArrival(tronc: Tronc) {
+    console.log(tronc);
   }
 
 }

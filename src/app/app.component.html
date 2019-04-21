@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="/homepage">RedQuest</a>
+  <a class="navbar-brand" routerLink="homepage">RedQuest</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -8,20 +8,28 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a *ngIf="connected" class="nav-link" href="/tips">Astuces de quête</a>
+        <a *ngIf="connected" class="nav-link" routerLink="tips">Astuces de quête</a>
+      </li>
+      <li class="nav-item active dropdown">
+        <a *ngIf="connected"  class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          Ma quête
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="my-quest/my-slots">Mes créneaux</a>
+          <a class="dropdown-item" routerLink="my-quest/history">Mon historique</a>
+          <a class="dropdown-item" routerLink="my-quest/my-data">Mes données</a>
+        </div>
       </li>
       <li class="nav-item active">
-        <a *ngIf="connected" class="nav-link" href="/my-quest">Ma quête</a>
-      </li>
-      <li class="nav-item active">
-        <a *ngIf="connected" class="nav-link" href="/ranking">Ranking</a>
+        <a *ngIf="connected" class="nav-link" routerLink="ranking">Ranking</a>
       </li>
     </ul>
     <div class="my-2 my-lg-0">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a *ngIf="!authentified" class="nav-link" href="/login"> <i class="fa fa-sign-in"></i> Se connecter</a>
-          <a *ngIf="authentified" href="javascript:void(0)" (click)="logout()" class="navbar-text" >Connecté</a>
+          <a *ngIf="!authentified" class="nav-link" routerLink="login"> <i class="fa fa-sign-in"></i> Se connecter</a>
+          <a *ngIf="authentified" href="javascript:void(0)" (click)="logout()" class="navbar-text">Connecté</a>
         </li>
       </ul>
     </div>

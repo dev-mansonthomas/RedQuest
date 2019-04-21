@@ -1,0 +1,66 @@
+<div class="bs-stepper vertical" [class.departure]="type==='departure'" [class.arrival]="type==='arrival'">
+  <div class="bs-stepper-header" role="tablist">
+    <!-- your steps here -->
+    <div class="step" data-target="#tronc-choice">
+      <button type="button" class="step-trigger" role="tab" aria-controls="tronc-choice" id="tronc-choice-trigger">
+        <span class="bs-stepper-circle">1</span>
+        <span class="bs-stepper-label">Tronc</span>
+      </button>
+    </div>
+    <div class="line"></div>
+    <div class="step" data-target="#datetime-choice">
+      <button type="button" class="step-trigger" role="tab" aria-controls="datetime-choice"
+              id="datetime-choice-trigger">
+        <span class="bs-stepper-circle">2</span>
+        <span class="bs-stepper-label">{{getStepTitle()}}</span>
+      </button>
+    </div>
+    <div class="line"></div>
+    <div class="step" data-target="#confirm-choice">
+      <button type="button" class="step-trigger" role="tab" aria-controls="confirm-choice"
+              id="confirm-choice-trigger">
+        <span class="bs-stepper-circle">2</span>
+        <span class="bs-stepper-label">Confirmation</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="bs-stepper-content">
+    <!-- your steps content here -->
+    <div id="tronc-choice" class="content" role="tabpanel" aria-labelledby="tronc-choice-trigger">
+      <div class="list-group">
+        <button *ngFor="let tronc of getTroncs()"
+                type="button"
+                class="list-group-item list-group-item-action"
+                (click)="selectTronc(tronc)">
+          {{getTroncDisplay(tronc)}}
+        </button>
+      </div>
+    </div>
+    <div id="datetime-choice" class="content" role="tabpanel" aria-labelledby="datetime-choice-trigger">
+      <button class="btn btn-primary mb-3" (click)="stepper.previous()">Retour</button>
+      <form action="" autocomplete="off">
+        <div class="form-group">
+          <input type="text" class="form-control" name="name" placeholder="Départ"
+                 [formControl]="dateForm" bsDatepicker [bsConfig]="datePickerConfig">
+          <timepicker [formControl]="timeForm" [showMeridian]="false"></timepicker>
+        </div>
+        <div *ngIf="errorMessage" class="text text-danger">
+              <span>
+               {{errorMessage}}
+              </span>
+        </div>
+        <button class="btn btn-primary" (click)="goToSaveStep()">Suivant</button>
+      </form>
+    </div>
+    <div id="confirm-choice" class="content" role="tabpanel" aria-labelledby="confirm-choice-trigger">
+      <button class="btn btn-primary mb-3" (click)="stepper.previous()">Retour</button>
+      <p class="alert alert-info">
+        Enregistrer un {{getTypeText()}}
+        <br/>du tronc n° {{selectedTronc.tronc_id}}
+        <br/>à {{dateTime.format(format)}}
+      </p>
+      <button class="btn btn-primary" (click)="updateTroncDate()">Confirmer</button>
+    </div>
+  </div>
+</div>

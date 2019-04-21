@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MyQuestComponent } from './my-quest.component';
+import { RegisterTroncStateComponent } from './register-tronc-state.component';
 
-describe('MyQuestComponent', () => {
-  let component: MyQuestComponent;
-  let fixture: ComponentFixture<MyQuestComponent>;
+describe('RegisterTroncStateComponent', () => {
+  let component: RegisterTroncStateComponent;
+  let fixture: ComponentFixture<RegisterTroncStateComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MyQuestComponent ]
+      declarations: [ RegisterTroncStateComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MyQuestComponent);
+    fixture = TestBed.createComponent(RegisterTroncStateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

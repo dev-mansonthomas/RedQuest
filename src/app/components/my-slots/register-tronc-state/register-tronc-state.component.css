@@ -1,0 +1,12 @@
+.list-group {
+  overflow: auto;
+  max-height: 15em;
+}
+
+.active .bs-stepper-circle {
+  background-color: #EB6864 ;
+}
+
+.active .bs-stepper-label {
+  color: #EB6864;
+}

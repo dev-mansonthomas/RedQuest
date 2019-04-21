@@ -1,5 +1,21 @@
-<div class="container mt-3">
-  <p>
-    my-slots works!
-  </p>
+<div class="container mt-3 mb-3">
+  <div class="btn-group btn-group-toggle mb-3" data-toggle="buttons">
+    <label class="btn btn-primary" [class.active]="registerState === 'departure'" (click)="switchStateTo('departure')">
+      <input type="radio" name="options" id="option1" autocomplete="off" checked>
+      Départ
+    </label>
+    <label class="btn btn-primary" [class.active]="registerState === 'arrival'" (click)="switchStateTo('arrival')">
+      <input type="radio" name="options" id="option2" autocomplete="off"> Retour
+    </label>
+  </div>
+
+  <app-register-tronc-state *ngIf="registerState === 'departure'" [type]="'departure'"
+                            (troncUpdate)="handleTroncDeparture($event)">
+  </app-register-tronc-state>
+
+  <app-register-tronc-state *ngIf="registerState === 'arrival'" [type]="'arrival'"
+                            (troncUpdate)="handleTroncArrival($event)">
+  </app-register-tronc-state>
+
 </div>
+
