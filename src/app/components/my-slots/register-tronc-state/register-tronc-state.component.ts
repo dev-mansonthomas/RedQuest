@@ -93,7 +93,7 @@ export class RegisterTroncStateComponent implements OnInit, AfterViewInit {
   @Output() troncUpdate = new EventEmitter<Tronc>();
   @Input() type: TroncState;
 
-  private format = 'HH:mm [le] YYYY-MM-DD';
+  format = 'HH:mm [le] YYYY-MM-DD';
 
   stepper: Stepper;
 
