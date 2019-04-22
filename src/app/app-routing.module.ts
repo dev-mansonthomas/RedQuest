@@ -11,6 +11,8 @@ import {RegistrationNeededComponent} from "./components/registration-needed/regi
 import {RegisteredGuard} from "./registered.guard";
 import {MySlotsComponent} from "./components/my-slots/my-slots.component";
 import {MyDataComponent} from "./components/my-data/my-data.component";
+import {BadgesComponent} from './components/badges/badges.component';
+import {QuestPointComponent} from './components/quest-point/quest-point.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/homepage', pathMatch: 'full'},
@@ -23,7 +25,9 @@ const routes: Routes = [
   {path: 'my-quest/history', component: QueteurHistoryComponent, canActivate: [RegisteredGuard]},
   {path: 'my-quest/my-slots', component: MySlotsComponent, canActivate: [RegisteredGuard]},
   {path: 'my-quest/my-data', component: MyDataComponent, canActivate: [RegisteredGuard]},
-  {path: 'ranking', component: RankingComponent, canActivate: [RegisteredGuard]}
+  {path: 'my-quest/my-badges', component: BadgesComponent, canActivate: [RegisteredGuard]},
+  {path: 'ranking', component: RankingComponent, canActivate: [RegisteredGuard]},
+  {path: 'quest-point', component: QuestPointComponent, canActivate: [RegisteredGuard]}
 ];
 
 @NgModule({

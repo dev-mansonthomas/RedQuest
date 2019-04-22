@@ -35,6 +35,7 @@ import {BadgesComponent} from './components/badges/badges.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {TimepickerModule} from 'ngx-bootstrap/timepicker';
 import {RegisterTroncStateComponent} from "./components/my-slots/register-tronc-state/register-tronc-state.component";
+import { QuestPointComponent } from './components/quest-point/quest-point.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import {RegisterTroncStateComponent} from "./components/my-slots/register-tronc-
     RegistrationNeededComponent,
     CustomPaginationComponent,
     BadgesComponent,
-    RegisterTroncStateComponent
+    RegisterTroncStateComponent,
+    QuestPointComponent
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,8 @@ export const environment = {
     storageBucket: 'STORAGE_BUCKET',
     messagingSenderId: 'MESSAGING_SENDER_ID'
   },
-  cloudFunctionsBaseUrl: 'CLOUD_FUNCTIONS_BASE_URL'
+  cloudFunctionsBaseUrl: 'CLOUD_FUNCTIONS_BASE_URL',
+  google_maps_key: 'YOUR_GOOGLE_MAPS_EMBED_API_KEY'
 };
 
 /*
