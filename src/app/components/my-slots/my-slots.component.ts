@@ -16,7 +16,6 @@ export class MySlotsComponent implements OnInit {
 
   confirmation = {error: false, message: ''};
 
-  @ViewChildren
 
   constructor(private cloudFunctions: CloudFunctionService) {
   }
@@ -40,7 +39,7 @@ export class MySlotsComponent implements OnInit {
   handleTroncDeparture(tronc: Tronc) {
     const update = {
       date: tronc.depart.format('YYYY-MM-DD HH:mm:ss'),
-      tqId: tronc.tronc_id,
+      tqId: tronc.tronc_queteur_id,
       isDepart: true
     };
     this.cloudFunctions.troncStateUpdate(update).subscribe(
