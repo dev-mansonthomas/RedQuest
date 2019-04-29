@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChildren} from '@angular/core';
 import {Tronc} from '../../model/tronc';
 import {CloudFunctionService} from '../../services/cloud-functions/cloud-function.service';
 
@@ -14,14 +14,23 @@ export class MySlotsComponent implements OnInit {
   registerState: TroncState = 'departure';
   troncs: Tronc[];
 
+  confirmation = {error: false, message: ''};
+
+  @ViewChildren
+
   constructor(private cloudFunctions: CloudFunctionService) {
   }
 
   ngOnInit() {
-    this.cloudFunctions.retrievePreparedTroncs().subscribe(troncs => {
-      console.log(troncs);
-      this.troncs = troncs;
-    });
+    this.loadTroncs();
+  }
+
+  refresh() {
+    this.loadTroncs();
+  }
+
+  loadTroncs() {
+    this.cloudFunctions.retrievePreparedTroncs().subscribe(troncs => this.troncs = troncs);
   }
 
   switchStateTo(state: TroncState) {
@@ -29,11 +38,28 @@ export class MySlotsComponent implements OnInit {
   }
 
   handleTroncDeparture(tronc: Tronc) {
-    console.log(tronc);
+    const update = {
+      date: tronc.depart.format('YYYY-MM-DD HH:mm:ss'),
+      tqId: tronc.tronc_id,
+      isDepart: true
+    };
+    this.cloudFunctions.troncStateUpdate(update).subscribe(
+      next => {
+        this.confirmation.message = 'C\'est validé!';
+      },
+      error => {
+        this.confirmation.error = true;
+        this.confirmation.message = 'Un problème est survenu lors de la mise à jour du tronc';
+      });
   }
 
   handleTroncArrival(tronc: Tronc) {
-    console.log(tronc);
+    const update = {
+      date: tronc.arrivee.format('YYYY-MM-DD HH:mm:ss'),
+      tqId: tronc.tronc_id,
+      isDepart: false
+    };
+    this.cloudFunctions.troncStateUpdate(update);
   }
 
   getTroncsDeparture() {

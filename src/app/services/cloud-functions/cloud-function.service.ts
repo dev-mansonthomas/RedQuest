@@ -41,4 +41,8 @@ export class CloudFunctionService {
         return v;
       })));
   }
+
+  troncStateUpdate(troncUpdate: {isDepart: boolean, date: string, tqId: number}): Observable<any> {
+    return this.firebaseFunctions.httpsCallable('tronc_setDepartOrRetour')(troncUpdate);
+  }
 }

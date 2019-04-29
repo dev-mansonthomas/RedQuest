@@ -1,3 +1,6 @@
+<div class="wrapper">
+  <button class="btn btn-outline-primary m-3" (click)="refresh()">Rafraîchir</button>
+</div>
 <div class="bs-stepper vertical" [class.departure]="type==='departure'" [class.arrival]="type==='arrival'">
   <div class="bs-stepper-header" role="tablist">
     <!-- your steps here -->
@@ -19,7 +22,18 @@
     <div class="step" data-target="#confirm-choice">
       <button type="button" class="step-trigger" role="tab" aria-controls="confirm-choice"
               id="confirm-choice-trigger">
-        <span class="bs-stepper-circle">2</span>
+        <span class="bs-stepper-circle">3</span>
+        <span class="bs-stepper-label">Validation</span>
+      </button>
+    </div>
+    <div class="line"></div>
+    <div class="step" data-target="#confirm-message">
+      <button type="button" class="step-trigger" role="tab" aria-controls="confirm-message"
+              id="confirm-message-trigger">
+        <span class="bs-stepper-circle">
+          <i *ngIf="confirmation.error" class="fas fa-times"></i>
+          <i *ngIf="!confirmation.error" class="fas fa-check"></i>
+        </span>
         <span class="bs-stepper-label">Confirmation</span>
       </button>
     </div>
@@ -33,7 +47,7 @@
                 type="button"
                 class="list-group-item list-group-item-action"
                 (click)="selectTronc(tronc)">
-          {{getTroncDisplay(tronc)}}
+          <pre>{{getTroncDisplay(tronc)}}</pre>
         </button>
       </div>
     </div>
@@ -59,6 +73,9 @@
         {{confirmationText()}}
       </p>
       <button class="btn btn-primary" (click)="updateTroncDate()">Confirmer</button>
+    </div>
+    <div id="confirm-message" class="content" role="tabpanel" aria-labelledby="confirm-message-trigger">
+      {{confirmation.message}}
     </div>
   </div>
 </div>

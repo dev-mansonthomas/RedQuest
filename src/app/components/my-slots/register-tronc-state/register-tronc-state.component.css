@@ -4,9 +4,15 @@
 }
 
 .active .bs-stepper-circle {
-  background-color: #EB6864 ;
+  background-color: #EB6864;
 }
 
 .active .bs-stepper-label {
   color: #EB6864;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

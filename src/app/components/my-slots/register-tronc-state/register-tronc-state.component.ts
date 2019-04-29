@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Tronc} from '../../../model/tronc';
 import * as moment from 'moment';
+import {Moment} from 'moment';
 import Stepper from 'bs-stepper';
 import {FormControl} from '@angular/forms';
 import {TroncState} from '../my-slots.component';
-import {Moment} from 'moment';
 
 @Component({
   selector: 'app-register-tronc-state',
@@ -13,83 +13,7 @@ import {Moment} from 'moment';
 })
 export class RegisterTroncStateComponent implements OnInit, AfterViewInit {
 
-  // troncs: Tronc[] = [
-  //   {
-  //     queteur_id: 110,
-  //     depart_theorique: moment(),
-  //     tronc_id: 110
-  //   },
-  //   {
-  //     queteur_id: 110,
-  //     depart_theorique: moment(),
-  //     tronc_id: 111
-  //   },
-  //   {
-  //     queteur_id: 110,
-  //     depart_theorique: moment(),
-  //     tronc_id: 112
-  //   },
-  //   {
-  //     queteur_id: 110,
-  //     depart_theorique: moment(),
-  //     tronc_id: 113
-  //   },
-  //   {
-  //     queteur_id: 110,
-  //     depart_theorique: moment(),
-  //     tronc_id: 114
-  //   },
-  //   {
-  //     queteur_id: 110,
-  //     depart_theorique: moment(),
-  //     tronc_id: 116
-  //   },
-  //   {
-  //     queteur_id: 110,
-  //     depart_theorique: moment(),
-  //     tronc_id: 117
-  //   },
-  //   {
-  //     queteur_id: 110,
-  //     depart_theorique: moment(),
-  //     tronc_id: 118
-  //   },
-  //   {
-  //     queteur_id: 110,
-  //     depart_theorique: moment(),
-  //     tronc_id: 118
-  //   },
-  //   {
-  //     queteur_id: 110,
-  //     depart_theorique: moment(),
-  //     tronc_id: 119
-  //   },
-  //   {
-  //     queteur_id: 110,
-  //     depart_theorique: moment(),
-  //     tronc_id: 120
-  //   },
-  //   {
-  //     queteur_id: 110,
-  //     depart_theorique: moment(),
-  //     tronc_id: 121,
-  //     depart: moment().add(1, 'hour')
-  //   },
-  //   {
-  //     queteur_id: 110,
-  //     depart_theorique: moment(),
-  //     tronc_id: 122,
-  //     depart: moment().add(1, 'hour')
-  //   },
-  //   {
-  //     queteur_id: 110,
-  //     depart_theorique: moment(),
-  //     tronc_id: 123,
-  //     depart: moment(),
-  //     arrivee: moment().add(1, 'hour')
-  //   }
-  // ];
-
+  @Output() refreshEvent = new EventEmitter<void>();
   @Output() troncUpdate = new EventEmitter<Tronc>();
   @Input() type: TroncState;
   @Input() troncs: Tronc[];
@@ -98,7 +22,7 @@ export class RegisterTroncStateComponent implements OnInit, AfterViewInit {
 
   stepper: Stepper;
 
-  selectedTronc: Tronc = {tronc_id: 0, depart_theorique: moment(), queteur_id: 0};
+  selectedTronc: Tronc = Tronc.aTronc();
 
   errorMessage: string;
 
@@ -109,6 +33,8 @@ export class RegisterTroncStateComponent implements OnInit, AfterViewInit {
     containerClass: 'theme-default',
     dateInputFormat: '[le] DD-MM-YYYY [à] HH:mm'
   };
+
+  @Input() confirmation: { error: boolean, message: string };
 
   constructor() {
   }
@@ -132,6 +58,12 @@ export class RegisterTroncStateComponent implements OnInit, AfterViewInit {
     });
   }
 
+  refresh() {
+    this.refreshEvent.emit();
+    this.stepper.to(0);
+    this.selectedTronc = Tronc.aTronc();
+  }
+
   getTroncs(): Tronc[] {
     if (this.type === 'departure') {
       return this.troncs.filter(tronc => tronc.depart === undefined);
@@ -140,14 +72,7 @@ export class RegisterTroncStateComponent implements OnInit, AfterViewInit {
   }
 
   selectTronc(tronc: Tronc) {
-    if (this.type === 'departure') {
-      this.dateForm.patchValue(tronc.depart_theorique.toDate());
-      this.timeForm.patchValue(tronc.depart_theorique.toDate());
-    } else {
-      this.dateForm.patchValue(tronc.depart.toDate());
-      this.timeForm.patchValue(tronc.depart.toDate());
-    }
-    this.selectedTronc = tronc;
+    this.selectedTronc = {...tronc};
     this.stepper.next();
   }
 
@@ -183,21 +108,28 @@ export class RegisterTroncStateComponent implements OnInit, AfterViewInit {
       this.selectedTronc.arrivee = this.dateTime;
     }
     this.troncUpdate.emit(this.selectedTronc);
+    this.stepper.next();
   }
 
   private validateTronc() {
     if (this.selectedTronc.depart) {
-      return this.dateTime.isAfter(this.selectedTronc.depart); // registered return date is after departure date
+      return this.dateTime.isSameOrAfter(this.selectedTronc.depart); // registered return date is after departure date
     } else {
-      return this.dateTime.isAfter(this.selectedTronc.depart_theorique); // registered departure date
+      return this.dateTime.isSameOrAfter(this.selectedTronc.depart_theorique); // registered departure date
     }
   }
 
   getTroncDisplay(tronc: Tronc) {
     if (tronc.depart) {
-      return 'Tronc n°' + tronc.tronc_id + ' à ' + tronc.depart.format(this.format);
+      return `id: ${tronc.tronc_queteur_id}
+Tronc n° ${tronc.tronc_id}
+Parti depuis le
+${tronc.depart.format(this.format)}`;
     }
-    return 'Tronc n°' + tronc.tronc_id + ' à ' + tronc.depart_theorique.format(this.format);
+    return `id: ${tronc.tronc_queteur_id}
+Tronc n° ${tronc.tronc_id}
+Départ planifié à
+${tronc.depart_theorique.format(this.format)}`;
   }
 
   private isDeparture() {

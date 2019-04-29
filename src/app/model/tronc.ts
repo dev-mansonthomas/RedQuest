@@ -1,4 +1,5 @@
 import {Moment} from 'moment';
+import * as moment from 'moment';
 
 export class Tronc {
   constructor(
@@ -18,5 +19,9 @@ export class Tronc {
     public advice: string,
     public localization: string
   ) {
+  }
+
+  public static aTronc(): Tronc {
+    return new Tronc(0, 0, 0, 0, moment(), moment(), moment(), '', 0, 0, '', '', '', '', '');
   }
 }
