@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FirestoreService} from '../../services/firestore/firestore.service';
 import {UlRankingByAmount} from '../../model/UlRankingByAmount';
 import {ActivatedRoute} from '@angular/router';
-import {CloudFunctionServiceService} from '../../services/cloud-functions/cloud-function-service.service';
+import {CloudFunctionService} from '../../services/cloud-functions/cloud-function.service';
 import {QueteurService} from '../../services/queteur/queteur.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class RankingComponent implements OnInit {
 
   constructor(private firestoreService: FirestoreService,
               private route: ActivatedRoute,
-              private functionsService: CloudFunctionServiceService,
+              private functionsService: CloudFunctionService,
               private queteurService: QueteurService) {
   }
 

@@ -41,7 +41,7 @@
       <button class="btn btn-primary mb-3" (click)="stepper.previous()">Retour</button>
       <form action="" autocomplete="off">
         <div class="form-group">
-          <input type="text" class="form-control" name="name" placeholder="Départ"
+          <input type="text" class="form-control" name="name"
                  [formControl]="dateForm" bsDatepicker [bsConfig]="datePickerConfig">
           <timepicker [formControl]="timeForm" [showMeridian]="false"></timepicker>
         </div>
@@ -56,9 +56,7 @@
     <div id="confirm-choice" class="content" role="tabpanel" aria-labelledby="confirm-choice-trigger">
       <button class="btn btn-primary mb-3" (click)="stepper.previous()">Retour</button>
       <p class="alert alert-info">
-        Enregistrer un {{getTypeText()}}
-        <br/>du tronc n° {{selectedTronc.tronc_id}}
-        <br/>à {{dateTime.format(format)}}
+        {{confirmationText()}}
       </p>
       <button class="btn btn-primary" (click)="updateTroncDate()">Confirmer</button>
     </div>

@@ -1,7 +1,15 @@
 <div class="container">
   <img src="../../../assets/image.png" class="img-fluid" alt="RedQuest logo">
   <div class="d-flex justify-content-between">
-    <a class="btn btn-primary" href="/my-quest">Ma quête</a>
+    <a class="btn btn-primary dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+       aria-haspopup="true" aria-expanded="false" style="color:white;">
+      Ma quête
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      <a class="dropdown-item" routerLink="/my-quest/my-slots">Mes créneaux</a>
+      <a class="dropdown-item" routerLink="/my-quest/history">Mon historique</a>
+      <a class="dropdown-item" routerLink="/my-quest/my-data">Mes données</a>
+    </div>
     <a class="btn btn-primary" href="/tips">Astuces de quête</a>
     <a class="btn btn-primary" href="/ranking">Ranking</a>
   </div>

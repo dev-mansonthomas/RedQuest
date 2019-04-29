@@ -13,85 +13,86 @@ import {Moment} from 'moment';
 })
 export class RegisterTroncStateComponent implements OnInit, AfterViewInit {
 
-  troncs: Tronc[] = [
-    {
-      queteur_id: 110,
-      depart_theorique: moment(),
-      tronc_id: 110
-    },
-    {
-      queteur_id: 110,
-      depart_theorique: moment(),
-      tronc_id: 111
-    },
-    {
-      queteur_id: 110,
-      depart_theorique: moment(),
-      tronc_id: 112
-    },
-    {
-      queteur_id: 110,
-      depart_theorique: moment(),
-      tronc_id: 113
-    },
-    {
-      queteur_id: 110,
-      depart_theorique: moment(),
-      tronc_id: 114
-    },
-    {
-      queteur_id: 110,
-      depart_theorique: moment(),
-      tronc_id: 116
-    },
-    {
-      queteur_id: 110,
-      depart_theorique: moment(),
-      tronc_id: 117
-    },
-    {
-      queteur_id: 110,
-      depart_theorique: moment(),
-      tronc_id: 118
-    },
-    {
-      queteur_id: 110,
-      depart_theorique: moment(),
-      tronc_id: 118
-    },
-    {
-      queteur_id: 110,
-      depart_theorique: moment(),
-      tronc_id: 119
-    },
-    {
-      queteur_id: 110,
-      depart_theorique: moment(),
-      tronc_id: 120
-    },
-    {
-      queteur_id: 110,
-      depart_theorique: moment(),
-      tronc_id: 121,
-      depart: moment().add(1, 'hour')
-    },
-    {
-      queteur_id: 110,
-      depart_theorique: moment(),
-      tronc_id: 122,
-      depart: moment().add(1, 'hour')
-    },
-    {
-      queteur_id: 110,
-      depart_theorique: moment(),
-      tronc_id: 123,
-      depart: moment(),
-      arrivee: moment().add(1, 'hour')
-    }
-  ];
+  // troncs: Tronc[] = [
+  //   {
+  //     queteur_id: 110,
+  //     depart_theorique: moment(),
+  //     tronc_id: 110
+  //   },
+  //   {
+  //     queteur_id: 110,
+  //     depart_theorique: moment(),
+  //     tronc_id: 111
+  //   },
+  //   {
+  //     queteur_id: 110,
+  //     depart_theorique: moment(),
+  //     tronc_id: 112
+  //   },
+  //   {
+  //     queteur_id: 110,
+  //     depart_theorique: moment(),
+  //     tronc_id: 113
+  //   },
+  //   {
+  //     queteur_id: 110,
+  //     depart_theorique: moment(),
+  //     tronc_id: 114
+  //   },
+  //   {
+  //     queteur_id: 110,
+  //     depart_theorique: moment(),
+  //     tronc_id: 116
+  //   },
+  //   {
+  //     queteur_id: 110,
+  //     depart_theorique: moment(),
+  //     tronc_id: 117
+  //   },
+  //   {
+  //     queteur_id: 110,
+  //     depart_theorique: moment(),
+  //     tronc_id: 118
+  //   },
+  //   {
+  //     queteur_id: 110,
+  //     depart_theorique: moment(),
+  //     tronc_id: 118
+  //   },
+  //   {
+  //     queteur_id: 110,
+  //     depart_theorique: moment(),
+  //     tronc_id: 119
+  //   },
+  //   {
+  //     queteur_id: 110,
+  //     depart_theorique: moment(),
+  //     tronc_id: 120
+  //   },
+  //   {
+  //     queteur_id: 110,
+  //     depart_theorique: moment(),
+  //     tronc_id: 121,
+  //     depart: moment().add(1, 'hour')
+  //   },
+  //   {
+  //     queteur_id: 110,
+  //     depart_theorique: moment(),
+  //     tronc_id: 122,
+  //     depart: moment().add(1, 'hour')
+  //   },
+  //   {
+  //     queteur_id: 110,
+  //     depart_theorique: moment(),
+  //     tronc_id: 123,
+  //     depart: moment(),
+  //     arrivee: moment().add(1, 'hour')
+  //   }
+  // ];
 
   @Output() troncUpdate = new EventEmitter<Tronc>();
   @Input() type: TroncState;
+  @Input() troncs: Tronc[];
 
   format = 'HH:mm [le] YYYY-MM-DD';
 
@@ -199,11 +200,24 @@ export class RegisterTroncStateComponent implements OnInit, AfterViewInit {
     return 'Tronc n°' + tronc.tronc_id + ' à ' + tronc.depart_theorique.format(this.format);
   }
 
-  getStepTitle() {
-    return this.type === 'departure' ? 'Départ' : 'Retour';
+  private isDeparture() {
+    return this.type === 'departure';
   }
 
-  getTypeText() {
-    return this.type === 'departure' ? 'départ' : 'retour';
+  getStepTitle() {
+    return this.isDeparture() ? 'Départ' : 'Retour';
+  }
+
+  confirmationText() {
+    if (this.isDeparture()) {
+      return `Enregistrer un départ
+        du tronc n° ${this.selectedTronc.tronc_id}
+        à ${this.dateTime.format(this.format)}
+        à destination de "${this.selectedTronc.localization}"`;
+    }
+    return `Enregistrer un retour
+        du tronc n° ${this.selectedTronc.tronc_id}
+        à ${this.dateTime.format(this.format)}
+        en provenance de "${this.selectedTronc.localization}"`;
   }
 }

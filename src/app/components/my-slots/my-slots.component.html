@@ -9,13 +9,19 @@
     </label>
   </div>
 
-  <app-register-tronc-state *ngIf="registerState === 'departure'" [type]="'departure'"
-                            (troncUpdate)="handleTroncDeparture($event)">
-  </app-register-tronc-state>
+  <ng-container *ngIf="registerState === 'departure'">
+    <app-register-tronc-state *ngIf="getTroncsDeparture().length !== 0" [type]="'departure'"
+                              (troncUpdate)="handleTroncDeparture($event)" [troncs]="getTroncsDeparture()">
+    </app-register-tronc-state>
+    <span *ngIf="getTroncsDeparture().length === 0">Il n'y a aucun tronc prêt pour un départ.</span>
+  </ng-container>
 
-  <app-register-tronc-state *ngIf="registerState === 'arrival'" [type]="'arrival'"
-                            (troncUpdate)="handleTroncArrival($event)">
-  </app-register-tronc-state>
+  <ng-container *ngIf="registerState === 'arrival'">
+    <app-register-tronc-state *ngIf="getTroncsArrival().length !== 0" [type]="'arrival'"
+                              (troncUpdate)="handleTroncArrival($event)" [troncs]="getTroncsArrival()">
+    </app-register-tronc-state>
+    <span *ngIf="getTroncsArrival().length === 0">Il n'y a aucun tronc sur le chemin du retour.</span>
+  </ng-container>
 
 </div>
 

@@ -6,11 +6,12 @@ import {Observable} from 'rxjs';
 import {ULDetails} from '../../model/ULDetails';
 import {map} from 'rxjs/operators';
 import {Queteur} from '../../model/queteur';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CloudFunctionServiceService {
+export class CloudFunctionService {
   baseUrl = environment.cloudFunctionsBaseUrl;
 
   constructor(private firebaseFunctions: AngularFireFunctions, private http: HttpClient) {
@@ -29,5 +30,15 @@ export class CloudFunctionServiceService {
   registerQueteur(user: Queteur): Observable<any> {
     return this.firebaseFunctions.httpsCallable('registerQueteur')(user)
       .pipe(map(value => JSON.parse(value)));
+  }
+
+  retrievePreparedTroncs(): Observable<any> {
+    return this.firebaseFunctions.httpsCallable('tronc_listPrepared')({})
+      .pipe(map(value => JSON.parse(value, (k, v) => {
+        if (k === 'depart_theorique' || k === 'depart' || k === 'arrivee') {
+          return moment(v);
+        }
+        return v;
+      })));
   }
 }

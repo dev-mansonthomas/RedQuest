@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CloudFunctionServiceService } from './cloud-function-service.service';
+import { CloudFunctionService } from './cloud-function-service.service';
 
-describe('CloudFunctionServiceService', () => {
+describe('CloudFunctionService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: CloudFunctionServiceService = TestBed.get(CloudFunctionServiceService);
+    const service: CloudFunctionService = TestBed.get(CloudFunctionService);
     expect(service).toBeTruthy();
   });
 });

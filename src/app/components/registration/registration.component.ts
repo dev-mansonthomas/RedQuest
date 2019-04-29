@@ -1,6 +1,6 @@
 import {Component, NgZone, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CloudFunctionServiceService} from '../../services/cloud-functions/cloud-function-service.service';
+import {CloudFunctionService} from '../../services/cloud-functions/cloud-function.service';
 import {ULDetails} from '../../model/ULDetails';
 import {Observable} from 'rxjs';
 import {AuthService} from '../../services/auth/auth.service';
@@ -8,7 +8,7 @@ import {Queteur} from '../../model/queteur';
 import {FirestoreService} from '../../services/firestore/firestore.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {QueteurService} from '../../services/queteur/queteur.service';
-import {WaitingModalComponent} from "../waiting-modal/waiting-modal.component";
+import {WaitingModalComponent} from '../waiting-modal/waiting-modal.component';
 
 @Component({
   selector: 'app-registration',
@@ -47,7 +47,7 @@ export class RegistrationComponent implements OnInit {
   userAuthId: string;
 
   constructor(private route: ActivatedRoute,
-              private functions: CloudFunctionServiceService,
+              private functions: CloudFunctionService,
               private queteurService: QueteurService,
               private router: Router,
               private zone: NgZone,

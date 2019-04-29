@@ -1,7 +1,7 @@
 import {Component, Input, NgZone, OnInit, ViewChild} from '@angular/core';
 import {Queteur} from '../../model/queteur';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CloudFunctionServiceService} from '../../services/cloud-functions/cloud-function-service.service';
+import {CloudFunctionService} from '../../services/cloud-functions/cloud-function.service';
 import {FirestoreService} from '../../services/firestore/firestore.service';
 import {WaitingModalComponent} from '../waiting-modal/waiting-modal.component';
 import {Router} from '@angular/router';
@@ -53,7 +53,7 @@ export class RegistrationStep2Component implements OnInit {
 
   constructor(private router: Router,
               private zone: NgZone,
-              private functions: CloudFunctionServiceService,
+              private functions: CloudFunctionService,
               private firestore: FirestoreService) {
   }
 

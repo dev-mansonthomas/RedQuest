@@ -32,6 +32,7 @@ export class FirestoreService {
   }
 
   getStoredQueteur(authId: string): Promise<Queteur> {
+    Number(1)
     return this.firestoreDB.firestore
       .collection('queteurs')
       .doc(authId)
