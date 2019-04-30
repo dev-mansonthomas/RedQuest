@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {QueteurService} from '../../services/queteur/queteur.service';
+import {QueteurService} from '../../../services/queteur/queteur.service';
 
 @Component({
   selector: 'app-my-data',

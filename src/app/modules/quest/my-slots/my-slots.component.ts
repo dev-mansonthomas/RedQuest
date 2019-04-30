@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChildren} from '@angular/core';
-import {Tronc} from '../../model/tronc';
-import {CloudFunctionService} from '../../services/cloud-functions/cloud-function.service';
+import {Tronc} from '../../../model/tronc';
+import {CloudFunctionService} from '../../../services/cloud-functions/cloud-function.service';
 
 export type TroncState = 'departure' | 'arrival';
 

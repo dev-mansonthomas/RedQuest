@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {FirestoreService} from '../../services/firestore/firestore.service';
-import {QueteurService} from '../../services/queteur/queteur.service';
-import {QueteurStats} from '../../model/queteur-stats';
+import {FirestoreService} from '../../../services/firestore/firestore.service';
+import {QueteurService} from '../../../services/queteur/queteur.service';
+import {QueteurStats} from '../../../model/queteur-stats';
 
 @Component({
   selector: 'app-queteur-history',

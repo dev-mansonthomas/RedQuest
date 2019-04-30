@@ -6,11 +6,11 @@
       Ma quête
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-      <a class="dropdown-item" routerLink="/my-quest/my-slots">Mes créneaux</a>
-      <a class="dropdown-item" routerLink="/my-quest/history">Mon historique</a>
-      <a class="dropdown-item" routerLink="/my-quest/my-data">Mes données</a>
+      <a class="dropdown-item" [routerLink]="['/quest/slots']">Mes créneaux</a>
+      <a class="dropdown-item" [routerLink]="['/quest/history']">Mon historique</a>
+      <a class="dropdown-item" [routerLink]="['/quest/data']">Mes données</a>
     </div>
-    <a class="btn btn-primary" href="/tips">Astuces de quête</a>
-    <a class="btn btn-primary" href="/ranking">Ranking</a>
+    <a class="btn btn-primary" [routerLink]="['/tips']">Astuces de quête</a>
+    <a class="btn btn-primary" [routerLink]="['/ranking']">Ranking</a>
   </div>
 </div>

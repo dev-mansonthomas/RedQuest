@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Tronc} from '../../../model/tronc';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Tronc } from '../../../../model/tronc';
 import * as moment from 'moment';
-import {Moment} from 'moment';
+import { Moment } from 'moment';
 import Stepper from 'bs-stepper';
-import {FormControl} from '@angular/forms';
-import {TroncState} from '../my-slots.component';
+import { FormControl } from '@angular/forms';
+import { TroncState } from '../my-slots.component';
 
 @Component({
   selector: 'app-register-tronc-state',
@@ -72,7 +72,7 @@ export class RegisterTroncStateComponent implements OnInit, AfterViewInit {
   }
 
   selectTronc(tronc: Tronc) {
-    this.selectedTronc = {...tronc};
+    this.selectedTronc = { ...tronc };
     this.stepper.next();
   }
 

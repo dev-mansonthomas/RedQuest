@@ -15,7 +15,7 @@ export class RegistrationNeededComponent implements OnInit {
 
   ngOnInit() {
     this.queteurService.getQueteur()
-      .then(() => this.router.navigateByUrl('/homepage'))
+      .then(() => this.router.navigateByUrl(''))
       .catch(() => {
       });
   }
