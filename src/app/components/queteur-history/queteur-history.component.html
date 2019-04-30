@@ -1,5 +1,5 @@
-<div class="container">
-  <div *ngIf="data.length > 0">
+<div class="container mt-3">
+  <div *ngIf="data && data.length > 0">
     <div *ngFor="let year of data" class="card-deck mt-3 mb-2">
       <button class="btn" (click)="selectYear(year.year)">
         <div class="card history-card">
@@ -31,5 +31,11 @@
       </div>
     </div>
     <p>*un sac de couchage coute x €</p>
+  </div>
+  <div *ngIf="!data || data.length === 0" class="jumbotron" >
+    <h2 class="display-5">Votre historique</h2>
+    <p class="lead">
+     Retrouvez ici vos historiques de quête, dès que vos premiers troncs auront été ramenés à votre Unité Locale.
+    </p>
   </div>
 </div>
