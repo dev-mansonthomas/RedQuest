@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../services/auth/auth.service';
-import {FirestoreService} from '../../services/firestore/firestore.service';
-import {Queteur} from '../../model/queteur';
-import {QueteurService} from '../../services/queteur/queteur.service';
+import {Queteur} from 'src/app/model/queteur';
+import {QueteurService} from 'src/app/services/queteur/queteur.service';
 
 @Component({
   selector: 'app-registration-confirmation',

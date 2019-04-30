@@ -1,7 +1,8 @@
-import {Component, NgZone, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {AuthService} from '../../services/auth/auth.service';
-import {QueteurService} from '../../services/queteur/queteur.service';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { QueteurService } from 'src/app/services/queteur/queteur.service';
 
 @Component({
   selector: 'app-homepage',
@@ -12,9 +13,9 @@ export class HomepageComponent implements OnInit {
   private connected: boolean;
 
   constructor(private authService: AuthService,
-              private queteurService: QueteurService,
-              private zone: NgZone,
-              private router: Router) {
+    private queteurService: QueteurService,
+    private zone: NgZone,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -22,10 +23,10 @@ export class HomepageComponent implements OnInit {
     this.queteurService.getQueteur()
       .then(queteur => {
         if (queteur.registration_approved !== true) {
-          this.zone.run(() => this.router.navigate(['registration-confirmation']));
+          this.zone.run(() => this.router.navigate(['registration/confirmation']));
         }
       })
-      .catch(() => this.zone.run(() => this.router.navigate(['registration-needed'])));
+      .catch(() => this.zone.run(() => this.router.navigate(['registration/needed'])));
   }
 
   logout() {

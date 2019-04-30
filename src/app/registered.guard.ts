@@ -16,12 +16,12 @@ export class RegisteredGuard implements CanActivate {
         if (queteur.registration_approved) {
           return true;
         } else {
-          this.router.navigateByUrl('registration-confirmation');
+          this.router.navigateByUrl('registration/confirmation');
           return true;
         }
       })
       .catch(() => {
-        this.router.navigateByUrl('registration-needed');
+        this.router.navigateByUrl('registration/needed');
         return false;
       });
   }

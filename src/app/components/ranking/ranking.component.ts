@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {FirestoreService} from '../../services/firestore/firestore.service';
-import {UlRankingByAmount} from '../../model/UlRankingByAmount';
-import {ActivatedRoute} from '@angular/router';
-import {CloudFunctionService} from '../../services/cloud-functions/cloud-function.service';
-import {QueteurService} from '../../services/queteur/queteur.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { FirestoreService } from 'src/app/services/firestore/firestore.service';
+import { UlRankingByAmount } from 'src/app/model/UlRankingByAmount';
+import { CloudFunctionService } from 'src/app/services/cloud-functions/cloud-function.service';
+import { QueteurService } from 'src/app/services/queteur/queteur.service';
 
 @Component({
   selector: 'app-ranking',
@@ -17,9 +18,9 @@ export class RankingComponent implements OnInit {
   rankings: UlRankingByAmount[] = [];
 
   constructor(private firestoreService: FirestoreService,
-              private route: ActivatedRoute,
-              private functionsService: CloudFunctionService,
-              private queteurService: QueteurService) {
+    private route: ActivatedRoute,
+    private functionsService: CloudFunctionService,
+    private queteurService: QueteurService) {
   }
 
   ngOnInit(): void {
@@ -38,7 +39,7 @@ export class RankingComponent implements OnInit {
 
   callFunction() {
     this.queteurService.getQueteur().then(queteur => {
-      const data = {id: queteur.queteur_id};
+      const data = { id: queteur.queteur_id };
       this.functionsService.findQueteurById(data);
     });
   }
@@ -48,14 +49,14 @@ export class RankingComponent implements OnInit {
       this.rankings.sort((rankA, rankB) => {
         const nameA = `${rankA.first_name.toLowerCase()} ${rankA.last_name.toLowerCase()}`;
         const nameB = `${rankB.first_name.toLowerCase()} ${rankB.last_name.toLowerCase()}`;
-        if (nameA < nameB) //sort string ascending
+        if (nameA < nameB) { // sort string ascending
           return event.sortDirection === 'asc' ? -1 : 1;
-        if (nameA > nameB)
+        } else if (nameA > nameB) {
           return event.sortDirection === 'asc' ? 1 : -1;
-        return 0; //default return value (no sorting)
+        }
+        return 0; // default return value (no sorting)
       });
-    }
-    else {
+    } else {
       this.rankings.sort((rankA, rankB) => {
         return event.sortDirection === 'asc'
           ? rankA[event.sortColumn] - rankB[event.sortColumn]

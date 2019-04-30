@@ -1,14 +1,13 @@
 import {Component, NgZone, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CloudFunctionService} from '../../services/cloud-functions/cloud-function.service';
-import {ULDetails} from '../../model/ULDetails';
+import {CloudFunctionService} from 'src/app/services/cloud-functions/cloud-function.service';
+import {ULDetails} from 'src/app/model/ULDetails';
 import {Observable} from 'rxjs';
-import {AuthService} from '../../services/auth/auth.service';
-import {Queteur} from '../../model/queteur';
-import {FirestoreService} from '../../services/firestore/firestore.service';
+import {AuthService} from 'src/app/services/auth/auth.service';
+import {Queteur} from 'src/app/model/queteur';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {QueteurService} from '../../services/queteur/queteur.service';
-import {WaitingModalComponent} from '../waiting-modal/waiting-modal.component';
+import {QueteurService} from 'src/app/services/queteur/queteur.service';
+import { WaitingModalComponent } from 'src/app/components/waiting-modal/waiting-modal.component';
 
 @Component({
   selector: 'app-registration',
@@ -59,7 +58,7 @@ export class RegistrationComponent implements OnInit {
       if (user != null) {
         this.queteurService.getQueteur().then(queteur => {
           if (queteur) {
-            this.zone.run(() => this.router.navigate(['registration-confirmation']));
+            this.zone.run(() => this.router.navigate(['registration/confirmation']));
           }
         });
       }

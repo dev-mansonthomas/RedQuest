@@ -1,5 +1,5 @@
-import {Component, NgZone, OnInit} from '@angular/core';
-import {QueteurService} from '../../services/queteur/queteur.service';
+import {Component, OnInit} from '@angular/core';
+import {QueteurService} from 'src/app/services/queteur/queteur.service';
 import {Router} from '@angular/router';
 
 @Component({
