@@ -22,11 +22,12 @@ import { TipsComponent } from './components/tips/tips.component';
 import { CustomPaginationComponent } from './components/custom-pagination/custom-pagination.component';
 import { QuestPointComponent } from './components/quest-point/quest-point.component';
 import { SharedModule } from './shared.module';
+import { LostPasswordDialogComponent } from './components/login/lostpassword.dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+    LoginComponent, LostPasswordDialogComponent,
     RankingComponent,
     HomepageComponent,
     SortableColumnComponent,
@@ -45,6 +46,7 @@ import { SharedModule } from './shared.module';
     AngularFireDatabaseModule,
     BrowserAnimationsModule
   ],
+  entryComponents: [LostPasswordDialogComponent],
   providers: [
     AngularFirestore,
     AngularFireAuth,

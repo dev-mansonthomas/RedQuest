@@ -1,39 +1,63 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" [routerLink]="['']">RedQuest</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+<mat-toolbar color="warn">
+  <mat-toolbar-row fxShow fxHide.xs="true" fxLayout="row" fxLayoutAlign="start center">
+
+    <span [routerLink]="['']">RedQuest</span>
+    <button mat-button *ngIf="connected" routerLinkActive="selected" [routerLink]="['tips']">Astuces de quête</button>
+    <button mat-button [matMenuTriggerFor]="menu" routerLinkActive="selected">Ma quête<mat-icon>arrow_drop_down
+      </mat-icon></button>
+
+    <button mat-button *ngIf="connected" routerLinkActive="selected" [routerLink]="['ranking']">Ranking</button>
+    <span fxFlex></span>
+    <button mat-button [matMenuTriggerFor]="menuUser" routerLinkActive="selected">{{queteur?.first_name}}<mat-icon>
+        arrow_drop_down
+      </mat-icon></button>
+  </mat-toolbar-row>
+  <mat-toolbar-row fxShow fxHide.gt-xs="true" fxLayout="row" fxLayoutAlign="space-between center">
+
+    <span [routerLink]="['']">RedQuest</span>
+    <button mat-icon-button [matMenuTriggerFor]="menuFull" routerLinkActive="selected">
+      <mat-icon>more_vert
+      </mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-menu #menuUser="matMenu">
+  <button mat-menu-item *ngIf="connected" [routerLink]="['registration/compte']">
+    <mat-icon>face</mat-icon>Mon compte
+  </button>
+  <button mat-menu-item *ngIf="connected" (click)="logout()">
+    <mat-icon>vpn_key</mat-icon>Se déconnecter
+  </button>
+  <button mat-menu-item *ngIf="!authentified" routerLinkActive="selected" [routerLink]="['login']">
+    <i class="fa fa-sign-in fa-lg"></i>
+    <mat-icon>vpn_key</mat-icon>Se connecter
+  </button>
+</mat-menu>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item *ngFor="let link of myLinks" [routerLink]="[link.route]">
+    <mat-icon>{{link.icon}}</mat-icon>{{link.label}}
+  </button>
+</mat-menu>
+
+<mat-menu #menuFull="matMenu">
+  <ng-container *ngIf="connected">
+    <button mat-menu-item *ngFor="let link of allLinks" [routerLink]="[link.route]">
+      <mat-icon>{{link.icon}}</mat-icon>{{link.label}}
+    </button>
+  </ng-container>
+  <button mat-menu-item *ngIf="!authentified" [routerLink]="['login']">
+    <mat-icon>vpn_key</mat-icon> Se connecter
+  </button>
+  <button mat-menu-item *ngIf="authentified" (click)="logout()">
+    <mat-icon>vpn_key</mat-icon>Se déconnecter
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a *ngIf="connected" class="nav-link" [routerLink]="['tips']">Astuces de quête</a>
-      </li>
-      <li class="nav-item active dropdown">
-        <a *ngIf="connected"  class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">
-          Ma quête
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" [routerLink]="['quest/slots']">Mes créneaux</a>
-          <a class="dropdown-item" [routerLink]="['quest/history']">Mon historique</a>
-          <a class="dropdown-item" [routerLink]="['quest/data']">Mes données</a>
-        </div>
-      </li>
-      <li class="nav-item active">
-        <a *ngIf="connected" class="nav-link" [routerLink]="['ranking']">Ranking</a>
-      </li>
-    </ul>
-    <div class="my-2 my-lg-0">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a *ngIf="!authentified" class="nav-link" [routerLink]="['login']"><i class="fa fa-sign-in"></i> Se connecter</a>
-          <a *ngIf="authentified" href="javascript:void(0)" (click)="logout()" class="navbar-text">Connecté</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
 
-<router-outlet></router-outlet>
+</mat-menu>
+<div fxLayout="row" zstyle='background:chartreuse'>
+  <div fxFlex="80" fxFlexOffset="10" fxLayout="column" zstyle='background:yellow'>
+    <router-outlet></router-outlet>
+  </div>
+</div>

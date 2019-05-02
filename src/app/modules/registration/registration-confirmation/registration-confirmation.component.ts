@@ -5,7 +5,7 @@ import {QueteurService} from 'src/app/services/queteur/queteur.service';
 @Component({
   selector: 'app-registration-confirmation',
   templateUrl: './registration-confirmation.component.html',
-  styleUrls: ['./registration-confirmation.component.css']
+  styleUrls: ['./registration-confirmation.component.scss']
 })
 export class RegistrationConfirmationComponent implements OnInit {
 

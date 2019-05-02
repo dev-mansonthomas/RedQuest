@@ -1,24 +1,9 @@
 @import url(//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css);
-@import url(https://fonts.googleapis.com/css?family=Titillium+Web&subset=latin,latin-ext);
 
 @media (min-width: 768px) {
   .row-sm-offset-3 div:first-child[class*="col-"] {
     margin-left: 25%;
   }
-}
-
-body {
-  font-family: 'Titillium Web', sans-serif;
-}
-
-a {
-  color: #ff5400;
-}
-
-a:hover {
-  opacity: 0.8;
-  color: #ff5400;
-  text-decoration: none;
 }
 
 .login .authTitle {

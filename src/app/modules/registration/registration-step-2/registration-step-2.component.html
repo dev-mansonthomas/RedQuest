@@ -1,141 +1,72 @@
-<div class="container">
-  <div class="login">
-    <h3 class="authTitle">Inscription</h3>
-    <br>
+<div fxLayout="column">
+  <section class="jumb">
+    <h2 class="mat-display-2">Inscription</h2>
+    <h2>Merci !</h2>
+    <p class="title">
+      Vous voilà connecté! Pour finaliser votre inscription, nous avons besoin de quelques informations
+      supplémentaires.
 
-    <div class="jumbotron">
-      <h2 class="display-5">Merci!</h2>
-      <p class="lead">
-        Vous voilà connecté! Pour finaliser votre inscription, nous avons besoin de quelques informations
-        supplémentaires.
+    </p>
+    <mat-divider></mat-divider>
+    <p class="title">
+      Aucune de ces informations ne sera transmise à des tiers, elles ne nous sont utiles que pour la quête, et pour
+      vous contacter en cas de problème.
+      Une fois ce formulaire validé, votre inscription devra être validée par un cadre de la quête.
+    </p>
+  </section>
 
-      </p>
-      <hr class="my-4">
-      <p>
-        Aucune de ces informations ne sera transmise à des tiers, elles ne nous sont utiles que pour la quête, et pour
-        vous contacter en cas de problème.
-        Une fois ce formulaire validé, votre inscription devra être validée par un cadre de la quête.
-      </p>
+  <form autocomplete="off" [formGroup]="registrationForm" fxLayout="column" fxLayoutGap="20px">
+    <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex>
+        <input matInput type="text" placeholder="Nom" required formControlName="last_name">
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <input matInput type="text" placeholder="Prénom" required formControlName="first_name">
+      </mat-form-field>
     </div>
 
-    <div class="row row-sm-offset-3">
-      <div class="col-xs-12 col-sm-6">
-        <form class="loginForm" action="" autocomplete="off" method="POST" [formGroup]="registrationForm">
-          <div class="form-group">
-            <input type="text" class="form-control" name="name" placeholder="Nom" formControlName="last_name">
-          </div>
-          <hr/>
-          <div class="form-group">
-            <input type="text" class="form-control" name="firstname" placeholder="Prénom"
-                   formControlName="first_name">
-          </div>
-          <hr/>
-          <div class="form-check">
-            <label for="man" class="form-check-label">
-              <input id="man" type="radio" formControlName="man" [value]="1" class="form-check-input"> Homme
-            </label>
-          </div>
-          <div class="form-check">
-            <label for="woman" class="form-check-label">
-              <input id="woman" type="radio" formControlName="man" [value]="0" class="form-check-input"> Femme
-            </label>
-          </div>
+    <mat-radio-group formControlName="man" fxLayout="row" fxLayoutGap="20px">
+      <mat-radio-button value="0">Femme</mat-radio-button>
+      <mat-radio-button value="1">Homme</mat-radio-button>
+    </mat-radio-group>
 
-          <hr/>
-          <div class="alert alert-success" role="alert">
-            La date de naissance nous permet de nous assurer que les mineurs
-            ne sont pas envoyés sur des lieux de quêtes dans des conditions inadaptées.
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" name="birthdate" placeholder="Date de naissance (JJ/MM/AAAA)"
-                   formControlName="birthdate"/>
-            <div *ngIf="birthdate.invalid && (birthdate.dirty || birthdate.touched)"
-                 class="text text-danger">
+    <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex>
+        <input matInput [matDatepicker]="picker" placeholder="Date de naissance" required formControlName="birthdate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-hint>Pour nous assurer que les mineurs ne sont pas envoyés sur des lieux de quêtes dans des conditions
+          inadaptées.</mat-hint>
+      </mat-form-field>
 
-              <span *ngIf="birthdate.errors.required">
-               La date de naissance est requise.
-              </span>
-
-              <span *ngIf="birthdate.errors.pattern">
-                La date de naissance n'est pas valide.
-              </span>
-            </div>
-          </div>
-
-          <hr/>
-          <div class="alert alert-success" role="alert">
-            Le numéro de téléphone, comme toutes les autres données, n'est pas destiné à un usage externe.
-            Il nous servira uniquement si nous devons vous contacter pendant vos créneaux de quête, en cas de problème.
-          </div>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <div class="input-group-text">
-                +33
-              </div>
-            </div>
-            <input id="mobile" type="number" class="form-control" name="mobile"
-                   placeholder="Numéro de téléphone portable"
-                   formControlName="mobile"/>
-          </div>
-          <div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)"
-               class="text text-danger">
-
-              <span *ngIf="mobile.errors.required">
-               Le numéro de mobile est requis.
-              </span>
-
-            <span *ngIf="mobile.errors.pattern">
-                Le numéro de mobile n'est pas valide.
-              </span>
-          </div>
-          <hr/>
-
-          <div *ngIf="!isBenevole1j">
-            <div class="alert alert-warning" role="alert">
-              Veuillez entrer votre NIVOL sans les 0 au début.
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" name="nivol" placeholder="Nivol"
-                     [formControlName]="'nivol'"/>
-            </div>
-            <div *ngIf="nivol.invalid && (nivol.dirty || nivol.touched)"
-                 class="text text-danger">
-
-              <span *ngIf="nivol.errors.required">
-               Le nivol est requis.
-              </span>
-
-              <span *ngIf="nivol.errors.pattern">
-                Le nivol n'est pas correct
-              </span>
-            </div>
-          </div>
-          <hr/>
-          <div class="form-group">
-            <select class="form-control" name="secteur" [formControlName]="'secteur'">
-              <option [value]="1" [disabled]="isBenevole1j">social</option>
-              <option [value]="2" [disabled]="isBenevole1j">secours</option>
-              <option [value]="3" [disabled]="!isBenevole1j">Bénévole d'un jour</option>
-            </select>
-          </div>
-          <hr/>
-
-          <div *ngIf="error" class="alert alert-danger" role="alert">
-            {{error}}
-          </div>
-          <button [disabled]="registrationForm.invalid" class="btn btn-lg btn-outline-primary btn-block" type="button"
-                  (click)="registerUser()"
-                  data-toggle="modal" data-target="#waiting" data-backdrop="static" data-keyboard="false"
-                  style="margin-bottom: 5%;">
-            <i class="fa fa-sign-in"></i> S'inscrire
-          </button>
-        </form>
-      </div>
+      <mat-form-field fxFlex>
+        <span matPrefix>+33 &nbsp;</span>
+        <input matInput type="text" placeholder="Numéro de téléphone portable" required formControlName="mobile">
+        <mat-hint>Pour vous contacter pendant vos créneaux de quête, en cas de problème.</mat-hint>
+      </mat-form-field>
     </div>
-  </div>
+    <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex hintLabel="Veuillez entrer votre NIVOL sans les 0 au début.">
+        <input matInput type="text" placeholder="Nivol" required formControlName="nivol">
+      </mat-form-field>
 
+      <mat-form-field fxFlex>
+        <mat-label>Secteur</mat-label>
+        <mat-select required formControlName="secteur">
+          <mat-option [value]="1" [disabled]="isBenevole1j">social</mat-option>
+          <mat-option [value]="2" [disabled]="isBenevole1j">secours</mat-option>
+          <mat-option [value]="3" [disabled]="!isBenevole1j">Bénévole d'un jour</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div *ngIf="error" class="alert alert-danger" role="alert">
+      {{error}}
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center">
+      <button [disabled]="registrationForm.invalid" mat-flat-button color="warn" type="button" (click)="registerUser()"
+        data-toggle="modal" data-target="#waiting" data-backdrop="static" data-keyboard="false">S'inscrire </button>
+    </div>
+  </form>
+  <br>
   <app-waiting-modal></app-waiting-modal>
-
 </div>
-
-

@@ -1,27 +1,20 @@
-<div class="container">
-  <div class="jumbotron" >
-    <h2 class="display-5">Bienvenue sur RedQuest</h2>
-    <p class="lead" *ngIf="queteurRegistrationNotApprovedYet()">
-      Merci pour votre inscription. Celle-ci est en attente de validation par un cadre de la quête.
-    </p>
-    <p class="lead" *ngIf="queteurRegistrationRefused()">
-      Votre inscription a été refusée pour la raison suivante: {{queteur.reject_reaseon}}
-    </p>
-    <hr class="my-4">
-    <p *ngIf="queteurRegistrationNotRefused()">
-      Vos informations:
-      <br/>
-      <b>Prénom:</b> {{queteur.first_name}}
-      <br/>
-      <b>Nom:</b> {{queteur.last_name}}
-      <br/>
-      <b>Email:</b> {{queteur.email}}
-      <br/>
-      <b>Nivol:</b> {{queteur.nivol}}
-      <br/>
-      <b>Date de naissance:</b> {{queteur.birthdate}}
-      <br/>
-      <b>Numéro de téléphone:</b> {{queteur.mobile}}
-    </p>
+<section class="jumb">
+  <h2 class="mat-display-1">Bienvenue sur RedQuest</h2>
+  <p class="lead" *ngIf="queteurRegistrationNotApprovedYet()">
+    Merci pour votre inscription. Celle-ci est en attente de validation par un cadre de la quête.
+  </p>
+  <p class="lead" *ngIf="queteurRegistrationRefused()">
+    Votre inscription a été refusée pour la raison suivante: {{queteur.reject_reaseon}}
+  </p>
+  <div *ngIf="queteurRegistrationNotRefused()">
+    <h2>Vos informations:</h2>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <b fxFlex="50">Prénom:</b> <span fxFlex="50">{{queteur.first_name}}</span>
+      <b fxFlex="50">Nom:</b> <span fxFlex="50">{{queteur.last_name}}</span>
+      <b fxFlex="50">Email:</b> <span fxFlex="50">{{queteur.email}}</span>
+      <b fxFlex="50">Nivol:</b> <span fxFlex="50">{{queteur.nivol}}</span>
+      <b fxFlex="50">Date de naissance:</b> <span fxFlex="50">{{queteur.birthdate}}</span>
+      <b fxFlex="50">Numéro de téléphone:</b> <span fxFlex="50">{{queteur.mobile}}</span>
+    </div>
   </div>
-</div>
+</section>

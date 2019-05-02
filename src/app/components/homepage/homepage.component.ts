@@ -3,15 +3,16 @@ import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { QueteurService } from 'src/app/services/queteur/queteur.service';
+import { MyLinks } from 'src/app/model/links';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
-  styleUrls: ['./homepage.component.css']
+  styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
   private connected: boolean;
-
+  links = MyLinks;
   constructor(private authService: AuthService,
     private queteurService: QueteurService,
     private zone: NgZone,
@@ -32,5 +33,4 @@ export class HomepageComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
-
 }
