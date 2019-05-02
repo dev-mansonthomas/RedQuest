@@ -18,7 +18,6 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { SortableColumnComponent } from './sort-utils/sortable-column/sortable-column.component';
 import { SortableTableDirective } from './sort-utils/sortable-table.directive';
 import { TipsComponent } from './components/tips/tips.component';
-import { CustomPaginationComponent } from './components/custom-pagination/custom-pagination.component';
 import { QuestPointComponent } from './components/quest-point/quest-point.component';
 import { SharedModule } from './shared.module';
 import { LostPasswordDialogComponent } from './components/login/lostpassword.dialog.component';
@@ -32,7 +31,6 @@ import { LostPasswordDialogComponent } from './components/login/lostpassword.dia
     SortableColumnComponent,
     SortableTableDirective,
     TipsComponent,
-    CustomPaginationComponent,
     QuestPointComponent
   ],
   imports: [
