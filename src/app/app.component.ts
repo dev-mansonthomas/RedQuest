@@ -4,6 +4,7 @@ import { AuthService } from './services/auth/auth.service';
 import { QueteurService } from './services/queteur/queteur.service';
 import { MyLinks, AllLinks } from './model/links';
 import { Queteur } from './model/queteur';
+import { environment } from 'src/environments/environment.test';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ export class AppComponent implements OnInit {
   authentified = false;
   myLinks = MyLinks;
   allLinks = AllLinks;
+  env = environment;
   queteur: Queteur = null;
   constructor(
     private authService: AuthService,
@@ -28,7 +30,7 @@ export class AppComponent implements OnInit {
     this.authService.onUserConnected().subscribe(user => {
       if (user) {
         this.queteurService.getQueteur()
-          .then((q: Queteur) => {
+          .then(q => {
             this.queteur = q;
             this.connected = true;
           })

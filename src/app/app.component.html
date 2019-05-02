@@ -1,16 +1,23 @@
 <mat-toolbar color="warn">
   <mat-toolbar-row fxShow fxHide.xs="true" fxLayout="row" fxLayoutAlign="start center">
 
-    <span [routerLink]="['']">RedQuest</span>
-    <button mat-button *ngIf="connected" routerLinkActive="selected" [routerLink]="['tips']">Astuces de quête</button>
-    <button mat-button [matMenuTriggerFor]="menu" routerLinkActive="selected">Ma quête<mat-icon>arrow_drop_down
-      </mat-icon></button>
+    <span [routerLink]="['']">RedQuest <small class="mat-small projId" *ngIf="!env.production">{{env.firebaseConfig.projectId}}</small></span>
+    <ng-container *ngIf="connected">
+      <button mat-button routerLinkActive="selected" [routerLink]="['tips']">Astuces de quête</button>
+      <button mat-button routerLinkActive="selected" [matMenuTriggerFor]="menu">Ma quête<mat-icon>
+          arrow_drop_down
+        </mat-icon></button>
 
-    <button mat-button *ngIf="connected" routerLinkActive="selected" [routerLink]="['ranking']">Ranking</button>
+      <button mat-button routerLinkActive="selected" [routerLink]="['ranking']">Ranking</button>
+    </ng-container>
     <span fxFlex></span>
-    <button mat-button [matMenuTriggerFor]="menuUser" routerLinkActive="selected">{{queteur?.first_name}}<mat-icon>
-        arrow_drop_down
-      </mat-icon></button>
+    <button *ngIf="queteur" mat-button [matMenuTriggerFor]="menuUser" routerLinkActive="selected">
+      {{queteur.first_name}}
+      <mat-icon> arrow_drop_down </mat-icon>
+    </button>
+    <button mat-button *ngIf="!authentified" routerLinkActive="selected" [routerLink]="['login']">
+      Se connecter
+    </button>
   </mat-toolbar-row>
   <mat-toolbar-row fxShow fxHide.gt-xs="true" fxLayout="row" fxLayoutAlign="space-between center">
 
@@ -23,14 +30,15 @@
 </mat-toolbar>
 
 <mat-menu #menuUser="matMenu">
-  <button mat-menu-item *ngIf="connected" [routerLink]="['registration/compte']">
-    <mat-icon>face</mat-icon>Mon compte
-  </button>
-  <button mat-menu-item *ngIf="connected" (click)="logout()">
-    <mat-icon>vpn_key</mat-icon>Se déconnecter
-  </button>
+  <ng-container *ngIf="connected">
+    <button mat-menu-item [routerLink]="['registration/compte']">
+      <mat-icon>face</mat-icon>Mon compte
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>vpn_key</mat-icon>Se déconnecter
+    </button>
+  </ng-container>
   <button mat-menu-item *ngIf="!authentified" routerLinkActive="selected" [routerLink]="['login']">
-    <i class="fa fa-sign-in fa-lg"></i>
     <mat-icon>vpn_key</mat-icon>Se connecter
   </button>
 </mat-menu>
