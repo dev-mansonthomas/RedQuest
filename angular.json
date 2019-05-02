@@ -67,22 +67,18 @@
                   "with": "src/environments/environment.dev.ts"
                 }
               ],
-              "optimization": true,
+              "progress": true,
+              "showCircularDependencies": true,
+              "verbose": false,
+              "optimization": false,
               "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
+              "sourceMap": true,
+              "extractCss": false,
+              "namedChunks": true,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
+              "vendorChunk": true,
+              "buildOptimizer": false
             },
             "test": {
               "fileReplacements": [
@@ -91,22 +87,18 @@
                   "with": "src/environments/environment.test.ts"
                 }
               ],
-              "optimization": true,
+              "progress": true,
+              "showCircularDependencies": true,
+              "verbose": false,
+              "optimization": false,
               "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
+              "sourceMap": true,
+              "extractCss": false,
+              "namedChunks": true,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
+              "vendorChunk": true,
+              "buildOptimizer": false
             }
           }
         },
@@ -118,6 +110,12 @@
           "configurations": {
             "production": {
               "browserTarget": "red-quest:build:production"
+            },
+            "test": {
+              "browserTarget": "red-quest:build:test"
+            },
+            "dev": {
+              "browserTarget": "red-quest:build:dev"
             }
           }
         },
