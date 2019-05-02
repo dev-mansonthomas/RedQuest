@@ -3,7 +3,6 @@ import {Queteur} from 'src/app/model/queteur';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CloudFunctionService} from 'src/app/services/cloud-functions/cloud-function.service';
 import {FirestoreService} from 'src/app/services/firestore/firestore.service';
-import { WaitingModalComponent } from 'src/app/components/waiting-modal/waiting-modal.component';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
 
@@ -17,7 +16,6 @@ export class RegistrationStep2Component implements OnInit {
   @Input() registeredUser: Queteur;
   @Input() isBenevole1j: boolean;
   @Input() userAuthId: string;
-  @ViewChild(WaitingModalComponent) waitingModal;
 
   registrationForm: FormGroup;
 
@@ -90,12 +88,10 @@ export class RegistrationStep2Component implements OnInit {
   }
 
   closeModalAndConfirmRegistration() {
-    this.waitingModal.close();
     this.zone.run(() => this.router.navigate(['registration/confirmation']));
   }
 
   closeModalAndDisplayError() {
-    this.waitingModal.close();
     this.error = 'Erreur lors de l\'inscription !';
   }
 

@@ -7,7 +7,6 @@ import {AuthService} from 'src/app/services/auth/auth.service';
 import {Queteur} from 'src/app/model/queteur';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {QueteurService} from 'src/app/services/queteur/queteur.service';
-import { WaitingModalComponent } from 'src/app/components/waiting-modal/waiting-modal.component';
 
 @Component({
   selector: 'app-registration',
@@ -17,8 +16,6 @@ import { WaitingModalComponent } from 'src/app/components/waiting-modal/waiting-
 export class RegistrationComponent implements OnInit {
   UNKNOWN = 'unknown';
   REGISTERING = 'registering';
-
-  @ViewChild(WaitingModalComponent) waitingModal;
 
   step = this.UNKNOWN;
 
@@ -109,7 +106,6 @@ export class RegistrationComponent implements OnInit {
   loginWithGoogle() {
     this.authService.signInGoogleLogin().then(() => {
       console.log('connected with google');
-      this.waitingModal.close();
     });
   }
 
