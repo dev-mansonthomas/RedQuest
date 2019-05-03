@@ -104,19 +104,14 @@ export class RegistrationComponent implements OnInit {
     return this.ulDetails && this.uuid === this.ulDetails.token_benevole_1j;
   }
 
-  loginWithGoogle() {
-    this.authService.signInGoogleLogin().then(() => {
-      console.log('connected with google');
-    });
-  }
+  loginWithGoogle = () => this.authService.signInGoogleLogin().then(() => {
+    console.log('connected with google');
+  })
 
-  loginWithTwitter() {
-    this.authService.signInTwitterLogin();
-  }
+  loginWithTwitter = () => this.authService.signInTwitterLogin();
 
-  loginWithFacebook() {
-    this.authService.signInFacebookLogin();
-  }
+  loginWithFacebook = () => this.authService.signInFacebookLogin();
+
 
   signingUpWithEmailAndPassword() {
     if (this.loginForm.valid) {
