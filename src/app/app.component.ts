@@ -4,7 +4,7 @@ import { AuthService } from './services/auth/auth.service';
 import { QueteurService } from './services/queteur/queteur.service';
 import { MyLinks, AllLinks } from './model/links';
 import { Queteur } from './model/queteur';
-import { environment } from 'src/environments/environment.test';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',

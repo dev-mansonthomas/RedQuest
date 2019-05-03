@@ -6,3 +6,83 @@
     </p>
   </div>
 </div>
+
+
+<mat-icon color="accent">star</mat-icon>
+<mat-icon color="accent">star</mat-icon>
+<mat-icon color="accent">star</mat-icon>
+<mat-icon style='color:#ccc'>star</mat-icon>
+<mat-icon style='color:#ccc'>star</mat-icon>
+<br>
+<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="30px"
+  style='width:450px;border-top: 3px solid grey; border-bottom: 3px solid grey;padding:21px'>
+  <div
+    style='border-top-right-radius: 5px; border-top: 3px solid grey; border-right: 3px solid grey; transform: rotate(45deg); padding:30px; width:56px; height:56px'>
+    <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center" style='transform: rotate(-45deg);'>
+      <i class="fas fa-medal fa-5x" style='color:transparent;'></i>
+      <span></span>
+    </div>
+  </div>
+  <div
+    style='border-top-right-radius: 5px; border-top: 3px solid grey; border-right: 3px solid grey; transform: rotate(45deg); padding:30px; width:56px; height:56px'>
+    <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center" style='transform: rotate(-45deg);'>
+      <i class="fas fa-medal fa-5x" style='color:#6A3805;'></i>
+      <span>Bronze</span>
+    </div>
+  </div>
+  <div
+    style='border-top-right-radius: 5px; border-top: 3px solid grey; border-right: 3px solid grey; transform: rotate(45deg); padding:30px; width:56px; height:56px'>
+    <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center" style='transform: rotate(-45deg);'>
+      <i class="fas fa-medal fa-5x" style='color:#B4B4B4;'></i>
+      <span>Silver</span>
+    </div>
+  </div>
+
+  <div
+    style='border-top-right-radius: 5px; border-top: 3px solid grey; border-right: 3px solid grey; transform: rotate(45deg); padding:30px; width:56px; height:56px'>
+    <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center" style='transform: rotate(-45deg);'>
+      <i class="fas fa-medal fa-5x" style='color:#C9B037; '></i>
+      <span>Gold</span> </div>
+  </div>
+</div>
+
+<br>
+<div fxLayout="row">
+  <div fxFlex class="tier bronze" fxLayout="column" fxLayoutAlign="space-evenly center">
+    <span>500 - 1000</span>
+    <h3>BRONZE</h3>
+    <div class="arrow"></div>
+  </div>
+  <div fxFlex class="tier silver" fxLayout="column" fxLayoutAlign="space-evenly center">
+    <span>1000 - 1500</span>
+    <h3>ARGENT</h3>
+    <div class="arrow"></div>
+  </div>
+  <div fxFlex class="tier gold" fxLayout="column" fxLayoutAlign="space-evenly center">
+    <span>1500 - 2000</span>
+    <h3>OR</h3>
+    <div class="arrow"></div>
+  </div>
+  <div fxFlex class="tier platinium" fxLayout="column" fxLayoutAlign="space-evenly center">
+    <span>2000 - 3000</span>
+    <h3>PLATINIUM</h3>
+    <div class="arrow"></div>
+
+  </div>
+  <div fxFlex class="tier diamond" fxLayout="column" fxLayoutAlign="space-evenly center">
+    <span>plus de 3000</span>
+    <h3>DIAMENT</h3>
+  </div>
+</div>
+
+<br><br>
+
+<div fxLayout="row wrap" fxLayoutGap="30px grid" fxLayoutAlign="start center">
+  <div class="rcqbadge" fxLayout="column" fxLayoutAlign="center center" *ngFor="let badge of badges" [class.earned]="badge.earned">
+    <span class="fa-stack fa-4x" >
+      <i class="fas fa-certificate fa-stack-2x"></i>
+      <i class="fas {{badge.icon}} fa-stack-1x fa-inverse"></i>
+    </span>
+    <span>{{badge.label}}</span>
+  </div>
+</div>

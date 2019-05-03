@@ -1,0 +1,57 @@
+.tier {
+    background:#bb8f3f;
+    height:56px;
+    position:relative;
+    text-align:center;
+    color:white;
+    > div.arrow {
+      height:12px;
+      width:12px;
+      position:absolute;
+      right:-6px;
+      top:23px;
+      transform:rotate(45deg);
+      z-index:888;
+    }
+    &.bronze, &.bronze > .arrow {
+      background:#6A3805;
+    }
+    &.silver, &.silver > .arrow {
+      background:#B4B4B4;
+    }
+    &.gold, &.gold > .arrow {
+      background:#bb8f3f;
+    }
+    &.platinium , &.platinium > .arrow{
+      background:#b2b2b0
+    }
+    &.diamond {
+      background: #e0dcdc
+    }
+    span {
+      font-size:14px;
+    }
+    h3 {
+      margin:0;
+      font-size: 18px;
+    }
+  }
+
+
+.rcqbadge.earned {
+  span.fa-stack {
+    color: tomato;
+    i.fa-certificate {
+      text-shadow: 1px 3px 4px black;
+    }
+  }
+  span {
+    font-weight: bolder;
+  }
+}
+.rcqbadge:not(.earned) {
+  span.fa-stack { color:#ddd }
+  span {
+    color: #999;
+  }
+}

@@ -9,22 +9,22 @@
 
   <ng-container matColumnDef="tronc_count">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre de troncs</mat-header-cell>
-    <mat-cell *matCellDef="let ranking">{{ranking.tronc_count}}</mat-cell>
+    <mat-cell *matCellDef="let ranking">{{ranking.tronc_count||0}}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="amount">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Montant total</mat-header-cell>
-    <mat-cell *matCellDef="let ranking">{{ranking.amount}} &euro;</mat-cell>
+    <mat-cell *matCellDef="let ranking">{{ranking.amount||0}} &euro;</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="weight">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Poids</mat-header-cell>
-    <mat-cell *matCellDef="let ranking">{{ranking.weight}} kg</mat-cell>
+    <mat-cell *matCellDef="let ranking">{{ranking.weight||0}} kg</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="time_spent_in_minutes">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Temps total</mat-header-cell>
-    <mat-cell *matCellDef="let ranking"> {{ranking.time_spent_in_minutes | time: {small: true} }}
+    <mat-cell *matCellDef="let ranking"> {{ranking.time_spent_in_minutes||0 | time: {small: true} }}
     </mat-cell>
 
   </ng-container>
