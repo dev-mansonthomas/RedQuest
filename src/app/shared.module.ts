@@ -9,7 +9,7 @@ import {
   MatToolbarModule, MatButtonModule, MatFormFieldModule, MatSelectModule,
   MatOptionModule, MatMenuModule, MatTabsModule, MatInputModule, MatRadioModule,
   MatDatepickerModule, MatNativeDateModule, MatCardModule, MatDividerModule, MatDialogModule,
-  MatIconModule, MatTableModule, MatSortModule, MatPaginatorModule, MatProgressBarModule
+  MatIconModule, MatTableModule, MatSortModule, MatPaginatorModule, MatProgressBarModule, MatIconRegistry
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -26,4 +26,10 @@ const MatModules = [MatTabsModule, MatInputModule, MatRadioModule, MatDatepicker
   ]
 })
 export class SharedModule {
+  constructor(private matIconRegistry: MatIconRegistry) {
+    // Use material Icon as default font for icon
+    // register fontawesome as 'fa' for icons (fontSet="fa", fontSet="fa" fontIcon="fa-car")
+    //
+    this.matIconRegistry.registerFontClassAlias('fontawesome', 'fa');
+  }
 }

@@ -1,8 +1,11 @@
 <mat-toolbar color="warn">
   <mat-toolbar-row fxShow fxHide.xs="true" fxLayout="row" fxLayoutAlign="start center">
-
-    <span [routerLink]="['']">RedQuest <small class="mat-small projId" *ngIf="!env.production">{{env.firebaseConfig.projectId}}</small></span>
+    <span [routerLink]="['']" style="cursor: pointer; outline: none">
+      <mat-icon fontSet="fa" fontIcon="fa-plus"></mat-icon>
+      RedQuest <small class="mat-small projId"
+        *ngIf="!env.production">{{env.firebaseConfig.projectId}}</small></span>
     <ng-container *ngIf="connected">
+        <span fxFlex="50px"></span>
       <button mat-button routerLinkActive="selected" [routerLink]="['tips']">Astuces de quête</button>
       <button mat-button routerLinkActive="selected" [matMenuTriggerFor]="menu">Ma quête<mat-icon>
           arrow_drop_down

@@ -1,20 +1,16 @@
 <section class="jumb">
-<h2>S'identifier</h2>
+  <h2>S'identifier</h2>
 </section>
 
-<form autocomplete="off" [formGroup]="loginForm" fxLayout="column">
+<form autocomplete="off" novalidate [formGroup]="loginForm" fxLayout="column">
   <mat-card class="login mat-elevation-z0" style="margin:0 15%">
     <mat-card-title></mat-card-title>
     <mat-card-content fxLayout="column" fxLayoutGap="30px">
       <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" style="zoom:1.6" class="socialButtons">
-        <button mat-flat-button href="javascript:void(0)" class="btn-facebook" title="Facebook"
-          (click)="loginWithFacebook()" data-toggle="modal" data-target="#waiting" data-backdrop="static"
-          data-keyboard="false">
+        <button mat-flat-button class="btn-facebook" title="Facebook" (click)="loginWithFacebook()">
           <i class="fa fa-facebook fa-lg"></i>
         </button>
-        <button mat-flat-button href="javascript:void(0)" class="btn-google-plus" title="Google"
-          (click)="loginWithGoogle()" data-toggle="modal" data-target="#waiting" data-backdrop="static"
-          data-keyboard="false">
+        <button mat-flat-button class="btn-google-plus" title="Google" (click)="loginWithGoogle()">
           <i class="fa fa-google fa-lg"></i>
         </button>
       </div>
@@ -24,7 +20,6 @@
         <span style="font-size:1.4em">Ou</span>
         <hr fxFlex>
       </div>
-
 
       <mat-form-field fxFlex appearance="outline" hideRequiredMarker="true">
         <mat-label>Email</mat-label>
