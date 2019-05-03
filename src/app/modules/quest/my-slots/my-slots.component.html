@@ -1,30 +1,24 @@
-<div class="container mt-3 mb-3">
+<section class="jumb">
+  <h2>Mes créneaux</h2>
+</section>
 
-  <div class="btn-group btn-group-toggle mb-3" data-toggle="buttons">
-    <label class="btn btn-primary" [class.active]="registerState === 'departure'" (click)="switchStateTo('departure')">
-      <input type="radio" name="options" id="option1" autocomplete="off" checked>
-      Départ
-    </label>
-    <label class="btn btn-primary" [class.active]="registerState === 'arrival'" (click)="switchStateTo('arrival')">
-      <input type="radio" name="options" id="option2" autocomplete="off"> Retour
-    </label>
-  </div>
+<mat-tab-group color="warn" mat-align-tabs="center" animationDuration="1000ms">
+  <mat-tab label="Départ">
 
-  <ng-container *ngIf="registerState === 'departure'">
     <app-register-tronc-state #departureStepper *ngIf="getTroncsDeparture().length !== 0" [type]="'departure'"
-                              (troncUpdate)="handleTroncDeparture($event)" [troncs]="getTroncsDeparture()"
-                              [confirmation]="confirmation" (refreshEvent)="refresh()" >
+      (troncUpdate)="handleTroncDeparture($event)" [troncs]="getTroncsDeparture()" [confirmation]="confirmation"
+      (refreshEvent)="refresh()">
     </app-register-tronc-state>
     <span *ngIf="getTroncsDeparture().length === 0">Il n'y a aucun tronc prêt pour un départ.</span>
-  </ng-container>
 
-  <ng-container *ngIf="registerState === 'arrival'">
+
+
+  </mat-tab>
+  <mat-tab label="Retour">
     <app-register-tronc-state #arrivalStepper *ngIf="getTroncsArrival().length !== 0" [type]="'arrival'"
-                              (troncUpdate)="handleTroncArrival($event)" [troncs]="getTroncsArrival()"
-                              [confirmation]="confirmation" (refreshEvent)="refresh()">
+      (troncUpdate)="handleTroncArrival($event)" [troncs]="getTroncsArrival()" [confirmation]="confirmation"
+      (refreshEvent)="refresh()">
     </app-register-tronc-state>
     <span *ngIf="getTroncsArrival().length === 0">Il n'y a aucun tronc sur le chemin du retour.</span>
-  </ng-container>
-
-</div>
-
+  </mat-tab>
+</mat-tab-group>

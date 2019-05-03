@@ -1,17 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {QueteurService} from 'src/app/services/queteur/queteur.service';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { QueteurService } from 'src/app/services/queteur/queteur.service';
 
 @Component({
   selector: 'app-registration-needed',
-  templateUrl: './registration-needed.component.html',
-  styleUrls: ['./registration-needed.component.css']
+  templateUrl: './registration-needed.component.html'
 })
 export class RegistrationNeededComponent implements OnInit {
 
-  constructor(private queteurService: QueteurService,
-              private router: Router) {
-  }
+  constructor(private queteurService: QueteurService, private router: Router) { }
 
   ngOnInit() {
     this.queteurService.getQueteur()

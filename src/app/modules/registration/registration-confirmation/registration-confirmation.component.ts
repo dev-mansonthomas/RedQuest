@@ -1,18 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {Queteur} from 'src/app/model/queteur';
-import {QueteurService} from 'src/app/services/queteur/queteur.service';
+import { Component, OnInit } from '@angular/core';
+
+import { Queteur } from 'src/app/model/queteur';
+import { QueteurService } from 'src/app/services/queteur/queteur.service';
 
 @Component({
   selector: 'app-registration-confirmation',
-  templateUrl: './registration-confirmation.component.html',
-  styleUrls: ['./registration-confirmation.component.scss']
+  templateUrl: './registration-confirmation.component.html'
 })
 export class RegistrationConfirmationComponent implements OnInit {
 
   queteur: Queteur;
 
-  constructor(private queteurService: QueteurService) {
-  }
+  constructor(private queteurService: QueteurService) { }
 
   ngOnInit() {
     this.queteurService.getQueteur().then(queteur => this.queteur = queteur);

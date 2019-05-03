@@ -8,8 +8,7 @@ import * as moment from 'moment';
 
 @Component({
   selector: 'app-registration-step-2',
-  templateUrl: './registration-step-2.component.html',
-  styleUrls: ['./registration-step-2.component.css']
+  templateUrl: './registration-step-2.component.html'
 })
 export class RegistrationStep2Component implements OnInit {
 

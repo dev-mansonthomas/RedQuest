@@ -1,17 +1,18 @@
-import {Component, NgZone, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {CloudFunctionService} from 'src/app/services/cloud-functions/cloud-function.service';
-import {ULDetails} from 'src/app/model/ULDetails';
-import {Observable} from 'rxjs';
-import {AuthService} from 'src/app/services/auth/auth.service';
-import {Queteur} from 'src/app/model/queteur';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {QueteurService} from 'src/app/services/queteur/queteur.service';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+
+import { CloudFunctionService } from 'src/app/services/cloud-functions/cloud-function.service';
+import { ULDetails } from 'src/app/model/ULDetails';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { Queteur } from 'src/app/model/queteur';
+import { QueteurService } from 'src/app/services/queteur/queteur.service';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['../../../_social.scss']
 })
 export class RegistrationComponent implements OnInit {
   UNKNOWN = 'unknown';
@@ -43,11 +44,11 @@ export class RegistrationComponent implements OnInit {
   userAuthId: string;
 
   constructor(private route: ActivatedRoute,
-              private functions: CloudFunctionService,
-              private queteurService: QueteurService,
-              private router: Router,
-              private zone: NgZone,
-              private authService: AuthService) {
+    private functions: CloudFunctionService,
+    private queteurService: QueteurService,
+    private router: Router,
+    private zone: NgZone,
+    private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -127,6 +128,6 @@ export class RegistrationComponent implements OnInit {
     const pass = group.get('password').value;
     const confirmPass = group.get('confirmPassword').value;
 
-    return pass === confirmPass ? null : {notSame: true};
+    return pass === confirmPass ? null : { notSame: true };
   }
 }

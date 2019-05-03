@@ -1,8 +1,8 @@
 <div *ngIf="step === UNKNOWN" fxLayout="column" fxLayoutAlign="center">
   <section class="jumb">
-    <h2 class="display-2">Merci!</h2>
+    <h2>S'enregistrer</h2>
     <p class="title">
-      Vous vous apprêtez à donner de votre temps pour la quête.
+      <b>Merci !</b> Vous vous apprêtez à donner de votre temps pour la quête.
       ...
     </p>
     <mat-divider></mat-divider>
@@ -14,17 +14,17 @@
   </section>
 
   <form autocomplete="off" [formGroup]="loginForm">
-    <mat-card class="loginmat-elevation-z0" style="margin:10% 15%">
-      <mat-card-title> S'enregistrer </mat-card-title>
+    <mat-card class="loginmat-elevation-z0" style="margin:0 15%">
+      <mat-card-title> </mat-card-title>
       <mat-card-content fxLayout="column" fxLayoutGap="30px">
-        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" style="zoom:1.6">
+        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" style="zoom:1.6" class="socialButtons">
 
-          <button mat-flat-button href="javascript:void(0)" color="primary" style="background: #3b5998;"
-            title="Facebook" (click)="loginWithFacebook()" data-toggle="modal" data-target="#waiting"
-            data-backdrop="static" data-keyboard="false">
+          <button mat-flat-button href="javascript:void(0)" class="btn-facebook" title="Facebook"
+            (click)="loginWithFacebook()" data-toggle="modal" data-target="#waiting" data-backdrop="static"
+            data-keyboard="false">
             <i class="fa fa-facebook fa-lg"></i>
           </button>
-          <button mat-flat-button href="javascript:void(0)" color="warn" style="background: #c32f10;" title="Google"
+          <button mat-flat-button href="javascript:void(0)" class="btn-google-plus" title="Google"
             (click)="loginWithGoogle()" data-toggle="modal" data-target="#waiting" data-backdrop="static"
             data-keyboard="false">
             <i class="fa fa-google fa-lg"></i>

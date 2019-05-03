@@ -9,7 +9,7 @@ import { LostPasswordDialogComponent } from './lostpassword.dialog.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['../../../_social.scss']
 })
 export class LoginComponent implements OnInit {
 
