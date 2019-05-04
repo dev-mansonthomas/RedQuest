@@ -10,13 +10,14 @@ import { BadgesComponent } from './badges/badges.component';
 import { RegisteredGuard } from 'src/app/registered.guard';
 import { RegisterTroncStateComponent } from './my-slots/register-tronc-state/register-tronc-state.component';
 import { SharedModule } from 'src/app/shared.module';
-import { QuestPointComponent } from 'src/app/components/quest-point/quest-point.component';
+import { QuestPointComponent } from 'src/app/modules/quest/quest-point/quest-point.component';
 
 const ROUTES: Routes = [
     { path: '', component: QueteurHistoryComponent, canActivate: [RegisteredGuard] },
     { path: 'slots', component: MySlotsComponent, canActivate: [RegisteredGuard] },
     { path: 'data', component: MyDataComponent, canActivate: [RegisteredGuard] },
     { path: 'badges', component: BadgesComponent, canActivate: [RegisteredGuard] },
+    { path: 'quest-point', component: QuestPointComponent, canActivate: [RegisteredGuard] },
     { path: '**', redirectTo: '' }
 ];
 

@@ -24,6 +24,7 @@ import { LostPasswordDialogComponent } from './components/login/lostpassword.dia
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import localeFrExtra from '@angular/common/locales/extra/fr';
+import {QuestPointComponent} from './modules/quest/quest-point/quest-point.component';
 
 registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
 

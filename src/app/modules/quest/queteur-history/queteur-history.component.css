@@ -26,3 +26,7 @@
   border-radius: inherit;
   transition: inherit;
 }
+
+.mat-card {
+  margin: 1em;
+}

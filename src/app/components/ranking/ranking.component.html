@@ -16,12 +16,12 @@
 
   <ng-container matColumnDef="amount">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Montant total</mat-header-cell>
-    <mat-cell *matCellDef="let ranking">{{ranking.amount||0}} &euro;</mat-cell>
+    <mat-cell *matCellDef="let ranking">{{ranking.amount||0 |number:'1.0-2':'fr-FR' }} &euro;</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="weight">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Poids</mat-header-cell>
-    <mat-cell *matCellDef="let ranking">{{ranking.weight||0}} kg</mat-cell>
+    <mat-cell *matCellDef="let ranking">{{ranking.weight||0 | weight}}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="time_spent_in_minutes">

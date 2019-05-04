@@ -6,7 +6,7 @@ import { RankingComponent } from './components/ranking/ranking.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { TipsComponent } from './components/tips/tips.component';
 import { RegisteredGuard } from './registered.guard';
-import { QuestPointComponent } from './components/quest-point/quest-point.component';
+import { QuestPointComponent } from './modules/quest/quest-point/quest-point.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent, canActivate: [RegisteredGuard] },
@@ -21,7 +21,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'tips', component: TipsComponent, canActivate: [RegisteredGuard] },
   { path: 'ranking', component: RankingComponent, canActivate: [RegisteredGuard] },
-  { path: 'quest-point', component: QuestPointComponent, canActivate: [RegisteredGuard] },
   { path: '**', redirectTo: '' }
 ];
 

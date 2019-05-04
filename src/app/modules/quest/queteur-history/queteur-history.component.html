@@ -1,41 +1,19 @@
-<div class="container mt-3">
-  <div *ngIf="data && data.length > 0">
-    <div *ngFor="let year of data" class="card-deck mt-3 mb-2">
-      <button class="btn" (click)="selectYear(year.year)">
-        <div class="card history-card">
-          <div class="card-body">
-            <div class="year-centered">
-              <h1 class="card-title text-primary">{{year.year}}</h1>
-            </div>
-          </div>
-        </div>
-      </button>
-      <div class="card history-card" [hidden]="year.year!==selectedYear">
-        <div class="card-body">
-          <h2 class="card-title text-primary">{{year.amount | number }}€</h2>
-          <h6 class="card-subtitle mb-2 text-muted">Récoltés</h6>
-          <p class="card-text">Soit x sacs de couchages, x repas ou x% d'une ambulance neuve</p>
-        </div>
-      </div>
-      <div class="card history-card" [hidden]="year.year!==selectedYear">
-        <div class="card-body">
-          <h2 class="card-title text-danger">{{year.time_spent_in_minutes | time}}</h2>
-          <h6 class="card-subtitle mb-2 text-muted">de quête</h6>
-        </div>
-      </div>
-      <div class="card history-card" [hidden]="year.year!==selectedYear">
-        <div class="card-body">
-          <h2 class="card-title text-secondary">{{year.weight | weight}}</h2>
-          <h6 class="card-subtitle mb-2 text-muted">Récoltés</h6>
-        </div>
-      </div>
-    </div>
-    <p>*un sac de couchage coute x €</p>
-  </div>
-  <section *ngIf="!data || data.length === 0" class="jumb" >
-    <h2>Mon historique</h2>
-    <p class="lead">
-     Retrouvez ici vos historiques de quête, dès que vos premiers troncs auront été ramenés à votre Unité Locale.
-    </p>
-  </section>
-</div>
+<section class="jumb">
+  <h2>Mon historique</h2>
+</section>
+<mat-accordion>
+
+  <mat-expansion-panel *ngFor="let year of data">
+    <mat-expansion-panel-header>
+      {{year.year}}
+    </mat-expansion-panel-header>
+
+    <mat-chip-list>
+      <mat-chip color="warn" selected>{{year.amount | number}}€</mat-chip>
+      <mat-chip color="primary" selected>{{year.time_spent_in_minutes | time}}</mat-chip>
+      <mat-chip color="accent" selected>{{year.weight | weight}}</mat-chip>
+    </mat-chip-list>
+
+  </mat-expansion-panel>
+
+</mat-accordion>
