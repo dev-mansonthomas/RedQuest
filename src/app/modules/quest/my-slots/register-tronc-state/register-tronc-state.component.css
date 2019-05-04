@@ -3,14 +3,6 @@
   max-height: 15em;
 }
 
-.active .bs-stepper-circle {
-  background-color: #EB6864;
-}
-
-.active .bs-stepper-label {
-  color: #EB6864;
-}
-
 .wrapper {
   width: 100%;
   display: flex;

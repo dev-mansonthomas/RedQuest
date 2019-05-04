@@ -18,9 +18,14 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { SortableColumnComponent } from './sort-utils/sortable-column/sortable-column.component';
 import { SortableTableDirective } from './sort-utils/sortable-table.directive';
 import { TipsComponent } from './components/tips/tips.component';
-import { QuestPointComponent } from './components/quest-point/quest-point.component';
 import { SharedModule } from './shared.module';
 import { LostPasswordDialogComponent } from './components/login/lostpassword.dialog.component';
+
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import localeFrExtra from '@angular/common/locales/extra/fr';
+
+registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
 
 @NgModule({
   declarations: [
@@ -30,8 +35,7 @@ import { LostPasswordDialogComponent } from './components/login/lostpassword.dia
     HomepageComponent,
     SortableColumnComponent,
     SortableTableDirective,
-    TipsComponent,
-    QuestPointComponent
+    TipsComponent
   ],
   imports: [
     BrowserModule,

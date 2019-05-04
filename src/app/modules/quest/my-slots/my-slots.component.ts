@@ -1,6 +1,7 @@
-import {Component, OnInit, ViewChildren} from '@angular/core';
-import {Tronc} from '../../../model/tronc';
-import {CloudFunctionService} from '../../../services/cloud-functions/cloud-function.service';
+import { Component, OnInit, ViewChildren } from '@angular/core';
+
+import { Tronc } from '../../../model/tronc';
+import { CloudFunctionService } from '../../../services/cloud-functions/cloud-function.service';
 
 export type TroncState = 'departure' | 'arrival';
 
@@ -14,7 +15,7 @@ export class MySlotsComponent implements OnInit {
   registerState: TroncState = 'departure';
   troncs: Tronc[];
 
-  confirmation = {error: false, message: ''};
+  confirmation = { error: false, message: '' };
 
 
   constructor(private cloudFunctions: CloudFunctionService) {
@@ -38,7 +39,7 @@ export class MySlotsComponent implements OnInit {
 
   handleTroncDeparture(tronc: Tronc) {
     const update = {
-      date: tronc.depart.format('YYYY-MM-DD HH:mm:ss'),
+      date: tronc.depart.toISOString().slice(0, 19).replace('T', ' '), // to format 'YYYY-MM-DD HH:mm:ss'
       tqId: tronc.tronc_queteur_id,
       isDepart: true
     };
@@ -54,7 +55,7 @@ export class MySlotsComponent implements OnInit {
 
   handleTroncArrival(tronc: Tronc) {
     const update = {
-      date: tronc.arrivee.format('YYYY-MM-DD HH:mm:ss'),
+      date: tronc.arrivee.toISOString().slice(0, 19).replace('T', ' '), // to format 'YYYY-MM-DD HH:mm:ss'
       tqId: tronc.tronc_id,
       isDepart: false
     };

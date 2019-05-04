@@ -23,16 +23,15 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/ng-pick-datetime/assets/style/picker.min.css",
               "src/custom-theme.scss",
-              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/popper.js/dist/umd/popper.js",
               "node_modules/tooltip.js/dist/umd/tooltip.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/bs-stepper/dist/js/bs-stepper.js"
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {
@@ -43,6 +42,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "i18nLocale": "fr",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -70,6 +70,7 @@
               "progress": true,
               "showCircularDependencies": true,
               "verbose": false,
+              "i18nLocale": "fr",
               "optimization": false,
               "outputHashing": "all",
               "sourceMap": true,
@@ -90,6 +91,7 @@
               "progress": true,
               "showCircularDependencies": true,
               "verbose": false,
+              "i18nLocale": "fr",
               "optimization": false,
               "outputHashing": "all",
               "sourceMap": true,

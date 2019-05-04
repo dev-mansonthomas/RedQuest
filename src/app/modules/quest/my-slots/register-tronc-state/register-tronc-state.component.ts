@@ -1,67 +1,58 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Tronc } from '../../../../model/tronc';
-import * as moment from 'moment';
-import { Moment } from 'moment';
-import Stepper from 'bs-stepper';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TroncState } from '../my-slots.component';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-register-tronc-state',
   templateUrl: './register-tronc-state.component.html',
   styleUrls: ['./register-tronc-state.component.css']
 })
-export class RegisterTroncStateComponent implements OnInit, AfterViewInit {
+export class RegisterTroncStateComponent {
 
   @Output() refreshEvent = new EventEmitter<void>();
   @Output() troncUpdate = new EventEmitter<Tronc>();
   @Input() type: TroncState;
   @Input() troncs: Tronc[];
 
+  @ViewChild(MatStepper) stepper: MatStepper;
+
   format = 'HH:mm [le] YYYY-MM-DD';
+  isEditable = true;
+  stepMinute = 15;
+  now = new Date();
 
-  stepper: Stepper;
-
-  selectedTronc: Tronc = Tronc.aTronc();
+  //  selectedTronc: Tronc = Tronc.aTronc();
 
   errorMessage: string;
 
-  dateForm = new FormControl(new Date());
-  timeForm = new FormControl(new Date());
-  dateTime: Moment;
-  datePickerConfig = {
-    containerClass: 'theme-default',
-    dateInputFormat: '[le] DD-MM-YYYY [à] HH:mm'
-  };
+  step1Form: FormGroup;
+  step2Form: FormGroup;
+
+  get tronc() {
+    return this.step1Form.get('tronc');
+  }
+  get startDate() {
+    return this.step2Form.get('startDate');
+  }
 
   @Input() confirmation: { error: boolean, message: string };
-
+  private getRoundTime(m = 10, a = new Date().getTime()) {
+    // get next time that is modulo 'm' (if it is 17h21 and m=10 -> returns 17h30)
+    const mo = a % (m * 60 * 1000);
+    const b = mo > 0 ? a - a % (m * 60 * 1000) + m * 60 * 1000 : a;
+    return new Date(b);
+  }
   constructor() {
-  }
-
-  ngAfterViewInit() {
-    this.stepper = new Stepper(document.querySelector(`.${this.type}`), {
-      linear: true,
-      animation: true
-    });
-  }
-
-  ngOnInit() {
-    this.handleDateTime();
-    this.timeForm.valueChanges.subscribe(() => {
-      this.errorMessage = undefined;
-      this.handleDateTime();
-    });
-    this.dateForm.valueChanges.subscribe(() => {
-      this.errorMessage = undefined;
-      this.handleDateTime();
-    });
+    this.step1Form = new FormGroup({ 'tronc': new FormControl('', Validators.required) });
+    this.step2Form = new FormGroup({ 'startDate': new FormControl('', Validators.required) });
   }
 
   refresh() {
     this.refreshEvent.emit();
-    this.stepper.to(0);
-    this.selectedTronc = Tronc.aTronc();
+    this.stepper.reset();
+    //    this.selectedTronc = Tronc.aTronc();
   }
 
   getTroncs(): Tronc[] {
@@ -71,54 +62,63 @@ export class RegisterTroncStateComponent implements OnInit, AfterViewInit {
     return this.troncs.filter(tronc => tronc.depart && tronc.arrivee === undefined);
   }
 
-  selectTronc(tronc: Tronc) {
-    this.selectedTronc = { ...tronc };
+  selectTronc() {
+    this.step2Form = new FormGroup({
+      'startDate': new FormControl(this.getRoundTime(this.stepMinute, this.minDep().getTime()), Validators.required)
+    });
     this.stepper.next();
   }
-
-  goToSaveStep() {
-    if (!this.validateTronc()) {
-      if (this.type === 'departure') {
-        this.errorMessage = 'La date de départ doit être ultérieure à la date de départ théorique.';
-      } else {
-        this.errorMessage = 'La date de retour doit être ultérieure à la date de départ.';
+  /*
+     goToSaveStep() {
+      if (!this.validateTronc()) {
+        if (this.type === 'departure') {
+          this.errorMessage = 'La date de départ doit être ultérieure à la date de départ théorique.';
+        } else {
+          this.errorMessage = 'La date de retour doit être ultérieure à la date de départ.';
+        }
+        return;
       }
-      return;
+      this.stepper.next();
     }
-    this.stepper.next();
-  }
+  
+    private handleDateTime() {
+      const date = moment(this.dateForm.value);
+      const time = moment(this.timeForm.value);
+      this.dateTime = this.mergeDateAndTime(date, time);
+    }
+  
+    private mergeDateAndTime(date, time) {
+      return moment(date.format('YYYY-MM-DD') + ' ' + time.format('HH:mm'));
+    }
+  */
+  minDep = () => this.step1Form.get('tronc').value ? new Date(this.type === 'departure' ?
+    this.step1Form.get('tronc').value.depart_theorique :
+    this.step1Form.get('tronc').value.depart) : new Date();
 
-  private handleDateTime() {
-    const date = moment(this.dateForm.value);
-    const time = moment(this.timeForm.value);
-    this.dateTime = this.mergeDateAndTime(date, time);
-  }
-
-  private mergeDateAndTime(date, time) {
-    return moment(date.format('YYYY-MM-DD') + ' ' + time.format('HH:mm'));
-  }
 
   updateTroncDate() {
-    if (!this.validateTronc()) {
-      return;
-    }
-    if (this.selectedTronc.depart === undefined) {
-      this.selectedTronc.depart = this.dateTime;
+    /* if (!this.validateTronc()) {
+       return;
+     }*/
+    const selectedTronc = this.step1Form.getRawValue();
+    if (selectedTronc.depart === undefined) {
+      selectedTronc.depart = this.step2Form.get('startDate').value;
     } else {
-      this.selectedTronc.arrivee = this.dateTime;
+      selectedTronc.arrivee = this.step2Form.get('startDate').value;
     }
-    this.troncUpdate.emit(this.selectedTronc);
+    this.troncUpdate.emit(selectedTronc);
+    this.isEditable = false;
     this.stepper.next();
   }
-
-  private validateTronc() {
-    if (this.selectedTronc.depart) {
-      return this.dateTime.isSameOrAfter(this.selectedTronc.depart); // registered return date is after departure date
-    } else {
-      return this.dateTime.isSameOrAfter(this.selectedTronc.depart_theorique); // registered departure date
+  /*
+    private validateTronc() {
+      if (this.selectedTronc.depart) {
+        return this.dateTime.isSameOrAfter(this.selectedTronc.depart); // registered return date is after departure date
+      } else {
+        return this.dateTime.isSameOrAfter(this.selectedTronc.depart_theorique); // registered departure date
+      }
     }
-  }
-
+  */
   getTroncDisplay(tronc: Tronc) {
     if (tronc.depart) {
       return `id: ${tronc.tronc_queteur_id}
@@ -141,6 +141,7 @@ ${tronc.depart_theorique.format(this.format)}`;
   }
 
   confirmationText() {
+    /*
     if (this.isDeparture()) {
       return `Enregistrer un départ
         du tronc n° ${this.selectedTronc.tronc_id}
@@ -151,5 +152,6 @@ ${tronc.depart_theorique.format(this.format)}`;
         du tronc n° ${this.selectedTronc.tronc_id}
         à ${this.dateTime.format(this.format)}
         en provenance de "${this.selectedTronc.localization}"`;
+        */
   }
 }

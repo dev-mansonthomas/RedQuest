@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
-import {environment} from '../../../environments/environment';
+import { Component, OnInit, Input } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-quest-point',
@@ -10,6 +10,8 @@ import {environment} from '../../../environments/environment';
 export class QuestPointComponent implements OnInit {
 
   // @Input() coordinates: {latitude: number, longitude: number};
+  @Input() latitude: number;
+  @Input() longitude: number;
 
   coordinates = {
     latitude: 48.8515833,
@@ -23,7 +25,7 @@ export class QuestPointComponent implements OnInit {
   }
 
   getUrl(coord): string {
-    return `https://www.google.com/maps/embed/v1/search?q=${coord.latitude},${coord.longitude}&key=${environment.google_maps_key}` ;
+    return `https://www.google.com/maps/embed/v1/search?q=${this.latitude},${this.longitude}&key=${environment.google_maps_key}`;
   }
 
 }

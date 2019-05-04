@@ -10,6 +10,7 @@ import { BadgesComponent } from './badges/badges.component';
 import { RegisteredGuard } from 'src/app/registered.guard';
 import { RegisterTroncStateComponent } from './my-slots/register-tronc-state/register-tronc-state.component';
 import { SharedModule } from 'src/app/shared.module';
+import { QuestPointComponent } from 'src/app/components/quest-point/quest-point.component';
 
 const ROUTES: Routes = [
     { path: '', component: QueteurHistoryComponent, canActivate: [RegisteredGuard] },
@@ -24,7 +25,7 @@ const ROUTES: Routes = [
         CommonModule, SharedModule, RouterModule.forChild(ROUTES)],
     declarations: [
         QueteurHistoryComponent, MySlotsComponent, MyDataComponent,
-        BadgesComponent, RegisterTroncStateComponent
+        BadgesComponent, RegisterTroncStateComponent, QuestPointComponent
     ]
 })
 export class QuestModule { }
