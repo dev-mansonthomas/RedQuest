@@ -80,20 +80,20 @@ export class RegisterTroncStateComponent {
       }
       this.stepper.next();
     }
-  
+
     private handleDateTime() {
       const date = moment(this.dateForm.value);
       const time = moment(this.timeForm.value);
       this.dateTime = this.mergeDateAndTime(date, time);
     }
-  
+
     private mergeDateAndTime(date, time) {
       return moment(date.format('YYYY-MM-DD') + ' ' + time.format('HH:mm'));
     }
   */
   minDep = () => this.step1Form.get('tronc').value ? new Date(this.type === 'departure' ?
     this.step1Form.get('tronc').value.depart_theorique :
-    this.step1Form.get('tronc').value.depart) : new Date();
+    this.step1Form.get('tronc').value.depart) : new Date()
 
 
   updateTroncDate() {

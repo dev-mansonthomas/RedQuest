@@ -35,7 +35,7 @@ export class RankingComponent implements AfterViewInit, OnInit {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page).pipe(tap(() => this.selectPage())).subscribe();
     this.dataSource.select(this.sort.active, this.sort.direction, this.paginator.pageSize, this.paginator.pageIndex);
-    // Load the entire base to count nb of items :o 
+    // Load the entire base to count nb of items :o
     // Thus, DON'T DO THAT:
     // this.firestoreService.getCount().subscribe(nb => this.nb = nb);
   }

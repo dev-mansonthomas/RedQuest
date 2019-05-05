@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {RegistrationStep2Component} from "./registration-step-2.component";
+import {RegistrationStep2Component} from './registration-step-2.component';
 
 
 describe('Registration.Step.2Component', () => {
