@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {AngularFireFunctions} from '@angular/fire/functions';
 import {HttpClient} from '@angular/common/http';
+
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {ULDetails} from '../../model/ULDetails';
 import {map} from 'rxjs/operators';
 import {Queteur} from '../../model/queteur';
-import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +36,7 @@ export class CloudFunctionService {
     return this.firebaseFunctions.httpsCallable('tronc_listPrepared')({})
       .pipe(map(value => JSON.parse(value, (k, v) => {
         if (k === 'depart_theorique' || k === 'depart' || k === 'arrivee') {
-          return moment(v);
+          return new Date(v);
         }
         return v;
       })));

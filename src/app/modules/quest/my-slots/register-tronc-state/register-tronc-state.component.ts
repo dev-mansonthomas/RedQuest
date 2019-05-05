@@ -118,19 +118,19 @@ export class RegisterTroncStateComponent {
         return this.dateTime.isSameOrAfter(this.selectedTronc.depart_theorique); // registered departure date
       }
     }
-  */
-  getTroncDisplay(tronc: Tronc) {
-    if (tronc.depart) {
-      return `id: ${tronc.tronc_queteur_id}
+    getTroncDisplay(tronc: Tronc) {
+      if (tronc.depart) {
+        return `id: ${tronc.tronc_queteur_id}
 Tronc n° ${tronc.tronc_id}
 Parti depuis le
 ${tronc.depart.format(this.format)}`;
     }
     return `id: ${tronc.tronc_queteur_id}
-Tronc n° ${tronc.tronc_id}
+    Tronc n° ${tronc.tronc_id}
 Départ planifié à
 ${tronc.depart_theorique.format(this.format)}`;
-  }
+}
+*/
 
   private isDeparture() {
     return this.type === 'departure';

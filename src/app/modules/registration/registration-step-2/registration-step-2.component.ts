@@ -1,10 +1,10 @@
 import {Component, Input, NgZone, OnInit, ViewChild} from '@angular/core';
-import {Queteur} from 'src/app/model/queteur';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+
+import {Queteur} from 'src/app/model/queteur';
 import {CloudFunctionService} from 'src/app/services/cloud-functions/cloud-function.service';
 import {FirestoreService} from 'src/app/services/firestore/firestore.service';
-import {Router} from '@angular/router';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-registration-step-2',
@@ -71,7 +71,7 @@ export class RegistrationStep2Component implements OnInit {
 
   registerUser() {
     Object.assign(this.registeredUser, this.registrationForm.value);
-    this.registeredUser.birthdate = moment(this.registeredUser.birthdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    this.registeredUser.birthdate = new Date(this.registeredUser.birthdate).toISOString().slice(0, 10), // to format 'YYYY-MM-DD'
     this.registeredUser.mobile = '+33' + this.registeredUser.mobile;
     this.functions.registerQueteur(this.registeredUser)
       .subscribe(token => {

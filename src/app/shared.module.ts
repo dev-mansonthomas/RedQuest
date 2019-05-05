@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TimePipe } from './pipes/time.pipe';
 import { WeightPipe } from './pipes/weight.pipe';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 import {
   MatToolbarModule, MatButtonModule, MatFormFieldModule, MatSelectModule,
@@ -15,21 +13,23 @@ import {
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 
-const MatModules = [MatTabsModule, MatInputModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule,
-  MatToolbarModule, MatButtonModule, MatFormFieldModule, MatSelectModule, MatOptionModule, MatMenuModule, MatProgressBarModule,
-  MatCardModule, MatDividerModule, MatDialogModule, MatIconModule, MatTableModule, MatSortModule, MatPaginatorModule, MatCheckboxModule,
+const MatModules = [
+  MatTabsModule, MatInputModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule,
+  MatToolbarModule, MatButtonModule, MatFormFieldModule, MatSelectModule, MatOptionModule,
+  MatMenuModule, MatProgressBarModule, MatCardModule, MatDividerModule, MatDialogModule,
+  MatIconModule, MatTableModule, MatSortModule, MatPaginatorModule, MatCheckboxModule,
   MatStepperModule, MatExpansionModule, MatChipsModule];
+
 @NgModule({
   declarations: [TimePipe, WeightPipe],
   imports: [FormsModule, ReactiveFormsModule, FlexLayoutModule, MatModules,
-    OwlDateTimeModule, OwlNativeDateTimeModule,
-    BsDatepickerModule.forRoot(), TimepickerModule.forRoot()],
+    OwlDateTimeModule, OwlNativeDateTimeModule],
   exports: [
-    FormsModule, ReactiveFormsModule, TimePipe, WeightPipe, OwlDateTimeModule, OwlNativeDateTimeModule,
-    BsDatepickerModule, TimepickerModule, MatModules, FlexLayoutModule
-  ], providers: [
-    // use french locale
-    { provide: OWL_DATE_TIME_LOCALE, useValue: 'fr' },
+    FormsModule, ReactiveFormsModule, TimePipe, WeightPipe,
+    OwlDateTimeModule, OwlNativeDateTimeModule,
+    MatModules, FlexLayoutModule],
+  providers: [
+    { provide: OWL_DATE_TIME_LOCALE, useValue: 'fr' }
   ],
 })
 export class SharedModule {
