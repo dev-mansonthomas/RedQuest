@@ -7,28 +7,25 @@ import { AngularFirestore, FirestoreSettingsToken } from '@angular/fire/firestor
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireFunctions, FunctionsRegionToken } from '@angular/fire/functions';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import localeFrExtra from '@angular/common/locales/extra/fr';
 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { LoginComponent } from './components/login/login.component';
 import { RankingComponent } from './components/ranking/ranking.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { TipsComponent } from './components/tips/tips.component';
 import { SharedModule } from './shared.module';
-import { LostPasswordDialogComponent } from './components/login/lostpassword.dialog.component';
 
-import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
-import localeFrExtra from '@angular/common/locales/extra/fr';
 
 registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent, LostPasswordDialogComponent,
     RankingComponent,
     HomepageComponent,
     TipsComponent
@@ -41,9 +38,6 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     BrowserAnimationsModule
-  ],
-  entryComponents: [
-    LostPasswordDialogComponent
   ],
   providers: [
     AngularFirestore, AngularFireAuth, AngularFireFunctions,
