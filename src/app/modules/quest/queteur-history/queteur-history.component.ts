@@ -1,24 +1,25 @@
-import {Component, OnInit} from '@angular/core';
-import {FirestoreService} from '../../../services/firestore/firestore.service';
-import {QueteurService} from '../../../services/queteur/queteur.service';
-import {QueteurStats} from '../../../model/queteur-stats';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { FirestoreService } from '../../../services/firestore/firestore.service';
+import { QueteurStats } from '../../../model/queteur-stats';
+import { Queteur } from 'src/app/model/queteur';
 
 @Component({
   selector: 'app-queteur-history',
-  templateUrl: './queteur-history.component.html',
-  styleUrls: ['./queteur-history.component.css']
+  templateUrl: './queteur-history.component.html'
 })
 export class QueteurHistoryComponent implements OnInit {
 
   data: QueteurStats[];
   selectedYear: number;
 
-  constructor(private firestoreService: FirestoreService,
-              private queteurService: QueteurService) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private firestoreService: FirestoreService) { }
 
   ngOnInit() {
-    this.queteurService.getQueteur().then(queteur => this.retrieveStats(queteur.queteur_id));
+    this.route.data.subscribe((data: { queteur: Queteur }) => this.retrieveStats(data.queteur.queteur_id));
   }
 
   private retrieveStats(queteurId) {
@@ -36,5 +37,4 @@ export class QueteurHistoryComponent implements OnInit {
       this.selectedYear = year;
     }
   }
-
 }

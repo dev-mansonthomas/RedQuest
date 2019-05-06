@@ -7,8 +7,7 @@ export type TroncState = 'departure' | 'arrival';
 
 @Component({
   selector: 'app-my-slots',
-  templateUrl: './my-slots.component.html',
-  styleUrls: ['./my-slots.component.css']
+  templateUrl: './my-slots.component.html'
 })
 export class MySlotsComponent implements OnInit {
 

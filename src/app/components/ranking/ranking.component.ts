@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatSort, MatPaginator } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 import { merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -7,7 +8,7 @@ import { FirestoreService } from 'src/app/services/firestore/firestore.service';
 import { FirestoreDataSource } from 'src/app/services/firestore/firestore.datasource';
 import { UlRankingByAmount } from 'src/app/model/UlRankingByAmount';
 import { CloudFunctionService } from 'src/app/services/cloud-functions/cloud-function.service';
-import { QueteurService } from 'src/app/services/queteur/queteur.service';
+import { Queteur } from 'src/app/model/queteur';
 
 @Component({
   templateUrl: './ranking.component.html'
@@ -20,14 +21,17 @@ export class RankingComponent implements AfterViewInit, OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+  queteur: Queteur;
   constructor(private firestoreService: FirestoreService,
     private functionsService: CloudFunctionService,
-    private queteurService: QueteurService) {
-  }
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.dataSource = new FirestoreDataSource(this.firestoreService, 'ul_queteur_stats_per_year');
+    this.route.data.subscribe((data: { queteur: Queteur }) => this.queteur = data.queteur);
+    // to avoid JS error:  Expression has changed after it was checked
+    // run a first select:
+    this.dataSource.select('amount');
   }
 
   ngAfterViewInit() {
@@ -44,9 +48,7 @@ export class RankingComponent implements AfterViewInit, OnInit {
     this.sort.active, this.sort.direction, this.paginator.pageSize, this.paginator.pageIndex)
 
   callFunction() {
-    this.queteurService.getQueteur().then(queteur => {
-      const data = { id: queteur.queteur_id };
-      this.functionsService.findQueteurById(data);
-    });
+    this.functionsService.findQueteurById({ id: this.queteur.queteur_id });
   }
+
 }

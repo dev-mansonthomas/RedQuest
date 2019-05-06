@@ -68,38 +68,12 @@ export class RegisterTroncStateComponent {
     });
     this.stepper.next();
   }
-  /*
-     goToSaveStep() {
-      if (!this.validateTronc()) {
-        if (this.type === 'departure') {
-          this.errorMessage = 'La date de départ doit être ultérieure à la date de départ théorique.';
-        } else {
-          this.errorMessage = 'La date de retour doit être ultérieure à la date de départ.';
-        }
-        return;
-      }
-      this.stepper.next();
-    }
 
-    private handleDateTime() {
-      const date = moment(this.dateForm.value);
-      const time = moment(this.timeForm.value);
-      this.dateTime = this.mergeDateAndTime(date, time);
-    }
-
-    private mergeDateAndTime(date, time) {
-      return moment(date.format('YYYY-MM-DD') + ' ' + time.format('HH:mm'));
-    }
-  */
   minDep = () => this.step1Form.get('tronc').value ? new Date(this.type === 'departure' ?
     this.step1Form.get('tronc').value.depart_theorique :
     this.step1Form.get('tronc').value.depart) : new Date()
 
-
   updateTroncDate() {
-    /* if (!this.validateTronc()) {
-       return;
-     }*/
     const selectedTronc = this.step1Form.getRawValue();
     if (selectedTronc.depart === undefined) {
       selectedTronc.depart = this.step2Form.get('startDate').value;
@@ -110,48 +84,6 @@ export class RegisterTroncStateComponent {
     this.isEditable = false;
     this.stepper.next();
   }
-  /*
-    private validateTronc() {
-      if (this.selectedTronc.depart) {
-        return this.dateTime.isSameOrAfter(this.selectedTronc.depart); // registered return date is after departure date
-      } else {
-        return this.dateTime.isSameOrAfter(this.selectedTronc.depart_theorique); // registered departure date
-      }
-    }
-    getTroncDisplay(tronc: Tronc) {
-      if (tronc.depart) {
-        return `id: ${tronc.tronc_queteur_id}
-Tronc n° ${tronc.tronc_id}
-Parti depuis le
-${tronc.depart.format(this.format)}`;
-    }
-    return `id: ${tronc.tronc_queteur_id}
-    Tronc n° ${tronc.tronc_id}
-Départ planifié à
-${tronc.depart_theorique.format(this.format)}`;
-}
-*/
 
-  private isDeparture() {
-    return this.type === 'departure';
-  }
-
-  getStepTitle() {
-    return this.isDeparture() ? 'Départ' : 'Retour';
-  }
-
-  confirmationText() {
-    /*
-    if (this.isDeparture()) {
-      return `Enregistrer un départ
-        du tronc n° ${this.selectedTronc.tronc_id}
-        à ${this.dateTime.format(this.format)}
-        à destination de "${this.selectedTronc.localization}"`;
-    }
-    return `Enregistrer un retour
-        du tronc n° ${this.selectedTronc.tronc_id}
-        à ${this.dateTime.format(this.format)}
-        en provenance de "${this.selectedTronc.localization}"`;
-        */
-  }
+  getStepTitle = () => this.type === 'departure' ? 'Départ' : 'Retour';
 }

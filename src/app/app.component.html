@@ -14,7 +14,7 @@
       <button mat-button routerLinkActive="selected" [routerLink]="['ranking']">Ranking</button>
     </ng-container>
     <span fxFlex></span>
-    <button *ngIf="queteur" mat-button [matMenuTriggerFor]="menuUser" routerLinkActive="selected">
+    <button *ngIf="authentified && queteur" mat-button [matMenuTriggerFor]="menuUser" routerLinkActive="selected">
       {{queteur.first_name}}
       <mat-icon> arrow_drop_down </mat-icon>
     </button>

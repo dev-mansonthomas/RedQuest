@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Queteur } from 'src/app/model/queteur';
-import { QueteurService } from 'src/app/services/queteur/queteur.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-registration-confirmation',
@@ -11,10 +11,10 @@ export class RegistrationConfirmationComponent implements OnInit {
 
   queteur: Queteur;
 
-  constructor(private queteurService: QueteurService) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.queteurService.getQueteur().then(queteur => this.queteur = queteur);
+    this.route.data.subscribe((data: { queteur: Queteur }) => this.queteur = data.queteur);
   }
 
   queteurRegistrationNotApprovedYet(): boolean {

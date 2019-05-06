@@ -24,24 +24,18 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.isLoggedIn().subscribe(authentified => {
-      this.authentified = authentified;
-    });
+    this.authService.isLoggedIn(false).subscribe(authentified => this.authentified = authentified);
     this.authService.onUserConnected().subscribe(user => {
       if (user) {
-        this.queteurService.getQueteur()
-          .then(q => {
-            this.queteur = q;
-            this.connected = true;
-          })
-          .catch(() => this.connected = false);
+        this.connected = true;
+        this.queteurService.getQueteur().subscribe(queteur => {
+          this.queteur = queteur;
+          this.connected = true;
+        });
       } else {
         this.connected = false;
       }
     });
   }
-
-  logout() {
-    this.authService.logout();
-  }
+  logout = () => this.authService.logout();
 }

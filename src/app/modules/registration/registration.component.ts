@@ -7,7 +7,6 @@ import { CloudFunctionService } from 'src/app/services/cloud-functions/cloud-fun
 import { ULDetails } from 'src/app/model/ULDetails';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Queteur } from 'src/app/model/queteur';
-import { QueteurService } from 'src/app/services/queteur/queteur.service';
 
 @Component({
   selector: 'app-registration',
@@ -45,7 +44,6 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private functions: CloudFunctionService,
-    private queteurService: QueteurService,
     private router: Router,
     private zone: NgZone,
     private authService: AuthService) {
@@ -53,11 +51,9 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.authService.onUserConnected().subscribe(user => {
-      if (user != null) {
-        this.queteurService.getQueteur().then(queteur => {
-          if (queteur) {
-            this.zone.run(() => this.router.navigate(['registration/confirmation']));
-          }
+      if (user !== null) {
+        this.route.data.subscribe((data: { queteur: Queteur }) => {
+          this.zone.run(() => this.router.navigate(['registration/confirmation']));
         });
       }
     });

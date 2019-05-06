@@ -1,23 +1,21 @@
-import {Component, OnInit} from '@angular/core';
-import {QueteurService} from '../../../services/queteur/queteur.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { Queteur } from 'src/app/model/queteur';
 
 @Component({
   selector: 'app-my-data',
-  templateUrl: './my-data.component.html',
-  styleUrls: ['./my-data.component.css']
+  templateUrl: './my-data.component.html'
 })
 export class MyDataComponent implements OnInit {
 
   mailto: string;
   ul_email = 'monul@croix-rouge.fr';
 
-  constructor(private queteurService: QueteurService) {
-  }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.queteurService.getQueteur().then(queteur =>
-      this.mailto = `mailto:${this.ul_email}?subject=[RedQuest, ID=${queteur.queteur_id}] Anonymiser mes données`
-    );
+    this.route.data.subscribe((data: { queteur: Queteur }) =>
+      this.mailto = `mailto:${this.ul_email}?subject=[RedQuest, ID=${data.queteur.queteur_id}] Anonymiser mes données`)
   }
-
 }

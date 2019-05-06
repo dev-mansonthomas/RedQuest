@@ -19,9 +19,16 @@
             <ul>
               <li>Queteur id: {{tronc.value.tronc_queteur_id}}</li>
               <li>Tronc n° {{tronc.value.tronc_id}}</li>
-              <li>Départ planifié à
+              <li *ngIf="tronc.value.depart">
+                Parti depuis le
+                <b>{{tronc.value.depart| date:'H'}}h{{tronc.value.depart| date:'mm'}}</b> le
+                <b>{{tronc.value.depart| date:'EEEE d MMMM y'}}</b>
+              </li>
+              <li *ngIf="!tronc.value.depart">
+                Départ planifié à
                 <b>{{tronc.value.depart_theorique| date:'H'}}h{{tronc.value.depart_theorique| date:'mm'}}</b> le
-                <b>{{tronc.value.depart_theorique| date:'EEEE d MMMM y'}}</b> </li>
+                <b>{{tronc.value.depart_theorique| date:'EEEE d MMMM y'}}</b>
+              </li>
             </ul>
             {{tronc.value|json}}
           </div>
@@ -35,7 +42,7 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [editable]="isEditable" label="Départ" [stepControl]="step2Form">
+  <mat-step [editable]="isEditable" [label]="getStepTitle()" [stepControl]="step2Form">
     <form [formGroup]="step2Form" fxLayout="column" fxLayoutGap="20px">
       <div>
         <button mat-flat-button color="warn" matStepperPrevious>Précédent</button>
@@ -64,11 +71,17 @@
       <div>
         <button mat-flat-button color="warn" matStepperPrevious>Précédent</button>
       </div>
-      <div *ngIf="tronc.value">
+      <div *ngIf="tronc.value && type == 'departure'">
 
         Enregister un départ du tronc n° {{tronc.value.tronc_id}} à
         <b>{{startDate.value| date:'H'}}h{{startDate.value| date:'mm'}}</b> le
         <b>{{startDate.value| date:'EEEE d MMMM y'}}</b> à destination de
+        {{tronc.value.localization}}
+      </div>
+      <div *ngIf="tronc.value && type != 'departure'">
+        Enregister un retour du tronc n° {{tronc.value.tronc_id}} à
+        <b>{{startDate.value| date:'H'}}h{{startDate.value| date:'mm'}}</b> le
+        <b>{{startDate.value| date:'EEEE d MMMM y'}}</b> en provenance de
         {{tronc.value.localization}}
       </div>
       <div>
@@ -77,130 +90,5 @@
       </div>
     </div>
   </mat-step>
-  <mat-step label="Confirmation">
-    You are now done.
-    <div>
-      <button mat-flat-button color="warn" matStepperPrevious>Précédent</button>
-    </div>
-  </mat-step>
+  <mat-step label="Confirmation">Tronc validé.</mat-step>
 </mat-vertical-stepper>
-
-<!--
-<form [formGroup]="stepsForm">
-  <mat-vertical-stepper [linear]="true" #stepper2 formArrayName="formArray">
-    <mat-step label="Tronc" formGroupName="0" [stepControl]="formArray.get([0])">
-      <mat-form-field>
-        <mat-label>Tronc</mat-label>
-        <mat-select required formControlName="tronc" #tronc>
-          <mat-option *ngFor="let tronc of getTroncs()" [value]="tronc">{{tronc.name}}</mat-option>
-      </mat-select>
-      </mat-form-field>
-      <div *ngIf="tronc?.value">
-        <u>Detail:</u>
-        <ul>
-          <li>id: {{tronc.value.tronc_queteur_id}}</li>
-          <li>Tronc n° {{tronc.value.tronc_id}}</li>
-          <li>Départ planifié à {{tronc.value.depart_theorique| date:'h:mm'}} le
-            {{tronc.value.depart_theorique| date:'d MMMM y'}} </li>
-        </ul>
-
-      </div>
-
-
-      <button mat-flat-button color="warn" type="button" matStepperNext>Suivant</button>
-
-  </mat-step>
-  <mat-step label="Départ" formGroupName="1" [stepControl]="formArray.get([0])">
-    <mat-form-field>
-      <input matInput formControlName="startDate" [owlDateTimeTrigger]="myDp1" [owlDateTime]="myDp1"
-        placeholder="Inventory expiration date">
-      <mat-icon matSuffix [owlDateTimeTrigger]="myDp1">event</mat-icon>
-      <owl-date-time #myDp1></owl-date-time>
-    </mat-form-field>
-    <pre>{{step2Form.value|json}}</pre>
-
-    <div>
-      <button mat-flat-button color="warn" type="button" matStepperPrevious>Précédent</button>
-      <button mat-flat-button color="warn" type="button" matStepperNext>Suivant</button>
-    </div>
-  </mat-step>
-</mat-vertical-stepper>
-</form>
--->
-<!--
-  
-
-<div class="bs-stepper vertical" [class.departure]="type==='departure'" [class.arrival]="type==='arrival'">
-  <div class="bs-stepper-header" role="tablist">
-  
-<div class="step" data-target="#tronc-choice">
-  <button type="button" class="step-trigger" role="tab" aria-controls="tronc-choice" id="tronc-choice-trigger">
-    <span class="bs-stepper-circle">1</span>
-    <span class="bs-stepper-label">Tronc</span>
-  </button>
-</div>
-<div class="line"></div>
-<div class="step" data-target="#datetime-choice">
-  <button type="button" class="step-trigger" role="tab" aria-controls="datetime-choice" id="datetime-choice-trigger">
-    <span class="bs-stepper-circle">2</span>
-    <span class="bs-stepper-label">{{getStepTitle()}}</span>
-  </button>
-</div>
-<div class="line"></div>
-<div class="step" data-target="#confirm-choice">
-  <button type="button" class="step-trigger" role="tab" aria-controls="confirm-choice" id="confirm-choice-trigger">
-    <span class="bs-stepper-circle">3</span>
-    <span class="bs-stepper-label">Validation</span>
-  </button>
-</div>
-<div class="line"></div>
-<div class="step" data-target="#confirm-message">
-  <button type="button" class="step-trigger" role="tab" aria-controls="confirm-message" id="confirm-message-trigger">
-    <span class="bs-stepper-circle">
-      <i *ngIf="confirmation.error" class="fas fa-times"></i>
-      <i *ngIf="!confirmation.error" class="fas fa-check"></i>
-    </span>
-    <span class="bs-stepper-label">Confirmation</span>
-  </button>
-</div>
-</div>
-
-<div class="bs-stepper-content">
-  <div id="tronc-choice" class="content" role="tabpanel" aria-labelledby="tronc-choice-trigger">
-    <div class="list-group">
-      <button *ngFor="let tronc of getTroncs()" type="button" class="list-group-item list-group-item-action"
-        (click)="selectTronc(tronc)">
-        <pre>{{getTroncDisplay(tronc)}}</pre>
-      </button>
-    </div>
-  </div>
-  <div id="datetime-choice" class="content" role="tabpanel" aria-labelledby="datetime-choice-trigger">
-    <button class="btn btn-primary mb-3" (click)="stepper.previous()">Retour</button>
-    <form action="" autocomplete="off">
-      <div class="form-group">
-        <input type="text" class="form-control" name="name" [formControl]="dateForm" bsDatepicker
-          [bsConfig]="datePickerConfig">
-        <timepicker [formControl]="timeForm" [showMeridian]="false"></timepicker>
-      </div>
-      <div *ngIf="errorMessage" class="text text-danger">
-        <span>
-          {{errorMessage}}
-        </span>
-      </div>
-      <button class="btn btn-primary" (click)="goToSaveStep()">Suivant</button>
-    </form>
-  </div>
-  <div id="confirm-choice" class="content" role="tabpanel" aria-labelledby="confirm-choice-trigger">
-    <button class="btn btn-primary mb-3" (click)="stepper.previous()">Retour</button>
-    <p class="alert alert-info">
-      {{confirmationText()}}
-    </p>
-    <button class="btn btn-primary" (click)="updateTroncDate()">Confirmer</button>
-  </div>
-  <div id="confirm-message" class="content" role="tabpanel" aria-labelledby="confirm-message-trigger">
-    {{confirmation.message}}
-  </div>
-</div>
-</div>
-
--->

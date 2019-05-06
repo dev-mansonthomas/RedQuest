@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -7,25 +8,12 @@ import { environment } from '../../../../environments/environment';
   templateUrl: './quest-point.component.html',
   styleUrls: ['./quest-point.component.css']
 })
-export class QuestPointComponent implements OnInit {
+export class QuestPointComponent {
 
-  // @Input() coordinates: {latitude: number, longitude: number};
-  @Input() latitude: number;
-  @Input() longitude: number;
+  @Input() latitude = 0;
+  @Input() longitude = 0;
 
-  coordinates = {
-    latitude: 48.8515833,
-    longitude: 2.3485891
-  };
+  constructor(public sanitizer: DomSanitizer) { }
 
-  constructor(public sanitizer: DomSanitizer) {
-  }
-
-  ngOnInit() {
-  }
-
-  getUrl(coord): string {
-    return `https://www.google.com/maps/embed/v1/search?q=${this.latitude},${this.longitude}&key=${environment.google_maps_key}`;
-  }
-
+  getUrl = () => `https://www.google.com/maps/embed/v1/search?q=${this.latitude},${this.longitude}&key=${environment.google_maps_key}`;
 }
