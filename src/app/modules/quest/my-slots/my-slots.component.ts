@@ -29,7 +29,11 @@ export class MySlotsComponent implements OnInit {
   }
 
   loadTroncs() {
-    this.cloudFunctions.retrievePreparedTroncs().subscribe(troncs => this.troncs = troncs);
+    // this.cloudFunctions.retrievePreparedTroncs().subscribe(troncs => this.troncs = troncs);
+    const tronc = Tronc.aTronc();
+    tronc.depart = undefined;
+    tronc.arrivee = undefined;
+    this.troncs = [tronc];
   }
 
   switchStateTo(state: TroncState) {
