@@ -1,12 +1,12 @@
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import {Component, NgZone, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Observable} from 'rxjs';
 
-import { CloudFunctionService } from 'src/app/services/cloud-functions/cloud-function.service';
-import { ULDetails } from 'src/app/model/ULDetails';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { Queteur } from 'src/app/model/queteur';
+import {CloudFunctionService} from 'src/app/services/cloud-functions/cloud-function.service';
+import {ULDetails} from 'src/app/model/ULDetails';
+import {AuthService} from 'src/app/services/auth/auth.service';
+import {Queteur} from 'src/app/model/queteur';
 
 @Component({
   selector: 'app-registration',
@@ -43,17 +43,19 @@ export class RegistrationComponent implements OnInit {
   userAuthId: string;
 
   constructor(private route: ActivatedRoute,
-    private functions: CloudFunctionService,
-    private router: Router,
-    private zone: NgZone,
-    private authService: AuthService) {
+              private functions: CloudFunctionService,
+              private router: Router,
+              private zone: NgZone,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
     this.authService.onUserConnected().subscribe(user => {
       if (user !== null) {
         this.route.data.subscribe((data: { queteur: Queteur }) => {
-          this.zone.run(() => this.router.navigate(['registration/confirmation']));
+          if (data.queteur) {
+            this.zone.run(() => this.router.navigate(['registration/confirmation']));
+          }
         });
       }
     });
@@ -102,7 +104,7 @@ export class RegistrationComponent implements OnInit {
 
   loginWithGoogle = () => this.authService.signInGoogleLogin().then(() => {
     console.log('connected with google');
-  })
+  });
 
   loginWithTwitter = () => this.authService.signInTwitterLogin();
 
@@ -119,6 +121,6 @@ export class RegistrationComponent implements OnInit {
     const pass = group.get('password').value;
     const confirmPass = group.get('confirmPassword').value;
 
-    return pass === confirmPass ? null : { notSame: true };
+    return pass === confirmPass ? null : {notSame: true};
   }
 }

@@ -1,4 +1,4 @@
-import {Component, Input, NgZone, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, NgZone, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
