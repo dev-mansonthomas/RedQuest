@@ -76,13 +76,16 @@ export class RegistrationStep2Component implements OnInit {
     this.functions.registerQueteur(this.registeredUser)
       .subscribe(token => {
         this.registeredUser.queteur_registration_token = token.queteur_registration_token;
-        this.firestore.registerQueteur(this.userAuthId, this.registeredUser)
-          .then(() => this.closeModalAndConfirmRegistration())
-          .catch(onrejected => {
-            this.closeModalAndDisplayError();
-            console.log(onrejected);
-            throw onrejected;
-          });
+        this.storeNewQueteur();
+      });
+  }
+
+  private storeNewQueteur() {
+    this.firestore.registerQueteur(this.userAuthId, this.registeredUser)
+      .then(() => this.closeModalAndConfirmRegistration())
+      .catch(onrejected => {
+        this.closeModalAndDisplayError();
+        throw onrejected;
       });
   }
 

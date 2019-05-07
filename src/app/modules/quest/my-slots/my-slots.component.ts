@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChildren } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { Tronc } from '../../../model/tronc';
-import { CloudFunctionService } from '../../../services/cloud-functions/cloud-function.service';
+import {Tronc} from '../../../model/tronc';
+import {CloudFunctionService} from '../../../services/cloud-functions/cloud-function.service';
 
 export type TroncState = 'departure' | 'arrival';
 
@@ -14,7 +14,7 @@ export class MySlotsComponent implements OnInit {
   registerState: TroncState = 'departure';
   troncs: Tronc[];
 
-  confirmation = { error: false, message: '' };
+  confirmation = {error: false, message: ''};
 
 
   constructor(private cloudFunctions: CloudFunctionService) {
@@ -29,11 +29,7 @@ export class MySlotsComponent implements OnInit {
   }
 
   loadTroncs() {
-    // this.cloudFunctions.retrievePreparedTroncs().subscribe(troncs => this.troncs = troncs);
-    const tronc = Tronc.aTronc();
-    tronc.depart = undefined;
-    tronc.arrivee = undefined;
-    this.troncs = [tronc];
+    this.cloudFunctions.retrievePreparedTroncs().subscribe(troncs => this.troncs = troncs);
   }
 
   switchStateTo(state: TroncState) {

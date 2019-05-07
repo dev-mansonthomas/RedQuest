@@ -1,8 +1,9 @@
 <div class="wrapper">
   <button mat-button color="priamry" (click)="refresh()">Rafraîchir</button>
 </div>
+<span *ngIf="troncs.length === 0">Il n'y a aucun tronc prêt pour un départ.</span>
 <!--<pre>{{troncs|json}}</pre>-->
-<mat-vertical-stepper [linear]="true" #stepper>
+<mat-vertical-stepper *ngIf="troncs.length !== 0" [linear]="true" #stepper>
   <mat-step [editable]="isEditable" label="Tronc" [stepControl]="step1Form" color="warn">
     <form [formGroup]="step1Form" fxLayout="column" fxLayoutGap="20px">
       <div fxLayout="row" fxLayoutGap="20px">
@@ -22,12 +23,12 @@
               <li *ngIf="tronc.value.depart">
                 Parti depuis le
                 <b>{{tronc.value.depart| date:'H'}}h{{tronc.value.depart| date:'mm'}}</b> le
-                <b>{{tronc.value.depart| date:'EEEE d MMMM y'}}</b>
+                <b>{{tronc.value.depart| date:'fullDate':'+0200':'fr-FR'}}</b>
               </li>
               <li *ngIf="!tronc.value.depart">
                 Départ planifié à
                 <b>{{tronc.value.depart_theorique| date:'H'}}h{{tronc.value.depart_theorique| date:'mm'}}</b> le
-                <b>{{tronc.value.depart_theorique| date:'EEEE d MMMM y'}}</b>
+                <b>{{tronc.value.depart_theorique| date:'fullDate':'+0200':'fr-FR'}}</b>
               </li>
             </ul>
             {{tronc.value|json}}
@@ -75,13 +76,13 @@
 
         Enregister un départ du tronc n° {{tronc.value.tronc_id}} à
         <b>{{startDate.value| date:'H'}}h{{startDate.value| date:'mm'}}</b> le
-        <b>{{startDate.value| date:'EEEE d MMMM y'}}</b> à destination de
+        <b>{{startDate.value| date:'fullDate':'+0200':'fr-FR'}}</b> à destination de
         {{tronc.value.localization}}
       </div>
       <div *ngIf="tronc.value && type != 'departure'">
         Enregister un retour du tronc n° {{tronc.value.tronc_id}} à
         <b>{{startDate.value| date:'H'}}h{{startDate.value| date:'mm'}}</b> le
-        <b>{{startDate.value| date:'EEEE d MMMM y'}}</b> en provenance de
+        <b>{{startDate.value| date:'fullDate':'+0200':'fr-FR'}}</b> en provenance de
         {{tronc.value.localization}}
       </div>
       <div>
