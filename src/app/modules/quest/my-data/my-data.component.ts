@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
-import { Queteur } from 'src/app/model/queteur';
+import {Queteur} from 'src/app/model/queteur';
 
 @Component({
   selector: 'app-my-data',
@@ -9,13 +9,14 @@ import { Queteur } from 'src/app/model/queteur';
 })
 export class MyDataComponent implements OnInit {
 
-  mailto: string;
+  mailto = 'mailto';
   ul_email = 'monul@croix-rouge.fr';
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.route.data.subscribe((data: { queteur: Queteur }) =>
-      this.mailto = `mailto:${this.ul_email}?subject=[RedQuest, ID=${data.queteur.queteur_id}] Anonymiser mes données`)
+      this.mailto = `mailto:${this.ul_email}?subject=[RedQuest, ID=${data.queteur.queteur_id}] Anonymiser mes données`);
   }
 }

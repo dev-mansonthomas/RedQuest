@@ -9,6 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RegistrationConfirmationComponent implements OnInit {
 
+  mailto = 'mailto';
+  ul_email = 'ulemail';
   queteur: Queteur;
 
   constructor(private route: ActivatedRoute) { }
