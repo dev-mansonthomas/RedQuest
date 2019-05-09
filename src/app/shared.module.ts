@@ -8,8 +8,8 @@ import {
   MatOptionModule, MatMenuModule, MatTabsModule, MatInputModule, MatRadioModule,
   MatDatepickerModule, MatNativeDateModule, MatCardModule, MatDividerModule, MatDialogModule,
   MatIconModule, MatTableModule, MatSortModule, MatPaginatorModule, MatProgressBarModule,
-  MatIconRegistry, MatStepperModule, MatCheckboxModule, MatExpansionModule, MatChipsModule
-} from '@angular/material';
+  MatIconRegistry, MatStepperModule, MatCheckboxModule, MatExpansionModule, MatChipsModule,
+  MatGridListModule} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 
@@ -18,7 +18,7 @@ const MatModules = [
   MatToolbarModule, MatButtonModule, MatFormFieldModule, MatSelectModule, MatOptionModule,
   MatMenuModule, MatProgressBarModule, MatCardModule, MatDividerModule, MatDialogModule,
   MatIconModule, MatTableModule, MatSortModule, MatPaginatorModule, MatCheckboxModule,
-  MatStepperModule, MatExpansionModule, MatChipsModule];
+  MatStepperModule, MatExpansionModule, MatChipsModule, MatGridListModule];
 
 @NgModule({
   declarations: [TimePipe, WeightPipe],
