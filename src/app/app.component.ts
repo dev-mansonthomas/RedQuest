@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { AuthService } from './services/auth/auth.service';
-import { QueteurService } from './services/queteur/queteur.service';
-import { MyLinks, AllLinks } from './model/links';
-import { Queteur } from './model/queteur';
-import { environment } from 'src/environments/environment';
+import {AuthService} from './services/auth/auth.service';
+import {QueteurService} from './services/queteur/queteur.service';
+import {MyLinks, AllLinks} from './model/links';
+import {Queteur} from './model/queteur';
+import {environment} from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -18,24 +18,25 @@ export class AppComponent implements OnInit {
   allLinks = AllLinks;
   env = environment;
   queteur: Queteur = null;
+
   constructor(
     private authService: AuthService,
     private queteurService: QueteurService) {
   }
 
   ngOnInit(): void {
-    this.authService.isLoggedIn(false).subscribe(authentified => this.authentified = authentified);
+    // this.authService.isLoggedIn(false).subscribe(authentified => {
+    //   this.authentified = authentified;
+    // });
     this.authService.onUserConnected().subscribe(user => {
-      if (user) {
-        this.connected = true;
-        this.queteurService.getQueteur().subscribe(queteur => {
-          this.queteur = queteur;
-          this.connected = true;
-        });
-      } else {
-        this.connected = false;
-      }
+      console.log('user:', user);
+      this.authentified = user !== null;
+    });
+    this.queteurService.getQueteur().subscribe(queteur => {
+      this.queteur = queteur;
+      this.connected = true;
     });
   }
+
   logout = () => this.authService.logout();
 }
