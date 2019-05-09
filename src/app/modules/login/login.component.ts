@@ -39,8 +39,12 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.logout();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.authService.onUserConnected().subscribe(user => {
+      if (user) {
+        this.zone.run(() => this.router.navigate(['/homepage']));
+      }
+    });
   }
 
   openDialog = () => this.dialog.open(LostPasswordDialogComponent,
