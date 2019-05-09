@@ -8,8 +8,8 @@
 <div fxLayout="row" fxLayoutAlign="center">
   <div fxFlex="80" fxLayout="row wrap" fxLayoutGap="30px grid" fxLayoutAlign="space-between center">
     <div class="rcqbadge" fxLayout="column" fxLayoutAlign="center center" *ngFor="let badge of badges"
-      [class.earned]="badge.earned">
-      <span class="fa-stack fa-4x">
+      [class.earned]="badge.level > 0">
+      <span class="fa-stack fa-4x level{{badge.level}}">
         <i class="fas fa-certificate fa-stack-2x"></i>
         <i class="fas {{badge.icon}} fa-stack-1x fa-inverse"></i>
       </span>
