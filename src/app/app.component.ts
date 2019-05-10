@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 
 import {AuthService} from './services/auth/auth.service';
 import {QueteurService} from './services/queteur/queteur.service';
-import {MyLinks, AllLinks} from './model/links';
+import {AllLinks, MyLinks} from './model/links';
 import {Queteur} from './model/queteur';
 import {environment} from 'src/environments/environment';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -21,22 +22,34 @@ export class AppComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private queteurService: QueteurService) {
+    private queteurService: QueteurService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
-    // this.authService.isLoggedIn(false).subscribe(authentified => {
-    //   this.authentified = authentified;
-    // });
     this.authService.onUserConnected().subscribe(user => {
-      console.log('user:', user);
       this.authentified = user !== null;
     });
-    this.queteurService.getQueteur().subscribe(queteur => {
-      this.queteur = queteur;
-      this.connected = true;
-    });
+    this.queteurService.getQueteur()
+      .subscribe(queteur => {
+        this.handleQueteur(queteur);
+      }, () => {
+        this.router.navigate(['registration/needed']);
+      });
   }
 
-  logout = () => this.authService.logout();
+  logout = () => {
+    this.authentified = false;
+    this.connected = false;
+    this.authService.logout();
+  }
+
+  private handleQueteur(queteur: Queteur) {
+    this.queteur = queteur;
+    if (queteur.registration_approved) {
+      this.connected = true;
+    } else {
+      this.router.navigate(['registration/confirmation']);
+    }
+  }
 }

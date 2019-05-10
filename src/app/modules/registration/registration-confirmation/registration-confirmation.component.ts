@@ -1,22 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { Queteur } from 'src/app/model/queteur';
-import { ActivatedRoute } from '@angular/router';
+import {Queteur} from 'src/app/model/queteur';
+import {ActivatedRoute} from '@angular/router';
+import {CloudFunctionService} from '../../../services/cloud-functions/cloud-function.service';
+import {ULDetails} from '../../../model/ULDetails';
 
 @Component({
   selector: 'app-registration-confirmation',
   templateUrl: './registration-confirmation.component.html'
 })
 export class RegistrationConfirmationComponent implements OnInit {
-
-  mailto = 'mailto';
-  ul_email = 'ulemail';
   queteur: Queteur;
 
-  constructor(private route: ActivatedRoute) { }
+  ulDetails: ULDetails;
+
+  constructor(private route: ActivatedRoute,
+              private cloudFunctions: CloudFunctionService) {
+  }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { queteur: Queteur }) => this.queteur = data.queteur);
+    this.route.data.subscribe((data: { queteur: Queteur }) => {
+      this.queteur = data.queteur;
+      this.cloudFunctions.findULDetailsByToken(data.queteur.ul_registration_token)
+        .subscribe(ulDetails => this.ulDetails = ulDetails);
+    });
   }
 
   queteurRegistrationNotApprovedYet(): boolean {

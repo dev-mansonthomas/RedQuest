@@ -13,11 +13,29 @@ export class Queteur {
     public queteur_id: number,
     public registration_approved: boolean,
     public reject_reaseon: string,
-    public queteur_registration_token: string
+    public queteur_registration_token: string,
+    public ul_id: number,
+    public rqAutonomousDepartAndReturn: boolean
   ) {
   }
 
-  static aUser(): Queteur {
-    return new Queteur('', '', 1, '', '', '', 3, '', '', 0, null, '', '');
+  static aQueteur(): Queteur {
+    return new Queteur(
+      '',
+      '',
+      1,
+      '',
+      '',
+      '',
+      3,
+      '',
+      '',
+      0,
+      null,
+      '',
+      '',
+      0,
+      false
+    );
   }
 }

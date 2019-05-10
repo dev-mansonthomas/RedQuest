@@ -72,7 +72,7 @@ export class QueteurResolverService implements Resolve<Queteur> {
           return of(queteur);
         }
         console.error('QueteurResolverService not found', queteur);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/registration/needed']);
         return EMPTY;
       }));
   }

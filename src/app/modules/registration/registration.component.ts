@@ -24,7 +24,7 @@ export class RegistrationComponent implements OnInit {
 
   user: firebase.User;
 
-  registeredUser: Queteur = Queteur.aUser();
+  registeredUser: Queteur = Queteur.aQueteur();
 
   loginForm: FormGroup;
 
@@ -83,7 +83,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   private initUser(): Queteur {
-    const user = Queteur.aUser();
+    const user = Queteur.aQueteur();
     if (this.isBenevole1j()) {
       user.nivol = 'benevol1j';
       user.secteur = 3;

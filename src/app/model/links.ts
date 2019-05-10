@@ -1,7 +1,6 @@
 export const MyLinks = [
     { label: 'Mes créneaux', icon: 'calendar_today', route: '/quest/slots' },
     { label: 'Mon historique', icon: 'history', route: '/quest/history' },
-    { label: 'Mes données', icon: 'data_usage', route: '/quest/data' },
     { label: 'Mes badges', icon: 'star_rate', route: '/quest/badges' }
 ];
 

@@ -17,14 +17,13 @@ export class CloudFunctionService {
   constructor(private firebaseFunctions: AngularFireFunctions, private http: HttpClient) {
   }
 
-  findQueteurById(data: any): Observable<any> {
+  findQueteurById(): Observable<any> {
     const func = this.firebaseFunctions.httpsCallable('findQueteurById');
-    return func(data);
+    return func({});
   }
 
   findULDetailsByToken(token: string): Observable<ULDetails> {
-    return this.http.get(this.baseUrl + 'findULDetailsByToken?token=' + token)
-      .pipe(map(result => new ULDetails(result)));
+    return this.http.get<ULDetails>(this.baseUrl + 'findULDetailsByToken?token=' + token);
   }
 
   registerQueteur(user: Queteur): Observable<any> {
