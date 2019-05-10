@@ -13,6 +13,7 @@ export class RegisterTroncStateComponent {
 
   @Output() refreshEvent = new EventEmitter<void>();
   @Output() troncUpdate = new EventEmitter<Tronc>();
+  @Input() readOnly: boolean;
   @Input() type: TroncState;
   @Input() troncs: Tronc[];
 

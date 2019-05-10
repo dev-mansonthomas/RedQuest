@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {CloudFunctionService} from '../cloud-functions/cloud-function.service';
 import {QueteurService} from '../queteur/queteur.service';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,8 @@ export class QueteurUlInfoService {
 
   data: any;
 
-  constructor(private cloudFunctions: CloudFunctionService) {
+  constructor(private cloudFunctions: CloudFunctionService,
+              private queteurService: QueteurService) {
   }
 
   private getQueteurUlInfo(): Promise<any> {
@@ -22,7 +25,7 @@ export class QueteurUlInfoService {
     });
   }
 
-  isSlotsUpdateActivated() {
-    this.getQueteurUlInfo().then(result => console.log(result));
+  isSlotsUpdateActivated(): Observable<boolean> {
+    return this.queteurService.getQueteur().pipe(map(queteur => queteur.rqAutonomousDepartAndReturn));
   }
 }

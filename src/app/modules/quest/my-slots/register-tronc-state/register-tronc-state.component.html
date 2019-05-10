@@ -16,7 +16,7 @@
             </mat-select>
           </mat-form-field>
           <div *ngIf="tronc.value">
-            <u>Detail:</u>
+            <u>Details:</u>
             <ul>
               <li>Queteur id: {{tronc.value.tronc_queteur_id}}</li>
               <li>Tronc n° {{tronc.value.tronc_id}}</li>
@@ -31,7 +31,6 @@
                 <b>{{tronc.value.depart_theorique| date:'fullDate':'+0200':'fr-FR'}}</b>
               </li>
             </ul>
-            {{tronc.value|json}}
           </div>
         </div>
         <div *ngIf="tronc?.value?.latitude" fxFlex="50Ò">
@@ -39,11 +38,11 @@
         </div>
       </div>
       <div>
-        <button mat-flat-button color="warn" (click)="selectTronc()">Suivant</button>
+        <button *ngIf="!readOnly" mat-flat-button color="warn" (click)="selectTronc()">Suivant</button>
       </div>
     </form>
   </mat-step>
-  <mat-step [editable]="isEditable" [label]="getStepTitle()" [stepControl]="step2Form">
+  <mat-step *ngIf="!readOnly" [editable]="isEditable" [label]="getStepTitle()" [stepControl]="step2Form">
     <form [formGroup]="step2Form" fxLayout="column" fxLayoutGap="20px">
       <div>
         <button mat-flat-button color="warn" matStepperPrevious>Précédent</button>
@@ -52,22 +51,12 @@
         <owl-date-time-inline formControlName="startDate" [stepMinute]="stepMinute" [min]="minDep()">
         </owl-date-time-inline>
       </div>
-      <!--
-
-  <mat-form-field>
-    <mat-label>Heure de départ prévue</mat-label>
-    <input matInput formControlName="startDate" [owlDateTimeTrigger]="myDp1" [owlDateTime]="myDp1" [min]="now">
-    <mat-icon matSuffix [owlDateTimeTrigger]="myDp1">event</mat-icon>
-    <owl-date-time #myDp1 [stepMinute]="stepMinute"></owl-date-time>
-  </mat-form-field>
--->
       <div>
         <button mat-flat-button color="warn" matStepperNext>Suivant</button>
       </div>
     </form>
   </mat-step>
-  <mat-step [editable]="isEditable" label="Validation">
-    <!-- [completed]="isok.value=='2'">-->
+  <mat-step *ngIf="!readOnly" [editable]="isEditable" label="Validation">
     <div fxLayout="column" fxLayoutGap="20px">
       <div>
         <button mat-flat-button color="warn" matStepperPrevious>Précédent</button>
@@ -91,5 +80,5 @@
       </div>
     </div>
   </mat-step>
-  <mat-step label="Confirmation">Tronc validé.</mat-step>
+  <mat-step *ngIf="!readOnly" label="Confirmation">Tronc validé.</mat-step>
 </mat-vertical-stepper>

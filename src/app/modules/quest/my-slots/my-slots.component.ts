@@ -17,7 +17,7 @@ export class MySlotsComponent implements OnInit {
 
   confirmation = {error: false, message: ''};
 
-  slotsUpdateActivated = false;
+  slotsReadOnly = true;
 
 
   constructor(private cloudFunctions: CloudFunctionService,
@@ -26,7 +26,8 @@ export class MySlotsComponent implements OnInit {
 
   ngOnInit() {
     this.loadTroncs();
-    this.queteurUlInfoService.isSlotsUpdateActivated();
+    this.queteurUlInfoService.isSlotsUpdateActivated()
+      .subscribe(activated => this.slotsReadOnly = !activated);
   }
 
   refresh() {
