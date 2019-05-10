@@ -4,6 +4,25 @@ $argent : #d7d7d8;
 $or : #ecb731;
 $redcross : #ed1b2e;
 $gris : #999;
+span.ba {
+  padding: 3px 8px; 
+  border-radius:20px;
+  color:white;
+  font-weight: bold;
+  margin: 0 5px;
+  &.l1 {
+    background-color: $bronze;
+  }
+  &.l2 {
+    background-color: $argent;
+  }
+  &.l3 {
+    background-color: $or;
+  }
+  &.l4 {
+    background-color: $redcross;
+  }
+}
 .rcqbadge.earned {
   span.fa-stack {
     &.level1 {
@@ -67,7 +86,7 @@ $gris : #999;
   padding: 5px 10px;
   font-style: inherit;
 }
-
+strong { font-size:1.5em}
 .badgeName {
   padding-top:5px;
   font-size: 20px;
