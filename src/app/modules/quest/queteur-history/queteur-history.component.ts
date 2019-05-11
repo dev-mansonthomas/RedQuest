@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
-import { FirestoreService } from '../../../services/firestore/firestore.service';
-import { QueteurStats } from '../../../model/queteur-stats';
-import { Queteur } from 'src/app/model/queteur';
+import {FirestoreService} from '../../../services/firestore/firestore.service';
+import {QueteurStats} from '../../../model/queteur-stats';
+import {Queteur} from 'src/app/model/queteur';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-queteur-history',
@@ -11,12 +12,15 @@ import { Queteur } from 'src/app/model/queteur';
 })
 export class QueteurHistoryComponent implements OnInit {
 
+  enabled = environment.history_enabled;
+
   data: QueteurStats[];
   selectedYear: number;
 
   constructor(
     private route: ActivatedRoute,
-    private firestoreService: FirestoreService) { }
+    private firestoreService: FirestoreService) {
+  }
 
   ngOnInit() {
     this.route.data.subscribe((data: { queteur: Queteur }) => this.retrieveStats(data.queteur.queteur_id));

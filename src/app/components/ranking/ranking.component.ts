@@ -1,19 +1,22 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatSort, MatPaginator } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
-import { merge } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
+import {MatSort, MatPaginator} from '@angular/material';
+import {ActivatedRoute} from '@angular/router';
+import {merge} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
-import { FirestoreService } from 'src/app/services/firestore/firestore.service';
-import { FirestoreDataSource } from 'src/app/services/firestore/firestore.datasource';
-import { UlRankingByAmount } from 'src/app/model/UlRankingByAmount';
-import { CloudFunctionService } from 'src/app/services/cloud-functions/cloud-function.service';
-import { Queteur } from 'src/app/model/queteur';
+import {FirestoreService} from 'src/app/services/firestore/firestore.service';
+import {FirestoreDataSource} from 'src/app/services/firestore/firestore.datasource';
+import {UlRankingByAmount} from 'src/app/model/UlRankingByAmount';
+import {CloudFunctionService} from 'src/app/services/cloud-functions/cloud-function.service';
+import {Queteur} from 'src/app/model/queteur';
+import {environment} from '../../../environments/environment';
 
 @Component({
   templateUrl: './ranking.component.html'
 })
 export class RankingComponent implements AfterViewInit, OnInit {
+
+  enabled = environment.ranking_enabled;
 
   dataSource: FirestoreDataSource<UlRankingByAmount>;
   displayedColumns = ['last_name', 'tronc_count', 'amount', 'weight', 'time_spent_in_minutes',
@@ -22,9 +25,11 @@ export class RankingComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   queteur: Queteur;
+
   constructor(private firestoreService: FirestoreService,
-    private functionsService: CloudFunctionService,
-    private route: ActivatedRoute) { }
+              private functionsService: CloudFunctionService,
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this.dataSource = new FirestoreDataSource(this.firestoreService, 'ul_queteur_stats_per_year');
@@ -46,9 +51,5 @@ export class RankingComponent implements AfterViewInit, OnInit {
 
   selectPage = () => this.dataSource.select(
     this.sort.active, this.sort.direction, this.paginator.pageSize, this.paginator.pageIndex)
-
-  callFunction() {
-    this.functionsService.findQueteurById({ id: this.queteur.queteur_id });
-  }
 
 }

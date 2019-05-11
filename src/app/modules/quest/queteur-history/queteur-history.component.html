@@ -1,7 +1,12 @@
 <section class="jumb">
   <h2>Mon historique</h2>
+
+  <p *ngIf="!enabled">
+    Cette section est encore en travaux et sera bientôt accessible !
+  </p>
 </section>
-<mat-accordion>
+
+<mat-accordion *ngIf="enabled">
 
   <mat-expansion-panel *ngFor="let year of data">
     <mat-expansion-panel-header>

@@ -1,7 +1,10 @@
 <section class="jumb">
   <h2>Les rankings</h2>
+  <p *ngIf="!enabled">
+    Cette section est encore en travaux et sera bientôt accessible !
+  </p>
 </section>
-<mat-table [dataSource]="dataSource" matSort matSortActive="amount" matSortDirection="desc" matSortDisableClear>
+<mat-table *ngIf="enabled" [dataSource]="dataSource" matSort matSortActive="amount" matSortDirection="desc" matSortDisableClear>
 
   <ng-container matColumnDef="last_name">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Queteur</mat-header-cell>
@@ -44,5 +47,5 @@
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
 </mat-table>
-<mat-paginator [length]="1000" [pageSize]="10" [pageSizeOptions]="[ 5, 10, 25]"></mat-paginator>
-<mat-progress-bar *ngIf="dataSource.loading$ | async" mode="query"></mat-progress-bar>
+<mat-paginator *ngIf="enabled" [length]="1000" [pageSize]="10" [pageSizeOptions]="[ 5, 10, 25]"></mat-paginator>
+<mat-progress-bar *ngIf="enabled && dataSource.loading$ | async" mode="query"></mat-progress-bar>

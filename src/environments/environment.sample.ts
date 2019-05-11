@@ -13,7 +13,10 @@ export const environment = {
     messagingSenderId: 'MESSAGING_SENDER_ID'
   },
   cloudFunctionsBaseUrl: 'CLOUD_FUNCTIONS_BASE_URL',
-  google_maps_key: 'YOUR_GOOGLE_MAPS_EMBED_API_KEY'
+  google_maps_key: 'YOUR_GOOGLE_MAPS_EMBED_API_KEY',
+  ranking_enabled: true,
+  history_enabled: true,
+  badges_enabled: true
 };
 
 /*
