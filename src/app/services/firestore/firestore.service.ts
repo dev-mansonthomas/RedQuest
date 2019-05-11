@@ -19,19 +19,7 @@ export class FirestoreService {
     return this.firestoreDB.collection(dbname, ref =>
       startAt ? ref.orderBy(sortBy, sort).startAfter(startAt).limit(pageSize) : ref.orderBy(sortBy, sort).limit(pageSize)
     ).get();
-  }
-
-  // Two functions below to BE REMOVED (Nicolas)
-  private getAllUlRankingByAmount() {
-    return this.firestoreDB.collection('ul_queteur_stats_per_year')
-      .get();
-  }
-
-  private getUlRankingByAmount(ul: string) {
-    return this.firestoreDB.collection('ul_queteur_stats_per_year',
-      ref => ref.where('ul_id', '==', ul))
-      .snapshotChanges();
-  }
+  };
 
 
   getQueteurStats(queteur_id: string) {
@@ -52,5 +40,18 @@ export class FirestoreService {
       .doc(authId)
       .get()
       .then(doc => doc.data() as Queteur);
+  }
+
+  isQueteurAlreadyRegistered(nivol: string): Promise<Queteur> {
+    return this.firestoreDB.firestore
+      .collection('queteurs')
+      .where('nivol', '==', nivol)
+      .get()
+      .then(query => {
+        if (query.docs.length !== 0) {
+          return query.docs[0].data() as Queteur;
+        }
+        return undefined;
+      });
   }
 }

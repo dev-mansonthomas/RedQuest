@@ -5,7 +5,7 @@ import {QueteurService} from './services/queteur/queteur.service';
 import {AllLinks, MyLinks} from './model/links';
 import {Queteur} from './model/queteur';
 import {environment} from 'src/environments/environment';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +34,9 @@ export class AppComponent implements OnInit {
       .subscribe(queteur => {
         this.handleQueteur(queteur);
       }, () => {
-        this.router.navigate(['registration/needed']);
+        if (this.router.url !== '/login' && this.router.url.indexOf('registration') === -1) {
+          this.router.navigate(['registration/needed']);
+        }
       });
   }
 

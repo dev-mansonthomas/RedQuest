@@ -70,13 +70,20 @@ export class RegistrationStep2Component implements OnInit {
   }
 
   registerUser() {
-    Object.assign(this.registeredUser, this.registrationForm.value);
-    this.registeredUser.birthdate = new Date(this.registeredUser.birthdate).toISOString().slice(0, 10), // to format 'YYYY-MM-DD'
-    this.registeredUser.mobile = '+33' + this.registeredUser.mobile;
-    this.functions.registerQueteur(this.registeredUser)
-      .subscribe(token => {
-        this.registeredUser.queteur_registration_token = token.queteur_registration_token;
-        this.storeNewQueteur();
+    this.firestore.isQueteurAlreadyRegistered(this.nivol.value)
+      .then(alreadyRegistered => {
+        if (alreadyRegistered) {
+          this.error = `Vous êtes déjà inscris sous cette adresse: ${alreadyRegistered.email}`;
+          return;
+        }
+        Object.assign(this.registeredUser, this.registrationForm.value);
+        this.registeredUser.birthdate = new Date(this.registeredUser.birthdate).toISOString().slice(0, 10), // to format 'YYYY-MM-DD'
+          this.registeredUser.mobile = '+33' + this.registeredUser.mobile;
+        this.functions.registerQueteur(this.registeredUser)
+          .subscribe(token => {
+            this.registeredUser.queteur_registration_token = token.queteur_registration_token;
+            this.storeNewQueteur();
+          });
       });
   }
 
