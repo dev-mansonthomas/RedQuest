@@ -41,8 +41,8 @@ environment.ts
 - CAUTION: do not use this environment, unless someone asked you to use it !
 ```
 
- * Run `ng build --configuration prod` to prepare the server with *prod* environment settings.
-* Then run `ng serve --configuration prod` for a dev server.
+ * Run `ng build --configuration production` to prepare the server with *production* environment settings.
+* Then run `ng serve --configuration production` for a dev server.
 
 
 > Notes:
