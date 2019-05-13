@@ -34,7 +34,7 @@ environment.ts
 ### Test server:
 
 * Run `ng build --configuration test` to prepare the server with *test* environment settings.
-* Then run `ng serve --configuration test` for a text server.
+* Then run `ng serve --configuration test` for a test server.
 
 ### Production server:
 ```diff
@@ -42,7 +42,7 @@ environment.ts
 ```
 
  * Run `ng build --configuration production` to prepare the server with *production* environment settings.
-* Then run `ng serve --configuration production` for a dev server.
+* Then run `ng serve --configuration production` for a production server.
 
 
 > Notes:

@@ -12,7 +12,7 @@ export class Queteur {
     public ul_registration_token: string,
     public queteur_id: number,
     public registration_approved: boolean,
-    public reject_reaseon: string,
+    public reject_reason: string,
     public queteur_registration_token: string,
     public ul_id: number,
     public rqAutonomousDepartAndReturn: boolean

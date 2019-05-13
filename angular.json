@@ -37,6 +37,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "progress": true,
               "i18nLocale": "fr",
               "optimization": true,
               "outputHashing": "all",
@@ -63,18 +64,23 @@
                 }
               ],
               "progress": true,
-              "showCircularDependencies": true,
-              "verbose": false,
               "i18nLocale": "fr",
-              "optimization": false,
+              "optimization": true,
               "outputHashing": "all",
-              "sourceMap": true,
-              "extractCss": false,
-              "namedChunks": true,
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": true,
-              "buildOptimizer": false
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
             },
             "test": {
               "fileReplacements": [
@@ -84,18 +90,23 @@
                 }
               ],
               "progress": true,
-              "showCircularDependencies": true,
-              "verbose": false,
               "i18nLocale": "fr",
-              "optimization": false,
+              "optimization": true,
               "outputHashing": "all",
-              "sourceMap": true,
-              "extractCss": false,
-              "namedChunks": true,
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": true,
-              "buildOptimizer": false
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
             }
           }
         },

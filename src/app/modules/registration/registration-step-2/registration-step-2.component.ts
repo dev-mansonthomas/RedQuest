@@ -63,22 +63,23 @@ export class RegistrationStep2Component implements OnInit {
       'birthdate': new FormControl(this.registeredUser.birthdate, Validators.required),
       'mobile': new FormControl(this.registeredUser.mobile, [Validators.required, Validators.pattern('[0-9]{9}')]),
       'nivol': !this.isBenevole1j
-        ? new FormControl(this.registeredUser.nivol, [Validators.required, Validators.pattern('[1-9][0-9]{3,11}[A-Z]')])
+        ? new FormControl(this.registeredUser.nivol, [Validators.required, Validators.pattern('[1-9][0-9]{3,11}[a-zA-Z]')])
         : new FormControl(),
       'secteur': new FormControl({value: this.registeredUser.secteur, disabled: this.isBenevole1j}, Validators.required)
     });
   }
 
   registerUser() {
-    this.firestore.isQueteurAlreadyRegistered(this.nivol.value)
+    this.firestore.isQueteurAlreadyRegistered((this.nivol.value as string).toUpperCase())
       .then(alreadyRegistered => {
         if (alreadyRegistered) {
           this.error = `Vous êtes déjà inscris sous cette adresse: ${alreadyRegistered.email}`;
           return;
         }
         Object.assign(this.registeredUser, this.registrationForm.value);
-        this.registeredUser.birthdate = new Date(this.registeredUser.birthdate).toISOString().slice(0, 10), // to format 'YYYY-MM-DD'
-          this.registeredUser.mobile = '+33' + this.registeredUser.mobile;
+        this.registeredUser.birthdate = new Date(this.registeredUser.birthdate).toISOString().slice(0, 10); // to format 'YYYY-MM-DD'
+        this.registeredUser.mobile = '+33' + this.registeredUser.mobile;
+        this.registeredUser.nivol = this.registeredUser.nivol.toUpperCase();
         this.functions.registerQueteur(this.registeredUser)
           .subscribe(token => {
             this.registeredUser.queteur_registration_token = token.queteur_registration_token;

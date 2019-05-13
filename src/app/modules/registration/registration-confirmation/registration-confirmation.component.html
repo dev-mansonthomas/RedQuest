@@ -5,7 +5,7 @@
     Merci pour votre inscription. Celle-ci est en attente de validation par un cadre de la quête.
   </p>
   <p class="lead" *ngIf="queteurRegistrationRefused()">
-    Votre inscription a été refusée pour la raison suivante: {{queteur.reject_reaseon}}
+    Votre inscription a été refusée pour la raison suivante: {{queteur.reject_reason}}
   </p>
   <div *ngIf="queteurRegistrationNotRefused()">
     <h3>Vos informations:</h3>
