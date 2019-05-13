@@ -64,23 +64,18 @@
                 }
               ],
               "progress": true,
+              "showCircularDependencies": true,
+              "verbose": false,
               "i18nLocale": "fr",
-              "optimization": true,
+              "optimization": false,
               "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
+              "sourceMap": true,
+              "extractCss": false,
+              "namedChunks": true,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
+              "vendorChunk": true,
+              "buildOptimizer": false
             },
             "test": {
               "fileReplacements": [

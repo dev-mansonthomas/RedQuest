@@ -9,23 +9,27 @@ import {RegisterTroncStateComponent} from './my-slots/register-tronc-state/regis
 import {SharedModule} from 'src/app/shared.module';
 import {QuestPointComponent} from 'src/app/modules/quest/quest-point/quest-point.component';
 import {QueteurResolverService} from 'src/app/services/queteur/queteur.service';
+import {TroncHistoryComponent} from './tronc-history/tronc-history.component';
+import {TroncHistoryDialogComponent} from './tronc-history-dialog/tronc-history-dialog.component';
 
 const ROUTES: Routes = [
-    { path: '', component: QueteurHistoryComponent, resolve: { queteur: QueteurResolverService } },
-    { path: 'slots', component: MySlotsComponent, resolve: { queteur: QueteurResolverService } },
-    { path: 'badges', component: BadgesComponent, resolve: { queteur: QueteurResolverService } },
-    { path: 'quest-point', component: QuestPointComponent, resolve: { queteur: QueteurResolverService } },
-    { path: '**', redirectTo: '' }
+  {path: '', component: QueteurHistoryComponent, resolve: {queteur: QueteurResolverService}},
+  {path: 'slots', component: MySlotsComponent, resolve: {queteur: QueteurResolverService}},
+  {path: 'badges', component: BadgesComponent, resolve: {queteur: QueteurResolverService}},
+  {path: 'quest-point', component: QuestPointComponent, resolve: {queteur: QueteurResolverService}},
+  {path: '**', redirectTo: ''}
 ];
 
 @NgModule({
-    imports: [
-        CommonModule, SharedModule, RouterModule.forChild(ROUTES)],
-    declarations: [
-        QueteurHistoryComponent, MySlotsComponent,
-        BadgesComponent, RegisterTroncStateComponent, QuestPointComponent
-    ]
+  imports: [
+    CommonModule, SharedModule, RouterModule.forChild(ROUTES)],
+  entryComponents: [TroncHistoryDialogComponent],
+  declarations: [
+    QueteurHistoryComponent, MySlotsComponent,
+    BadgesComponent, RegisterTroncStateComponent, QuestPointComponent, TroncHistoryComponent, TroncHistoryDialogComponent
+  ]
 })
-export class QuestModule { }
+export class QuestModule {
+}
 
 

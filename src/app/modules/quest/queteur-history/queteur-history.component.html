@@ -6,19 +6,30 @@
   </p>
 </section>
 
-<mat-accordion *ngIf="enabled">
+<div *ngIf="enabled">
 
-  <mat-expansion-panel *ngFor="let year of data">
-    <mat-expansion-panel-header>
-      {{year.year}}
-    </mat-expansion-panel-header>
+  <mat-card>
+    <mat-card-title>Année en cours</mat-card-title>
+    <mat-list role="list">
+      <app-tronc-history *ngFor="let troncStat of statsTroncCurrentYear; let i = index" [troncStat]="troncStat" [troncIndex]="i+1"></app-tronc-history>
+    </mat-list>
 
-    <mat-chip-list>
-      <mat-chip color="warn" selected>{{year.amount | number}}€</mat-chip>
-      <mat-chip color="primary" selected>{{year.time_spent_in_minutes | time}}</mat-chip>
-      <mat-chip color="accent" selected>{{year.weight | weight}}</mat-chip>
-    </mat-chip-list>
+  </mat-card>
 
-  </mat-expansion-panel>
+  <mat-accordion>
 
-</mat-accordion>
+    <mat-expansion-panel *ngFor="let year of data">
+      <mat-expansion-panel-header>
+        {{year.year}}
+      </mat-expansion-panel-header>
+
+      <mat-chip-list>
+        <mat-chip color="warn" selected>{{year.amount | number}}€</mat-chip>
+        <mat-chip color="primary" selected>{{year.time_spent_in_minutes | time}}</mat-chip>
+        <mat-chip color="accent" selected>{{year.weight | weight}}</mat-chip>
+      </mat-chip-list>
+
+    </mat-expansion-panel>
+
+  </mat-accordion>
+</div>

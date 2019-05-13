@@ -1,0 +1,13 @@
+mat-chip {
+  margin: 1em;
+}
+
+.tronc-index {
+  width: auto !important;
+  min-height: 32px !important;
+  height: 1px !important;
+}
+
+.mat-list-item {
+  height: auto !important;
+}

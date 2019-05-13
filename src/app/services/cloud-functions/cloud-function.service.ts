@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import {ULDetails} from '../../model/ULDetails';
 import {map} from 'rxjs/operators';
 import {Queteur} from '../../model/queteur';
+import {HistoriqueTroncQueteur} from '../../model/historiqueTroncQueteur';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,9 @@ export class CloudFunctionService {
 
   troncStateUpdate(troncUpdate: {isDepart: boolean, date: string, tqId: number}): Observable<any> {
     return this.firebaseFunctions.httpsCallable('tronc_setDepartOrRetour')(troncUpdate);
+  }
+
+  historiqueTroncQueteur(): Observable<HistoriqueTroncQueteur[]> {
+    return this.firebaseFunctions.httpsCallable('historiqueTroncQueteur')({});
   }
 }
