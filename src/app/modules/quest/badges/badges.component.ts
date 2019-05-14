@@ -69,5 +69,5 @@ export class BadgesComponent implements OnInit {
     if (this.score < this.badges.length * this.levels[this.levels.length - 1].mult) {
       setTimeout(this.random, 500 + Math.random() * 1000);
     }
-  };
+  }
 }

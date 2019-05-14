@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import {Tronc} from '../../../model/tronc';
 import {CloudFunctionService} from '../../../services/cloud-functions/cloud-function.service';
-import {QueteurUlInfoService} from '../../../services/queteur-ul-info/queteur-ul-info.service';
+import {QueteurService} from '../../../services/queteur/queteur.service';
 
 export type TroncState = 'departure' | 'arrival';
 
@@ -21,12 +21,12 @@ export class MySlotsComponent implements OnInit {
 
 
   constructor(private cloudFunctions: CloudFunctionService,
-              private queteurUlInfoService: QueteurUlInfoService) {
+              private queteurService: QueteurService) {
   }
 
   ngOnInit() {
     this.loadTroncs();
-    this.queteurUlInfoService.isSlotsUpdateActivated()
+    this.queteurService.isSlotsUpdateActivated()
       .subscribe(activated => this.slotsReadOnly = !activated);
   }
 

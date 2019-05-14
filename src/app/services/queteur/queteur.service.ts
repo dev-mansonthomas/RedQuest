@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Resolve, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Observable, of, EMPTY, Subscriber} from 'rxjs';
-import {take, mergeMap} from 'rxjs/operators';
+import {take, mergeMap, map} from 'rxjs/operators';
 import {FirestoreService} from '../firestore/firestore.service';
 
 import {Queteur} from '../../model/queteur';
@@ -20,6 +20,10 @@ export class QueteurService {
   gotIt = <T>(o: Subscriber<T>, q: T) => {
     o.next(q);
     o.complete();
+  }
+
+  isSlotsUpdateActivated(): Observable<boolean> {
+    return this.getQueteur().pipe(map(queteur => queteur.rqAutonomousDepartAndReturn));
   }
 
   getQueteur(): Observable<Queteur> {
