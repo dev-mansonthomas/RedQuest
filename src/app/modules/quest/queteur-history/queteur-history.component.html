@@ -8,7 +8,7 @@
 
 <div *ngIf="enabled">
 
-  <mat-card>
+  <mat-card *ngIf="statsTroncCurrentYear.length > 0">
     <mat-card-title>Année en cours</mat-card-title>
     <mat-action-list role="list" style="width: 100%;">
       <app-tronc-history *ngFor="let troncStat of statsTroncCurrentYear; let i = index" [troncStat]="troncStat" [troncIndex]="i+1"></app-tronc-history>
@@ -22,6 +22,7 @@
       <mat-expansion-panel-header>
         {{year.year}}
       </mat-expansion-panel-header>
+      <h3>Au total, en {{year.year}}, vous avez quêté:</h3>
 
       <mat-chip-list>
         <mat-chip color="warn" selected>{{year.amount | number}}€</mat-chip>
