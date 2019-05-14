@@ -14,6 +14,8 @@
 </mat-form-field>
 
 
+<div class="table-container">
+
 <mat-table *ngIf="enabled" [dataSource]="dataSource" matSort matSortActive="amount" matSortDirection="desc"
            matSortDisableClear>
 
@@ -64,3 +66,4 @@
 </mat-table>
 <mat-paginator *ngIf="enabled" [length]="1000" [pageSize]="10" [pageSizeOptions]="[ 5, 10, 25]"></mat-paginator>
 <mat-progress-bar *ngIf="enabled && dataSource.loading$ | async" mode="query"></mat-progress-bar>
+</div>
