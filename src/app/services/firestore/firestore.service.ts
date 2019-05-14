@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {map} from 'rxjs/operators';
 
 import {Queteur} from '../../model/queteur';
 
@@ -12,12 +11,24 @@ export class FirestoreService {
   constructor(private firestoreDB: AngularFirestore) {
   }
 
-  getCount = () => this.firestoreDB.collection('ul_queteur_stats_per_year').get().pipe(map(snap => snap.size));
-
-  select = (dbname: string, sortBy: string, asort = 'desc', pageSize = 10, startAt = null) => {
+  selectUlStats = (dbname: string,
+                   sortBy: string,
+                   ul: number,
+                   year: number,
+                   asort = 'desc',
+                   pageSize = 10,
+                   startAt = null) => {
     const sort = ((asort as firebase.firestore.OrderByDirection) ? asort : 'desc') as firebase.firestore.OrderByDirection;
-    return this.firestoreDB.collection(dbname, ref =>
-      startAt ? ref.orderBy(sortBy, sort).startAfter(startAt).limit(pageSize) : ref.orderBy(sortBy, sort).limit(pageSize)
+    return this.firestoreDB.collection(dbname, ref => {
+        let query = ref
+          .where('ul_id', '==', ul)
+          .where('year', '==', year)
+          .orderBy(sortBy, sort);
+        if (startAt) {
+          query = query.startAfter(startAt);
+        }
+        return query.limit(pageSize);
+      }
     ).get();
   };
 

@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "ul_queteur_stats_per_year",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "ul_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "amount",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
