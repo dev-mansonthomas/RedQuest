@@ -1,5 +1,5 @@
 export class Queteur {
-
+  public badges: any;
   constructor(
     public last_name: string,
     public first_name: string,

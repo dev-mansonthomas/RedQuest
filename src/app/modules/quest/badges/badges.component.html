@@ -55,7 +55,7 @@
     <span class="tag level{{badge.level}}">{{levels[badge.level].name}}</span>
     <div fxFlex="15px"></div>
     <div fxFlex="140px">
-      <span class="fa-stack fa-4x level{{badge.level}}">
+      <span [@collect]="badge.level" class="fa-stack fa-4x levela{{badge.level}}">
         <i class="fas fa-certificate fa-stack-2x"></i>
         <i class="fas {{badge.icon}} fa-stack-1x fa-inverse"></i>
       </span>
