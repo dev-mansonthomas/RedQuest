@@ -1,0 +1,7 @@
+mat-card {
+  padding: 0 !important;
+}
+
+.mat-card-title {
+  margin: 0 16px;
+}

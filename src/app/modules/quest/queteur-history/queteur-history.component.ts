@@ -10,7 +10,8 @@ import {HistoriqueTroncQueteur} from '../../../model/historiqueTroncQueteur';
 
 @Component({
   selector: 'app-queteur-history',
-  templateUrl: './queteur-history.component.html'
+  templateUrl: './queteur-history.component.html',
+  styleUrls: ['./queteur-history.component.css']
 })
 export class QueteurHistoryComponent implements OnInit {
 

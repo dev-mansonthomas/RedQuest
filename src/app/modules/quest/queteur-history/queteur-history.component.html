@@ -10,9 +10,9 @@
 
   <mat-card>
     <mat-card-title>Année en cours</mat-card-title>
-    <mat-list role="list">
+    <mat-action-list role="list" style="width: 100%;">
       <app-tronc-history *ngFor="let troncStat of statsTroncCurrentYear; let i = index" [troncStat]="troncStat" [troncIndex]="i+1"></app-tronc-history>
-    </mat-list>
+    </mat-action-list>
 
   </mat-card>
 
