@@ -3,19 +3,20 @@ import {CollectionViewer} from '@angular/cdk/collections';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {FirestoreService} from '../../services/firestore/firestore.service';
 import {catchError, finalize, map, tap} from 'rxjs/operators';
+import {UlRankingByAmount} from '../../model/UlRankingByAmount';
 
-export class RankingDatasource<T> implements DataSource<T> {
+export class RankingDatasource implements DataSource<UlRankingByAmount> {
 
-  private objSubject = new BehaviorSubject<T[]>([]);
+  private objSubject = new BehaviorSubject<UlRankingByAmount[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 
-  private data: T[];
+  private data: UlRankingByAmount[];
 
   constructor(private firestoreService: FirestoreService) {
   }
 
-  connect(collectionViewer: CollectionViewer): Observable<T[] | ReadonlyArray<T>> {
+  connect(collectionViewer: CollectionViewer): Observable<UlRankingByAmount[] | ReadonlyArray<UlRankingByAmount>> {
     console.log('Connecting data source');
     return this.objSubject.asObservable();
   }
@@ -35,10 +36,9 @@ export class RankingDatasource<T> implements DataSource<T> {
     this.firestoreService.getUlStatsOrderedBy(sortBy, sortDirection, ul_id, year)
       .pipe(
         catchError(error => of(error)),
-        map((f: firebase.firestore.QuerySnapshot) => f.docs.map(e => e.data() as T)),
         tap(f => console.log('[FirestoreDataSource] Retrieved objects:', f)),
         finalize(() => this.loadingSubject.next(false)))
-      .subscribe((objs: T[]) => {
+      .subscribe((objs: UlRankingByAmount[]) => {
         this.data = objs;
         this.selectPage(0, pageSize);
       });

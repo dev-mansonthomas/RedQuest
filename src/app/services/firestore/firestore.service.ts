@@ -4,6 +4,7 @@ import {AngularFirestore, QueryDocumentSnapshot, QuerySnapshot} from '@angular/f
 import {Queteur} from '../../model/queteur';
 import {UlRankingByAmount} from '../../model/UlRankingByAmount';
 import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 
 @Injectable({
@@ -41,12 +42,13 @@ export class FirestoreService {
       .get();
   }
 
-  getUlStatsOrderedBy(orderBy: string, sortDirection: 'desc' | 'asc', ul_id: number, year: number): Observable<QuerySnapshot> {
+  getUlStatsOrderedBy(orderBy: string, sortDirection: 'desc' | 'asc', ul_id: number, year: number): Observable<UlRankingByAmount[]> {
     return this.firestoreDB.collection('ul_queteur_stats_per_year',
       ref => ref.where('ul_id', '==', ul_id)
         .where('year', '==', year)
         .orderBy(orderBy, sortDirection)
-    ).get();
+    ).get()
+      .pipe(map((f: firebase.firestore.QuerySnapshot) => f.docs.map(e => e.data() as UlRankingByAmount)));
   }
 
   registerQueteur(userId: string, user: Queteur) {

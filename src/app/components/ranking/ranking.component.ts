@@ -17,7 +17,7 @@ export class RankingComponent implements AfterViewInit, OnInit {
 
   enabled = environment.ranking_enabled;
 
-  dataSource: RankingDatasource<UlRankingByAmount>;
+  dataSource: RankingDatasource;
   displayedColumns = ['last_name', 'tronc_count', 'amount', 'weight', 'time_spent_in_minutes',
     'unique_point_quete_count', 'year'];
   years = [2016, 2017, 2018, 2019];
@@ -37,8 +37,6 @@ export class RankingComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.dataSource = new RankingDatasource(this.firestoreService);
-    // to avoid JS error:  Expression has changed after it was checked
-    // run a first selectUlStats:
     this.route.data.subscribe((data: { queteur: Queteur }) => {
       this.queteur = data.queteur;
       this.ul_id = this.queteur.ul_id;
@@ -54,12 +52,17 @@ export class RankingComponent implements AfterViewInit, OnInit {
     });
     this.paginator.page.subscribe(() => this.dataSource.selectPage(this.paginator.pageIndex, this.paginator.pageSize));
     this.dataSource.selectUlStats(
-      this.sort.active, this.ul_id, this.year, this.sort.direction as 'desc' | 'asc', this.paginator.pageSize, this.paginator.pageIndex);
+      this.sort.active,
+      this.ul_id,
+      this.year,
+      this.sort.direction as 'desc' | 'asc',
+      this.paginator.pageSize
+    );
   }
 
-  selectPage = () => this.dataSource.selectUlStats(
-    this.sort.active, this.ul_id, this.year, this.sort.direction as 'desc' | 'asc', this.paginator.pageSize, this.paginator.pageIndex
-  );
+  selectPage() {
+    this.dataSource.selectUlStats(this.sort.active, this.ul_id, this.year, this.sort.direction as 'desc' | 'asc', this.paginator.pageSize);
+  }
 
   whereAmI() {
     const queteurRank = this.dataSource.retrieveRankFor(this.queteur.queteur_id);
