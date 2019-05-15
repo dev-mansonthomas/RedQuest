@@ -5,25 +5,26 @@
 -->
 </section>
 
-<form autocomplete="off" novalidate [formGroup]="loginForm" fxLayout="column">
-  <mat-card class="login mat-elevation-z0" style="margin:0 15%">
-    <mat-card-title></mat-card-title>
+<mat-card class="login mat-elevation-z0" style="margin:0 15%">
+  <mat-card-title></mat-card-title>
+  <mat-card-content fxLayout="column" fxLayoutGap="30px">
+    <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" style="zoom:1.6" class="socialButtons">
+      <button mat-flat-button class="btn-facebook" title="Facebook" (click)="loginWithFacebook()">
+        <i class="fa fa-facebook fa-lg"></i>
+      </button>
+      <button mat-flat-button class="btn-google-plus" title="Google" (click)="loginWithGoogle()">
+        <i class="fa fa-google fa-lg"></i>
+      </button>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+      <hr fxFlex>
+      <span style="font-size:1.4em">Ou</span>
+      <hr fxFlex>
+    </div>
+  </mat-card-content>
+  <form autocomplete="off" novalidate [formGroup]="loginForm" fxLayout="column" (submit)="loginWithEmailPassword()">
     <mat-card-content fxLayout="column" fxLayoutGap="30px">
-      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" style="zoom:1.6" class="socialButtons">
-        <button mat-flat-button class="btn-facebook" title="Facebook" (click)="loginWithFacebook()">
-          <i class="fa fa-facebook fa-lg"></i>
-        </button>
-        <button mat-flat-button class="btn-google-plus" title="Google" (click)="loginWithGoogle()">
-          <i class="fa fa-google fa-lg"></i>
-        </button>
-      </div>
-
-      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
-        <hr fxFlex>
-        <span style="font-size:1.4em">Ou</span>
-        <hr fxFlex>
-      </div>
-
       <mat-form-field fxFlex appearance="outline" hideRequiredMarker="true">
         <mat-label>Email</mat-label>
         <input matInput type="text" formControlName="email" required>
@@ -42,8 +43,8 @@
       <div *ngIf="errorMessage"> {{errorMessage}} </div>
     </mat-card-content>
     <mat-card-actions fxLayout="row" fxLayoutAlign="center">
-      <button [disabled]="loginForm.invalid" mat-flat-button color="warn" type="button"
-        (click)="loginWithEmailPassword()"> Se connecter </button>
+      <button [disabled]="loginForm.invalid" mat-flat-button color="warn" type="button" type="submit"> Se connecter
+      </button>
     </mat-card-actions>
-  </mat-card>
-</form>
+  </form>
+</mat-card>

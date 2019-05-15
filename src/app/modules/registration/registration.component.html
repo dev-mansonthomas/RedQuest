@@ -14,25 +14,27 @@
     <button mat-flat-button [routerLink]="['/login']" mat-button>J'ai déjà un compte !</button>
   </section>
 
-  <form autocomplete="off" novalidate [formGroup]="loginForm">
-    <mat-card class="loginmat-elevation-z0" style="margin:0 15%">
-      <mat-card-title> </mat-card-title>
+
+  <mat-card class="loginmat-elevation-z0" style="margin:0 15%">
+    <mat-card-title> </mat-card-title>
+    <mat-card-content fxLayout="column" fxLayoutGap="30px">
+      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" style="zoom:1.6" class="socialButtons">
+        <button mat-flat-button class="btn-facebook" title="Facebook" (click)="loginWithFacebook()">
+          <i class="fa fa-facebook fa-lg"></i>
+        </button>
+        <button mat-flat-button class="btn-google-plus" title="Google" (click)="loginWithGoogle()">
+          <i class="fa fa-google fa-lg"></i>
+        </button>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+        <hr fxFlex>
+        <span style="font-size:1.4em">Ou</span>
+        <hr fxFlex>
+      </div>
+    </mat-card-content>
+    <form autocomplete="off" novalidate [formGroup]="loginForm">
       <mat-card-content fxLayout="column" fxLayoutGap="30px">
-        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" style="zoom:1.6" class="socialButtons">
-          <button mat-flat-button class="btn-facebook" title="Facebook" (click)="loginWithFacebook()">
-            <i class="fa fa-facebook fa-lg"></i>
-          </button>
-          <button mat-flat-button class="btn-google-plus" title="Google" (click)="loginWithGoogle()">
-            <i class="fa fa-google fa-lg"></i>
-          </button>
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
-          <hr fxFlex>
-          <span style="font-size:1.4em">Ou</span>
-          <hr fxFlex>
-        </div>
-
         <div fxLayout="column">
 
           <mat-form-field fxFlex appearance="outline">
@@ -68,8 +70,8 @@
         <button [disabled]="loginForm.invalid" mat-flat-button color="warn" type="button"
           (click)="signingUpWithEmailAndPassword()">Créer un compte</button>
       </mat-card-actions>
-    </mat-card>
-  </form>
+    </form>
+  </mat-card>
 </div>
 <app-registration-step-2 *ngIf="step === REGISTERING" [registeredUser]="registeredUser"
   [isBenevole1j]="ulDetails && isBenevole1j()" [userAuthId]="userAuthId"></app-registration-step-2>
