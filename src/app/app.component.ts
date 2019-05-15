@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 
 import {AuthService} from './services/auth/auth.service';
 import {QueteurService} from './services/queteur/queteur.service';
@@ -12,7 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   connected = false;
   authentified = false;
   myLinks = MyLinks;
@@ -30,11 +30,14 @@ export class AppComponent implements OnInit {
     this.authService.onUserConnected().subscribe(user => {
       this.authentified = user !== null;
     });
+  }
+
+  ngAfterViewInit(): void {
     this.queteurService.getQueteur()
       .subscribe(queteur => {
         this.handleQueteur(queteur);
       }, () => {
-        if (this.router.url !== '/login' && this.router.url.indexOf('registration') === -1) {
+        if (window.location.pathname.indexOf('login') === -1 && window.location.pathname.indexOf('registration') === -1) {
           this.router.navigate(['registration/needed']);
         }
       });
@@ -44,7 +47,7 @@ export class AppComponent implements OnInit {
     this.authentified = false;
     this.connected = false;
     this.authService.logout();
-  }
+  };
 
   private handleQueteur(queteur: Queteur) {
     this.queteur = queteur;
@@ -54,4 +57,6 @@ export class AppComponent implements OnInit {
       this.router.navigate(['registration/confirmation']);
     }
   }
+
+
 }
