@@ -39,7 +39,7 @@ export class BadgesComponent implements OnInit {
     'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ' +
     'ullamco laboris nisi ut aliquip ex ea commodo consequat';
   badges = [
-    { icon: 'fa-thumbs-up', name: '1ère quète', desc: '1ère quète', id: 'badge01', level: 0 },
+    { icon: 'fa-thumbs-up', name: '1ère quête', desc: '1ère quête', id: 'badge01', level: 0 },
     { icon: 'fa-calendar', name: 'Calendrier', desc: 'Calendrier', id: 'badge02', level: 0 },
     { icon: 'fa-flag', name: 'Nom du badge', desc: this.lorem, id: 'badge03', level: 0 },
     { icon: 'fa-comments', name: 'Nom du badge', desc: this.lorem, id: 'badge04', level: 0 },
