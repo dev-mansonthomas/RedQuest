@@ -20,7 +20,6 @@ export class AuthService {
   constructor(private router: Router, private angularFireAuth: AngularFireAuth) {
     this.user = this.angularFireAuth.user;
     this.user.subscribe(user => {
-      console.log(user);
       this.userDetails = user;
     });
     this.angularFireAuth.auth.getRedirectResult().then(result => {
