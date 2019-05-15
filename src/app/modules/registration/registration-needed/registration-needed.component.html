@@ -1,57 +1,77 @@
 <div fxLayout="column" fxLayoutAlign="center">
 
-  <div fxFlex="300px" class='hero'></div>
+  <div fxHide.xs="true" fxFlex="300px" class='hero'></div>
+  <div fxHide.gt-xs="true" fxFlex="100px" class='hero'></div>
+  <h2 fxHide.xs="true" class="mat-display-2">RedQuest: l’application mobile compagnon du quêteur !</h2>
+  <h2 fxHide.gt-xs="true" style="text-align:center; font-size:1.9em; white-space: pre">Le compagnon du quêteur !</h2>
   <div>
-    <h2>RedQuest: l’application mobile compagnon du quêteur !</h2>
-
-    <p>
-
-      L’inscription est déléguée aux quêteurs, vous n’avez plus qu’à associer l’inscription avec un compte existant ou
-      la valider pour créer un nouveau quêteur.
-    </p>
-
-    <p>
-      Lors de l’inscription d’un bénévole, il est demandé son NIVOL. Une documentation explique comment un bénévole peut
-      retrouver son nivol.
-
-    </p>
 
     <dl>
-
-      <dt>Une section astuces de quête :</dt>
+      <dt>
+        <mat-icon color="warn">verified_user</mat-icon>Inscription requise
+      </dt>
       <dd>
-        La vidéo réalisée l’année dernière et des sections textuelles. Vos contributions sont les bienvenues ici (compte
-        gmail requis, je vous donnerais l’accès dès que je vois la demande (je suis toujours en décalage horaire +6h))
+        <p>Pour continuer, il est nécessaire de s'inscrire.
+          Pour cela veuillez cliquer sur le lien d'inscription que vous avez reçu par mail, ou scanner le QRcode affiché
+          dans votre local.
+        </p>
+        <p>
+          L’inscription est déléguée aux quêteurs, vous n’avez plus qu’à associer l’inscription avec un compte existant
+          ou la valider pour créer un nouveau quêteur.
+        </p>
+
+        <p>
+          Lors de l’inscription d’un bénévole, il est demandé son NIVOL. Une documentation explique comment un bénévole
+          peut retrouver son nivol.
+        </p>
       </dd>
-      <dt>Une section “Mes Créneaux” :</dt>
-      <dd> cela rappel ou et à quelle heure le quêteur doit quêter.
-        Optionellement, le quêteur peut enregistrer son départ et son retour. (la fonction n’est pas encore activée)
-      </dd>
-      <dt>Historique de mes troncs :</dt>
-      <dd>Dès que vous aurez compté le tronc d’un quêteur, le montant, poids, temps de quête et lieu sera affiché.
-      </dd>
-      <dt>Mes Badges :</dt>
-      <dd>(pas encore activée) Au fur et a mesure que les troncs du quêteur sont comptés, il gagnera des badges en
-        fonction de son activités. Le but étant de motiver le quêteur à quêter plus</dd>
-      <dt>Classement :</dt>
-      <dd>(pas encore activé) Le top des quêteurs de l’UL selon plusieurs axes. L’idée est toujours de motiver les
-        quêteurs à quêter un peu plus.</dd>
     </dl>
 
-    L’application est en développement, nous allons déployer les fonctions pas encore activées au cours de la semaine.
-    N’hésitez pas à nous faire part des bugs, améliorations souhaités, suggestions.
-    On ne pourra probablement pas prendre tout en compte, mais on notera les remarques pour l’année prochaine.
 
   </div>
-
   <mat-divider></mat-divider>
+  <div fxLayout="row" fxFill fxLayoutGap="20px">
+    <div fxLayout="column" fxFlex.xs fxFlex.gt-xs="50">
+      <dl>
+        <dt>
+          <mat-icon color="warn">contact_support</mat-icon>Mes astuces
+        </dt>
+        <dd>
+          La vidéo réalisée l’année dernière et des sections textuelles. <br>
+          Vos contributions sont les bienvenues ici !
+        </dd>
+        <dt>
+          <mat-icon color="warn">calendar_today</mat-icon>Ma quète
+        </dt>
+        <dd>Cela rappelle où et à quelle heure le quêteur doit quêter.
+          Optionellement, le quêteur peut enregistrer son départ et son retour<sup>*</sup>. 
+        </dd>
+        <dt>
+          <mat-icon color="warn">history</mat-icon>Mes troncs
+        </dt>
+        <dd>Dès que vous aurez compté le tronc d’un quêteur, les montant, poids, temps de quête et lieu seront affichés.
+        </dd>
+        <dt>
+          <mat-icon color="warn">star_rate</mat-icon>Mes badges<sup>*</sup>
+        </dt>
+        <dd>Au fur et à mesure que les troncs du quêteur sont comptés, il gagnera des badges en
+          fonction de son activité. Le but étant de motiver le quêteur à quêter plus !</dd>
+        <dt>
+          <mat-icon color="warn">cake</mat-icon>Mon classement<sup>*</sup>
+        </dt>
+        <dd>Le top des quêteurs de l’UL selon plusieurs axes. L’idée est toujours de motiver les
+          quêteurs à quêter un peu plus...</dd>
+      </dl>
 
-  <h2>Inscription requise</h2>
-  <p>
-    Bienvenue sur RedQuest ! Pour continuer, il est nécessaire de s'inscrire.
-  </p>
-  <p>
-    Pour cela veuillez cliquer sur le lien d'inscription que vous avez reçu par mail, ou scanner le QRcode affiché dans
-    votre local.
-  </p>
+    </div>
+    <div fxHide.xs="true" fxFlex="50" fxLayout="column" fxLayoutAlign="center center" class="hero2">
+      <div fxFlex></div>
+      <!--   <span fxFlex="200px"></span>
+      <mat-icon color="warn" fontSet="fa" fontIcon="fa-plus" style="font-size:25em"></mat-icon> -->
+    </div>
+  </div>
+  <p>* : fonctionalité pas encore déployée.</p>
+<!--   <p><i> L’application est en développement, nous allons déployer les fonctions pas encore activées au cours de la
+      semaine.</i></p> -->
+  <p><i> N’hésitez pas à nous faire part des bugs, améliorations souhaitées et suggestions.</i></p>
 </div>
