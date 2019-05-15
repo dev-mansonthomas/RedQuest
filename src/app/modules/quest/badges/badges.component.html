@@ -1,0 +1,70 @@
+<section class="jumb" style='position:relative'>
+  <h2>Mes badges</h2>
+  <p class="lead">
+    Vous retrouverez ici des badges à débloquer.<br>
+    Suivez la progression de vos quêtes au travers d'un jeu de badges déclinés en 4 niveaux:
+    <span class="ba l1">Bronze</span>, <span class="ba l2">Argent</span>, <span class="ba l3">Or</span> et <span
+      class="ba l4">Rubis</span> !<br><br><br>
+      <strong>Collectez les tous !</strong>
+  </p>
+  <p *ngIf="!enabled">
+    Cette section est encore en travaux et sera bientôt accessible !
+  </p>
+
+  <span *ngIf="enabled"
+    style="position: absolute; right: 25px; top: 45px; font-size:80px; color:lightblue; font-weight:bolder; text-shadow: 0 0 2px black">{{score/(levels[levels.length-1].mult*badges.length)|percent}}</span>
+</section>
+
+
+<div *ngIf="enabled" fxLayout="row" fxLayoutAlign="center">
+  <div fxLayout="row wrap" fxLayoutGap="0 grid" fxLayoutAlign="center center">
+
+    <ng-template ngFor let-level [ngForOf]="levels" let-last="last" let-idx="index">
+      <div class="rcqbadge" fxLayout="column" fxLayoutAlign="center center" [class.earned]="idx > 0">
+        <span class="fa-stack fa-4x level{{idx}}">
+          <i class="badge">{{count(idx)}}</i>
+          <i class="fas fa-certificate fa-stack-2x"></i>
+          <small class="fa-stack-1x fa-inverse">{{count(idx)*level.mult}}</small>
+        </span>
+        <b class="badgeName">{{level.name}}</b>
+        <small *ngIf="level.mult<2"><strong>{{level.mult}}</strong> point par badge</small>
+        <small *ngIf="level.mult>1"><strong>{{level.mult}}</strong> points par badge</small>
+      </div>
+      <div *ngIf="!last" class="operator"><span class="fas fa-3x fa-plus"></span></div>
+      <div *ngIf="last" class="operator"><span style="padding-left: 20px" class="fas fa-3x fa-equals"></span></div>
+    </ng-template>
+
+    <div class="rcqbadge earned" fxLayout="column" fxLayoutAlign="center center">
+      <span class="fa-stack fa-4x total">
+        <i class="badge">{{count()}}</i>
+        <i class="fas fa-certificate fa-stack-2x"></i>
+        <small class="fa-stack-1x fa-inverse">{{score}}</small>
+      </span>
+      <span class="badgeName">points acquis</span>
+      <small>sur un total de <strong>{{badges.length*levels[levels.length-1].mult}}</strong> points</small>
+    </div>
+  </div>
+</div>
+
+<br><br>
+
+<mat-grid-list *ngIf="enabled" [cols]="breakpoint" rowHeight="200" (window:resize)="onResize($event)" gutterSize="20">
+  <mat-grid-tile class="rcqbadge " *ngFor="let badge of badges" [class.earned]="badge.level > 0"
+    [class.mat-elevation-z4]="badge.level > 0" [class.mat-elevation-z1]="badge.level == 0" fxLayout="row"
+    fxLayoutGap="15px" fxLayoutAlign="start center" style='background:floralwhite'>
+    <span class="tag level{{badge.level}}">{{levels[badge.level].name}}</span>
+    <div fxFlex="15px"></div>
+    <div fxFlex="140px">
+      <span [@collect]="badge.level" class="fa-stack fa-4x levela{{badge.level}}">
+        <i class="fas fa-certificate fa-stack-2x"></i>
+        <i class="fas {{badge.icon}} fa-stack-1x fa-inverse"></i>
+      </span>
+    </div>
+    <div fxFlex fxLayout="column" fxLayoutAlign="stretch" fxFill>
+      <div fxFlex="15px"></div>
+      <h2>{{badge.name}}</h2>
+      <span>{{badge.desc}}</span>
+    </div>
+    <div fxFlex="15px"></div>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -1,5 +1,5 @@
 export class Queteur {
-
+  public badges: any;
   constructor(
     public last_name: string,
     public first_name: string,
@@ -12,12 +12,30 @@ export class Queteur {
     public ul_registration_token: string,
     public queteur_id: number,
     public registration_approved: boolean,
-    public reject_reaseon: string,
-    public queteur_registration_token: string
+    public reject_reason: string,
+    public queteur_registration_token: string,
+    public ul_id: number,
+    public rqAutonomousDepartAndReturn: boolean
   ) {
   }
 
-  static aUser(): Queteur {
-    return new Queteur('', '', 1, '', '', '', 3, '', '', 0, null, '', '');
+  static aQueteur(): Queteur {
+    return new Queteur(
+      '',
+      '',
+      1,
+      '',
+      '',
+      '',
+      3,
+      '',
+      '',
+      0,
+      null,
+      '',
+      '',
+      0,
+      false
+    );
   }
 }

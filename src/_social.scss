@@ -1,0 +1,193 @@
+
+@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css);
+.socialButtons {
+    button {
+        color: white;
+        opacity: 0.9;
+        &:hover {
+            color: white;
+            cursor: pointer;
+            opacity: 1;
+        }
+    }
+    .btn-facebook {
+        background: #3b5998;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #172d5e
+        }
+        &:focus {
+            background: #fff;
+            color: #3b5998;
+            border-color: #3b5998;
+        }
+    }
+    .btn-twitter {
+        background: #00aced;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #043d52
+        }
+        &:focus {
+            background: #fff;
+            color: #00aced;
+            border-color: #00aced;
+        }
+    }
+    .btn-google-plus {
+        background: #c32f10;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #6b1301
+        }
+        &:focus {
+            background: #fff;
+            color: #c32f10;
+            border-color: #c32f10
+        }
+    }
+    .btn-soundcloud {
+        background: #ff8800;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #c73e04
+        }
+        &:focus {
+            background: #fff;
+            color: #ff8800;
+            border-color: #ff8800
+        }
+    }
+    .btn-github {
+        background: #666666;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #333333
+        }
+        &:focus {
+            background: #fff;
+            color: #666666;
+            border-color: #666666
+        }
+    }
+    .btn-steam {
+        background: #878787;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #292929
+        }
+        &:focus {
+            background: #fff;
+            color: #878787;
+            border-color: #878787
+        }
+    } 
+    .btn-pinterest {
+        background: #cc2127;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #780004
+        }
+        &:focus {
+            background: #fff;
+            color: #cc2127;
+            border-color: #cc2127
+        }
+    }
+    .btn-vimeo {
+        background: #1ab7ea;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #162221
+        }
+        &:focus {
+            background: #fff;
+            color: #1ab7ea;
+            border-color: #1ab7ea
+        }
+    }
+    .btn-lastfm {
+        background: #c3000d;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #5e0208
+        }
+        &:focus {
+            background: #fff;
+            color: #c3000d;
+            border-color: #c3000d
+        }
+    }
+    .btn-yahoo {
+        background: #400191;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #230052
+        }
+        &:focus {
+            background: #fff;
+            color: #400191;
+            border-color: #400191
+        }
+    }
+    .btn-vk {
+        background: #45668e;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #1a3352
+        }
+        &:focus {
+            background: #fff;
+            color: #45668e;
+            border-color: #45668e
+        }
+    }
+    .btn-spotify {
+        background: #7ab800;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #3a5700
+        }
+        &:focus {
+            background: #fff;
+            color: #7ab800;
+            border-color: #7ab800
+        }
+    }
+    .btn-linkedin {
+        background: #0976b4;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #004269
+        }
+        &:focus {
+            background: #fff;
+            color: #0976b4;
+            border-color: #0976b4
+        }
+    }
+    .btn-stumbleupon {
+        background: #eb4924;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #943019
+        }
+        &:focus {
+            background: #fff;
+            color: #eb4924;
+            border-color: #eb4924
+        }
+    }
+    .btn-tumblr {
+        background: #35465c;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+            background: #142030
+        }
+        &:focus {
+            background: #fff;
+            color: #35465c;
+            border-color: #35465c
+        }
+    }
+}

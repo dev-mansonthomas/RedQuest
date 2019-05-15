@@ -1,0 +1,199 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "ul_queteur_stats_per_year",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "ul_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "year",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "weight",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ul_queteur_stats_per_year",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "ul_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "year",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "tronc_count",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ul_queteur_stats_per_year",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "ul_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "year",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "unique_point_quete_count",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ul_queteur_stats_per_year",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "ul_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "year",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "amount",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ul_queteur_stats_per_year",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "ul_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "year",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "tronc_count",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ul_queteur_stats_per_year",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "ul_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "year",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "amount",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ul_queteur_stats_per_year",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "ul_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "year",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "time_spent_in_minutes",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ul_queteur_stats_per_year",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "ul_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "year",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "weight",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ul_queteur_stats_per_year",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "ul_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "year",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "time_spent_in_minutes",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ul_queteur_stats_per_year",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "ul_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "year",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "unique_point_quete_count",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ul_queteur_stats_per_year",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "ul_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "amount",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

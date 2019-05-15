@@ -1,5 +1,3 @@
-import {Moment} from 'moment';
-import * as moment from 'moment';
 
 export class Tronc {
   constructor(
@@ -7,9 +5,9 @@ export class Tronc {
     public queteur_id: number,
     public point_quete_id: number,
     public tronc_id: number,
-    public depart_theorique: Moment,
-    public depart: Moment,
-    public arrivee: Moment,
+    public depart_theorique: Date,
+    public depart: Date,
+    public arrivee: Date,
     public name: string,
     public latitude: number,
     public longitude: number,
@@ -18,10 +16,9 @@ export class Tronc {
     public city: string,
     public advice: string,
     public localization: string
-  ) {
-  }
+  ) { }
 
   public static aTronc(): Tronc {
-    return new Tronc(0, 0, 0, 0, moment(), moment(), moment(), '', 0, 0, '', '', '', '', '');
+    return new Tronc(0, 0, 0, 0, new Date(), new Date(), new Date(), '', 0, 0, '', '', '', '', '');
   }
 }

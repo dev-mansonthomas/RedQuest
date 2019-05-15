@@ -1,0 +1,49 @@
+<section class="jumb">
+  <h2>S'identifier</h2>
+<!--
+  <button mat-flat-button [routerLink]="['/registration']" mat-button>Je n'ai pas de compte</button>
+-->
+</section>
+
+<form autocomplete="off" novalidate [formGroup]="loginForm" fxLayout="column">
+  <mat-card class="login mat-elevation-z0" style="margin:0 15%">
+    <mat-card-title></mat-card-title>
+    <mat-card-content fxLayout="column" fxLayoutGap="30px">
+      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" style="zoom:1.6" class="socialButtons">
+        <button mat-flat-button class="btn-facebook" title="Facebook" (click)="loginWithFacebook()">
+          <i class="fa fa-facebook fa-lg"></i>
+        </button>
+        <button mat-flat-button class="btn-google-plus" title="Google" (click)="loginWithGoogle()">
+          <i class="fa fa-google fa-lg"></i>
+        </button>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+        <hr fxFlex>
+        <span style="font-size:1.4em">Ou</span>
+        <hr fxFlex>
+      </div>
+
+      <mat-form-field fxFlex appearance="outline" hideRequiredMarker="true">
+        <mat-label>Email</mat-label>
+        <input matInput type="text" formControlName="email" required>
+        <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+          <div *ngIf="email.errors?.required"> L'email est requis. </div>
+          <div *ngIf="email.errors?.email"> L'email n'est pas valide </div>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex appearance="outline" hideRequiredMarker="true">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput type="password" formControlName="password" required>
+        <mat-hint align="end">
+          <a (click)="openDialog()" mat-button>J'ai oublié mon mot de passe</a>
+        </mat-hint>
+      </mat-form-field>
+      <div *ngIf="errorMessage"> {{errorMessage}} </div>
+    </mat-card-content>
+    <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+      <button [disabled]="loginForm.invalid" mat-flat-button color="warn" type="button"
+        (click)="loginWithEmailPassword()"> Se connecter </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

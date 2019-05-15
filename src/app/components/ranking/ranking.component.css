@@ -1,0 +1,8 @@
+.mat-table, .mat-paginator {
+  min-width: 530px;
+}
+
+.table-container {
+  margin: 0 -10%;
+  overflow-x: scroll;
+}

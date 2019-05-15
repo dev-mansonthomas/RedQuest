@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>ID: {{troncStat.id}}</h1>
+<div mat-dialog-content>
+  <u>Details:</u>
+  <ul>
+    <li>Point de quête: {{troncStat.point_quete}}</li>
+    <li>Tronc n° {{troncStat.tronc_id}}</li>
+    <li>Départ théorique: {{troncStat.depart_theorique|date:'medium':'+0200':'fr-FR'}}</li>
+    <li>Départ: {{troncStat.depart|date:'medium':'+0200':'fr-FR'}}</li>
+    <li>Retour: {{troncStat.retour|date:'medium':'+0200':'fr-FR'}}</li>
+    <li>Comptage: {{troncStat.comptage|date:'medium':'+0200':'fr-FR'}}</li>
+    <li>Total: {{troncStat.amount}}€</li>
+    <li>Don CB: {{troncStat.don_creditcard}}€</li>
+    <li>Don chèque: {{troncStat.don_cheque}}€</li>
+  </ul>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Fermer</button>
+</div>

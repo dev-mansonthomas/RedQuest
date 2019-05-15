@@ -1,0 +1,85 @@
+<div class="wrapper">
+  <button mat-button color="priamry" (click)="refresh()">Rafraîchir</button>
+</div>
+<span *ngIf="troncs.length === 0 && type==='departure'">Il n'y a aucun tronc prêt pour un départ</span>
+<span *ngIf="troncs.length === 0 && type==='arrival'">Vous n'êtes pas en train de quêter!</span>
+
+<mat-vertical-stepper *ngIf="troncs.length !== 0" [linear]="true" #stepper>
+  <mat-step [editable]="isEditable" label="Tronc" [stepControl]="step1Form" color="warn">
+    <form [formGroup]="step1Form" fxLayout="column" fxLayoutGap="20px">
+      <div fxLayout="row" fxLayoutGap="20px">
+        <div fxLayout="column" fxLayoutGap="20px" fxFlex="50">
+
+          <mat-form-field>
+            <mat-label>Tronc</mat-label>
+            <mat-select required formControlName="tronc">
+              <mat-option *ngFor="let t of getTroncs()" [value]="t">[{{t.tronc_id}}] {{t.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div *ngIf="tronc.value">
+            <u>Details:</u>
+            <ul>
+              <li>Queteur id: {{tronc.value.tronc_queteur_id}}</li>
+              <li>Tronc n° {{tronc.value.tronc_id}}</li>
+              <li *ngIf="tronc.value.depart">
+                Parti depuis le
+                <b>{{tronc.value.depart| date:'H'}}h{{tronc.value.depart| date:'mm'}}</b> le
+                <b>{{tronc.value.depart| date:'fullDate':'+0200':'fr-FR'}}</b>
+              </li>
+              <li *ngIf="!tronc.value.depart">
+                Départ planifié à
+                <b>{{tronc.value.depart_theorique| date:'H'}}h{{tronc.value.depart_theorique| date:'mm'}}</b> le
+                <b>{{tronc.value.depart_theorique| date:'fullDate':'+0200':'fr-FR'}}</b>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div *ngIf="tronc?.value?.latitude" fxFlex="50Ò">
+          <app-quest-point [latitude]="tronc.value.latitude" [longitude]="tronc.value.longitude"></app-quest-point>
+        </div>
+      </div>
+      <div>
+        <button *ngIf="!readOnly" mat-flat-button color="warn" (click)="selectTronc()">Suivant</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step *ngIf="!readOnly" [editable]="isEditable" [label]="getStepTitle()" [stepControl]="step2Form">
+    <form [formGroup]="step2Form" fxLayout="column" fxLayoutGap="20px">
+      <div>
+        <button mat-flat-button color="warn" matStepperPrevious>Précédent</button>
+      </div>
+      <div *ngIf="tronc.value">
+        <owl-date-time-inline formControlName="startDate" [stepMinute]="stepMinute" [min]="minDep()">
+        </owl-date-time-inline>
+      </div>
+      <div>
+        <button mat-flat-button color="warn" matStepperNext>Suivant</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step *ngIf="!readOnly" [editable]="isEditable" label="Validation">
+    <div fxLayout="column" fxLayoutGap="20px">
+      <div>
+        <button mat-flat-button color="warn" matStepperPrevious>Précédent</button>
+      </div>
+      <div *ngIf="tronc.value && type == 'departure'">
+
+        Enregister un départ du tronc n° {{tronc.value.tronc_id}} à
+        <b>{{startDate.value| date:'H'}}h{{startDate.value| date:'mm'}}</b> le
+        <b>{{startDate.value| date:'fullDate':'+0200':'fr-FR'}}</b> à destination de
+        {{tronc.value.localization}}
+      </div>
+      <div *ngIf="tronc.value && type != 'departure'">
+        Enregister un retour du tronc n° {{tronc.value.tronc_id}} à
+        <b>{{startDate.value| date:'H'}}h{{startDate.value| date:'mm'}}</b> le
+        <b>{{startDate.value| date:'fullDate':'+0200':'fr-FR'}}</b> en provenance de
+        {{tronc.value.localization}}
+      </div>
+      <div>
+        <button mat-flat-button color="warn" (click)="updateTroncDate()">Confirmer</button>
+        <button mat-flat-button (click)="stepper.reset()">Annuler</button>
+      </div>
+    </div>
+  </mat-step>
+  <mat-step *ngIf="!readOnly" label="Confirmation">Tronc validé.</mat-step>
+</mat-vertical-stepper>

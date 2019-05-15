@@ -1,26 +1,37 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
+
 import {Queteur} from '../../model/queteur';
-import {AuthService} from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
 
-  constructor(private authService: AuthService, private firestoreDB: AngularFirestore) {
+  constructor(private firestoreDB: AngularFirestore) {
   }
 
-  getUlRankingByAmount(ul: string) {
-    return this.firestoreDB.collection('ul_queteur_stats_per_year',
-      ref => ref.where('ul_id', '==', ul))
-      .snapshotChanges();
-  }
+  selectUlStats = (dbname: string,
+                   sortBy: string,
+                   ul: number,
+                   year: number,
+                   asort = 'desc',
+                   pageSize = 10,
+                   startAt = null) => {
+    const sort = ((asort as firebase.firestore.OrderByDirection) ? asort : 'desc') as firebase.firestore.OrderByDirection;
+    return this.firestoreDB.collection(dbname, ref => {
+        let query = ref
+          .where('ul_id', '==', ul)
+          .where('year', '==', year)
+          .orderBy(sortBy, sort);
+        if (startAt) {
+          query = query.startAfter(startAt);
+        }
+        return query.limit(pageSize);
+      }
+    ).get();
+  };
 
-  getAllUlRankingByAmount() {
-    return this.firestoreDB.collection('ul_queteur_stats_per_year')
-      .get();
-  }
 
   getQueteurStats(queteur_id: string) {
     return this.firestoreDB.collection('ul_queteur_stats_per_year', ref => ref.where('queteur_id', '==', queteur_id))
@@ -28,15 +39,30 @@ export class FirestoreService {
   }
 
   registerQueteur(userId: string, user: Queteur) {
-    return this.firestoreDB.collection('queteurs').doc(userId).set(Object.assign({}, user));
+    return this.firestoreDB
+      .collection('queteurs')
+      .doc(userId)
+      .set(Object.assign({}, user));
   }
 
   getStoredQueteur(authId: string): Promise<Queteur> {
-    Number(1)
     return this.firestoreDB.firestore
       .collection('queteurs')
       .doc(authId)
       .get()
       .then(doc => doc.data() as Queteur);
+  }
+
+  isQueteurAlreadyRegistered(nivol: string): Promise<Queteur> {
+    return this.firestoreDB.firestore
+      .collection('queteurs')
+      .where('nivol', '==', nivol)
+      .get()
+      .then(query => {
+        if (query.docs.length !== 0) {
+          return query.docs[0].data() as Queteur;
+        }
+        return undefined;
+      });
   }
 }

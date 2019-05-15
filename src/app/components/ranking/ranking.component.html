@@ -1,27 +1,69 @@
-<div class="container">
-  <table class="table" sortable-table (sorted)="onSorted($event)">
-    <thead>
-    <tr>
-      <th sortable-column="name" scope="col">Queteur</th>
-      <th sortable-column="tronc_count" scope="col">Nombre de tronc</th>
-      <th sortable-column="amount" scope="col">Montant total</th>
-      <th sortable-column="weight" scope="col">poids</th>
-      <th sortable-column="time_spent_in_minutes" scope="col">Temps total</th>
-      <th sortable-column="unique_point_quete_count" scope="col">Lieux de quête</th>
-      <th sortable-column="year" scope="col">Année</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let ranking of rankings | paginate: {itemsPerPage: 10, currentPage: page }">
-      <td>{{ranking.first_name}} {{ranking.last_name.toUpperCase()}}</td>
-      <td>{{ranking.tronc_count}}</td>
-      <td>{{ranking.amount | number}}€</td>
-      <td>{{ranking.weight | weight}}</td>
-      <td>{{ranking.time_spent_in_minutes | time: {small: true} }}</td>
-      <td>{{ranking.unique_point_quete_count}}</td>
-      <td>{{ranking.year}}</td>
-    </tr>
-    </tbody>
-  </table>
-  <pagination-controls (pageChange)="page = $event" previousLabel="Précédent" nextLabel="Suivant" [autoHide]="true" [responsive]="true"></pagination-controls>
+<section class="jumb">
+  <h2>Les rankings</h2>
+  <p *ngIf="!enabled">
+    Cette section est encore en travaux et sera bientôt accessible !
+  </p>
+</section>
+
+<mat-form-field>
+  <mat-label>Année</mat-label>
+  <mat-select [(ngModel)]="year" (selectionChange)="selectPage()">
+    <mat-option *ngFor="let selectYear of years" [value]="selectYear"> {{selectYear}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+
+<div class="table-container">
+
+<mat-table *ngIf="enabled" [dataSource]="dataSource" matSort matSortActive="amount" matSortDirection="desc"
+           matSortDisableClear>
+
+  <ng-container matColumnDef="last_name">
+    <mat-header-cell *matHeaderCellDef>Queteur</mat-header-cell>
+    <mat-cell *matCellDef="let ranking" data-label="Queteur">{{ranking.first_name|titlecase}}
+      {{ranking.last_name|uppercase}}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="tronc_count">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre de troncs</mat-header-cell>
+    <mat-cell *matCellDef="let ranking" data-label="Nombre de troncs">{{ranking.tronc_count||0}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="amount">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Montant total</mat-header-cell>
+    <mat-cell *matCellDef="let ranking" data-label="Montant total">{{ranking.amount||0 |number:'1.0-2':'fr-FR' }}
+      &euro;
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="weight">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Poids</mat-header-cell>
+    <mat-cell *matCellDef="let ranking" data-label="Poids">{{ranking.weight||0 | weight}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="time_spent_in_minutes">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Temps total</mat-header-cell>
+    <mat-cell *matCellDef="let ranking" data-label="Temps total"> {{ranking.time_spent_in_minutes||0 | time: {small:
+      true} }}
+    </mat-cell>
+
+  </ng-container>
+  <ng-container matColumnDef="unique_point_quete_count">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Lieux de quête</mat-header-cell>
+    <mat-cell *matCellDef="let ranking" data-label="Lieux de quête">{{ranking.unique_point_quete_count}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="year">
+    <mat-header-cell *matHeaderCellDef>Année</mat-header-cell>
+    <mat-cell *matCellDef="let ranking" data-label="Année">{{ranking.year}}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+<mat-paginator *ngIf="enabled" [length]="1000" [pageSize]="10" [pageSizeOptions]="[ 5, 10, 25]"></mat-paginator>
+<mat-progress-bar *ngIf="enabled && dataSource.loading$ | async" mode="query"></mat-progress-bar>
 </div>

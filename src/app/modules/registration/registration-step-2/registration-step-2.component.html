@@ -1,0 +1,71 @@
+<div fxLayout="column">
+  <section class="jumb">
+    <h2>Inscription</h2>
+    <p class="title">
+      <b>Merci !</b> Vous voilà connecté! Pour finaliser votre inscription, nous avons besoin de quelques informations
+      supplémentaires.
+
+    </p>
+    <mat-divider></mat-divider>
+    <p class="title">
+      Aucune de ces informations ne sera transmise à des tiers, elles ne nous sont utiles que pour la quête, et pour
+      vous contacter en cas de problème.
+      Une fois ce formulaire validé, votre inscription devra être validée par un cadre de la quête.
+    </p>
+  </section>
+
+  <form autocomplete="off" [formGroup]="registrationForm" fxLayout="column" fxLayoutGap="20px">
+    <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex>
+        <input matInput type="text" placeholder="Nom" required formControlName="last_name">
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <input matInput type="text" placeholder="Prénom" required formControlName="first_name">
+      </mat-form-field>
+    </div>
+
+    <mat-radio-group formControlName="man" fxLayout="row" fxLayoutGap="20px">
+      <mat-radio-button [value]="0">Femme</mat-radio-button>
+      <mat-radio-button [value]="1">Homme</mat-radio-button>
+    </mat-radio-group>
+
+    <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex>
+        <input matInput [matDatepicker]="picker" placeholder="Date de naissance" required formControlName="birthdate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-hint>Pour nous assurer que les mineurs ne sont pas envoyés sur des lieux de quêtes dans des conditions
+          inadaptées.</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <span matPrefix>+33 &nbsp;</span>
+        <input matInput type="text" placeholder="Numéro de téléphone portable" required formControlName="mobile">
+        <mat-hint>Pour vous contacter pendant vos créneaux de quête, en cas de problème.</mat-hint>
+      </mat-form-field>
+    </div>
+    <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex hintLabel="Veuillez entrer votre NIVOL sans les 0 au début.">
+        <input matInput type="text" placeholder="Nivol" required formControlName="nivol">
+        <a matSuffix target="_blank" href="https://docs.google.com/document/d/1OKUckdQhvPFFo6xH86kPSnL6R7RyVqSz3PZzRIIvgR8"><mat-icon color="warn">info</mat-icon></a>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Secteur</mat-label>
+        <mat-select required formControlName="secteur">
+          <mat-option [value]="1" [disabled]="isBenevole1j">social</mat-option>
+          <mat-option [value]="2" [disabled]="isBenevole1j">secours</mat-option>
+          <mat-option [value]="3" [disabled]="!isBenevole1j">Bénévole d'un jour</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div *ngIf="error" class="alert alert-danger" role="alert">
+      {{error}}
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center">
+      <button [disabled]="registrationForm.invalid" mat-flat-button color="warn" type="button" (click)="registerUser()"
+        data-toggle="modal" data-target="#waiting" data-backdrop="static" data-keyboard="false">S'inscrire </button>
+    </div>
+  </form>
+  <br>
+</div>

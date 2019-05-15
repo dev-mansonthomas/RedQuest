@@ -1,0 +1,94 @@
+
+$bronze : #b4a996;
+$argent : #d7d7d8;
+$or : #ecb731;
+$redcross : #ed1b2e;
+$gris : #999;
+span.ba {
+  padding: 3px 8px; 
+  border-radius:20px;
+  color:white;
+  font-weight: bold;
+  margin: 0 5px;
+  &.l1 {
+    background-color: $bronze;
+  }
+  &.l2 {
+    background-color: $argent;
+  }
+  &.l3 {
+    background-color: $or;
+  }
+  &.l4 {
+    background-color: $redcross;
+  }
+}
+.rcqbadge.earned {
+  span.fa-stack {
+    &.level1 {
+      color: $bronze;
+    }
+    &.level2 {
+      color: $argent;
+    }
+    &.level3 {
+      color: $or;
+    }
+    &.level4 {
+      color: $redcross;
+    }
+    &.total {
+      color: lightblue;
+    }
+    i.fa-certificate {
+      text-shadow: 1px 3px 4px black;
+    }
+  }
+  span {
+    font-weight: bolder;
+  }
+}
+.rcqbadge:not(.earned) {
+  span.fa-stack { color: #FFF; text-shadow: 0 0 4px #AAA; }
+}
+
+.tag {
+  width: 200px;
+  position: absolute;
+  top: 10px; right: -75px;
+  left: auto;
+  text-align: center;
+  line-height: 5px;
+  letter-spacing: 1px;
+  transform: rotate(45deg);
+  padding: 10px 0;
+  color: white;
+  &.level0 { color: $gris; background: whitesmoke; border:2px dashed $gris; font-size:0.8em }
+  &.level1 { background-color: $bronze; }
+  &.level2 { background-color: $argent; }
+  &.level3 { background-color: $or; }
+  &.level4 { background-color: $redcross; }
+}
+.operator {
+  padding-bottom:45px !important
+}
+.badge {
+  z-index: 9999;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  background: tomato;
+  border-radius: 23px;
+  font-size: 18px;
+  line-height: 20px;
+  height: 20px;
+  padding: 5px 10px;
+  font-style: inherit;
+}
+strong { font-size:1.5em}
+.badgeName {
+  padding-top:5px;
+  font-size: 20px;
+  letter-spacing: 3px;
+}

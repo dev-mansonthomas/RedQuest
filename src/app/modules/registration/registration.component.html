@@ -1,0 +1,75 @@
+<div *ngIf="step === UNKNOWN" fxLayout="column" fxLayoutAlign="center">
+  <section class="jumb">
+    <h2>S'enregistrer</h2>
+    <p class="title">
+      <b>Merci !</b> Vous vous apprêtez à donner de votre temps pour la quête.
+      ...
+    </p>
+    <mat-divider></mat-divider>
+    <p class="title">Vous pouvez vous connecter avec votre réseau social favori, ou bien vous créer un compte tout
+      neuf.</p>
+    <!--<p class="lead">
+        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+      </p>-->
+    <button mat-flat-button [routerLink]="['/login']" mat-button>J'ai déjà un compte !</button>
+  </section>
+
+  <form autocomplete="off" novalidate [formGroup]="loginForm">
+    <mat-card class="loginmat-elevation-z0" style="margin:0 15%">
+      <mat-card-title> </mat-card-title>
+      <mat-card-content fxLayout="column" fxLayoutGap="30px">
+        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" style="zoom:1.6" class="socialButtons">
+          <button mat-flat-button class="btn-facebook" title="Facebook" (click)="loginWithFacebook()">
+            <i class="fa fa-facebook fa-lg"></i>
+          </button>
+          <button mat-flat-button class="btn-google-plus" title="Google" (click)="loginWithGoogle()">
+            <i class="fa fa-google fa-lg"></i>
+          </button>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+          <hr fxFlex>
+          <span style="font-size:1.4em">Ou</span>
+          <hr fxFlex>
+        </div>
+
+        <div fxLayout="column">
+
+          <mat-form-field fxFlex appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="text" formControlName="email" required>
+            <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+              <div *ngIf="email.errors.required"> L'email est requis. </div>
+              <div *ngIf="email.errors.email"> L'email n'est pas valide </div>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex appearance="outline">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput type="password" formControlName="password" required>
+            <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+              <span *ngIf="password.errors.required">
+                Le mot de passe est requis.
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex appearance="outline">
+            <mat-label>Confirmez le mot de passe</mat-label>
+            <input matInput type="password" formControlName="confirmPassword" required>
+            <mat-error
+              *ngIf="(loginForm.invalid || confirmPassword.invalid) && (confirmPassword.dirty || confirmPassword.touched)">
+              <span *ngIf="confirmPassword.errors?.required"> Veuillez confirmer le mot de passe. </span>
+              <span *ngIf="loginForm.hasError('notSame')"> Les mots de passe sont différents. </span>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+        <button [disabled]="loginForm.invalid" mat-flat-button color="warn" type="button"
+          (click)="signingUpWithEmailAndPassword()">Créer un compte</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>
+<app-registration-step-2 *ngIf="step === REGISTERING" [registeredUser]="registeredUser"
+  [isBenevole1j]="ulDetails && isBenevole1j()" [userAuthId]="userAuthId"></app-registration-step-2>

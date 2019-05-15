@@ -1,0 +1,27 @@
+<section class="jumb">
+  <h2>Mon compte</h2>
+  <p class="lead" *ngIf="queteurRegistrationNotApprovedYet()">
+    Bienvenue sur RedQuest
+    Merci pour votre inscription. Celle-ci est en attente de validation par un cadre de la quête.
+  </p>
+  <p class="lead" *ngIf="queteurRegistrationRefused()">
+    Votre inscription a été refusée pour la raison suivante: {{queteur.reject_reason}}
+  </p>
+  <div *ngIf="queteurRegistrationNotRefused()">
+    <h3>Vos informations:</h3>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <b fxFlex="50">Prénom:</b> <span fxFlex="50">{{queteur.first_name}}</span>
+      <b fxFlex="50">Nom:</b> <span fxFlex="50">{{queteur.last_name}}</span>
+      <b fxFlex="50">Email:</b> <span fxFlex="50">{{queteur.email}}</span>
+      <b fxFlex="50">Nivol:</b> <span fxFlex="50">{{queteur.nivol}}</span>
+      <b fxFlex="50">Date de naissance:</b> <span fxFlex="50">{{queteur.birthdate}}</span>
+      <b fxFlex="50">Numéro de téléphone:</b> <span fxFlex="50">{{queteur.mobile}}</span>
+    </div>
+  </div>
+</section>
+<div *ngIf="ulDetails">
+  Pour anonymiser vos données, veuillez contacter l'Unité Locale {{ulDetails.name}} par email à l'adresse : <a
+  [href]="'mailto:'+ulDetails.email">{{ulDetails.email}}</a>
+</div>
+<a mat-stroked-button href="https://goo.gl/UpTLAK" target="_blank" style="margin: 1em;"> Règlement Général sur la Protection des
+  Données</a>

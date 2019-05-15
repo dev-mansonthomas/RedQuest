@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; }
+body { margin: 0 }
+
+section.jumb {
+  border-radius:0 0 20px 20px;
+  background: #ebebeb;
+  padding:20px 40px;
+  margin-bottom:30px;
+}
+.hero {
+  background:url("/assets/image.png") no-repeat 50% 50%/cover;
+}
+.hero2 {
+  background:url("/assets/toutlemonde.jpg") no-repeat 50% 50%/contain;
+}
+
+.full { background:#f44336 }

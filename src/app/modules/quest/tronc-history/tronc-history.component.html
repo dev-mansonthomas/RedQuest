@@ -1,0 +1,16 @@
+<mat-divider></mat-divider>
+<mat-list-item role="listitem" (click)="seeMore()">
+  <mat-chip color="primary" selected mat-list-avatar class="tronc-index">{{troncIndex}}</mat-chip>
+  <button matLine>
+  </button>
+  <p matLine>
+    Départ le <b>{{troncStat.depart| date:'medium':'+0200':'fr-FR'}}</b> sur le lieu suivant: <b>{{troncStat.point_quete}}</b>
+  </p>
+  <p matLine>
+    <mat-chip-list>
+      <mat-chip color="warn" selected>{{troncStat.amount | number}}€</mat-chip>
+      <mat-chip color="primary" selected>{{troncStat.time_spent_in_hours*60 | time}}</mat-chip>
+      <mat-chip color="accent" selected>{{troncStat.weight | weight}}</mat-chip>
+    </mat-chip-list>
+  </p>
+</mat-list-item>

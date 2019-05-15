@@ -1,9 +1,0 @@
-/* You can add global styles to this file, and also import other style files */
-@import "assets/bootstrap.min.css";
-@import "~bs-stepper/dist/css/bs-stepper.min.css";
-@import "~ngx-bootstrap/datepicker/bs-datepicker.css";
-
-
-.bs-timepicker-field {
-  width: 52px !important;
-}
