@@ -1,7 +1,10 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore, QueryDocumentSnapshot, QuerySnapshot} from '@angular/fire/firestore';
 
 import {Queteur} from '../../model/queteur';
+import {UlRankingByAmount} from '../../model/UlRankingByAmount';
+import {Observable} from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +39,14 @@ export class FirestoreService {
   getQueteurStats(queteur_id: string) {
     return this.firestoreDB.collection('ul_queteur_stats_per_year', ref => ref.where('queteur_id', '==', queteur_id))
       .get();
+  }
+
+  getUlStatsOrderedBy(orderBy: string, sortDirection: 'desc' | 'asc', ul_id: number, year: number): Observable<QuerySnapshot> {
+    return this.firestoreDB.collection('ul_queteur_stats_per_year',
+      ref => ref.where('ul_id', '==', ul_id)
+        .where('year', '==', year)
+        .orderBy(orderBy, sortDirection)
+    ).get();
   }
 
   registerQueteur(userId: string, user: Queteur) {

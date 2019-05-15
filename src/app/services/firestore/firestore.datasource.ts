@@ -2,7 +2,7 @@ import {DataSource} from '@angular/cdk/table';
 import {CollectionViewer} from '@angular/cdk/collections';
 import {QueryDocumentSnapshot} from '@angular/fire/firestore';
 
-import {catchError, tap, map, finalize} from 'rxjs/operators';
+import {catchError, finalize, map, tap} from 'rxjs/operators';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {FirestoreService} from './firestore.service';
 
@@ -34,15 +34,46 @@ export class FirestoreDataSource<T> implements DataSource<T> {
                 pageSize = 10,
                 pageIndex = 0
   ) {
+    console.log('retrieve page:', sortBy, ul, year, sortDirection, pageSize, pageIndex);
+    if (this.lastVisibles[pageIndex]) {
+      console.log(this.lastVisibles[pageIndex].data());
+    } else {
+      console.log(this.lastVisibles[pageIndex]);
+    }
     this.loadingSubject.next(true);
     this.firestoreService.selectUlStats(this.dbname, sortBy, ul, year, sortDirection, pageSize, this.lastVisibles[pageIndex])
       .pipe(
         catchError(error => of(error)),
-        tap((f: firebase.firestore.QuerySnapshot) =>
-          this.lastVisibles[pageIndex + 1] = f.docs[f.docs.length - 1] as QueryDocumentSnapshot<T>),
+        tap((f: firebase.firestore.QuerySnapshot) => {
+          console.log('f.docs.length:', f.docs.length);
+          this.lastVisibles[pageIndex + 1] = f.docs[f.docs.length - 1] as QueryDocumentSnapshot<T>;
+        }),
         map((f: firebase.firestore.QuerySnapshot) => f.docs.map(e => e.data() as T)),
         tap(f => console.log('[FirestoreDataSource] Retrieved objects:', f)),
         finalize(() => this.loadingSubject.next(false)))
       .subscribe((objs: T[]) => this.objSubject.next(objs));
   }
+
+  selectUlStatsFromIndex(sortBy: string,
+                         ul: number,
+                         year: number,
+                         sortDirection = 'desc',
+                         pageSize = 10,
+                         pageIndex = 0,
+                         lastVisible: QueryDocumentSnapshot
+  ) {
+    console.log('retrieve page:', sortBy, ul, year, sortDirection, pageSize, pageIndex, lastVisible);
+    this.loadingSubject.next(true);
+    this.firestoreService.selectUlStats(this.dbname, sortBy, ul, year, sortDirection, pageSize, lastVisible)
+      .pipe(
+        catchError(error => of(error)),
+        tap((f: firebase.firestore.QuerySnapshot) => {
+          this.lastVisibles[pageIndex + 1] = f.docs[f.docs.length - 1] as QueryDocumentSnapshot<T>;
+        }),
+        map((f: firebase.firestore.QuerySnapshot) => f.docs.map(e => e.data() as T)),
+        tap(f => console.log('[FirestoreDataSource] Retrieved objects:', f)),
+        finalize(() => this.loadingSubject.next(false)))
+      .subscribe((objs: T[]) => this.objSubject.next(objs));
+  }
+
 }

@@ -12,58 +12,76 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
+<button class="lone-button" color="warn" mat-raised-button (click)="whereAmI()">Où suis-je ?</button>
 
 
 <div class="table-container">
 
-<mat-table *ngIf="enabled" [dataSource]="dataSource" matSort matSortActive="amount" matSortDirection="desc"
-           matSortDisableClear>
+  <mat-table *ngIf="enabled" [dataSource]="dataSource" matSort matSortActive="amount" matSortDirection="desc"
+             matSortDisableClear>
 
-  <ng-container matColumnDef="last_name">
-    <mat-header-cell *matHeaderCellDef>Queteur</mat-header-cell>
-    <mat-cell *matCellDef="let ranking" data-label="Queteur">{{ranking.first_name|titlecase}}
-      {{ranking.last_name|uppercase}}
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="last_name">
+      <mat-header-cell *matHeaderCellDef>Queteur</mat-header-cell>
+      <mat-cell *matCellDef="let ranking" data-label="Queteur">
+        <span *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.first_name|titlecase}} {{ranking.last_name|uppercase}}</span>
+        <span *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.first_name|titlecase}} {{ranking.last_name|uppercase}}</b></span>
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="tronc_count">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre de troncs</mat-header-cell>
-    <mat-cell *matCellDef="let ranking" data-label="Nombre de troncs">{{ranking.tronc_count||0}}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="tronc_count">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre de troncs</mat-header-cell>
+      <mat-cell *matCellDef="let ranking" data-label="Nombre de troncs">
+        <span *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.tronc_count||0}}</span>
+        <span *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.tronc_count||0}}</b></span>
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="amount">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Montant total</mat-header-cell>
-    <mat-cell *matCellDef="let ranking" data-label="Montant total">{{ranking.amount||0 |number:'1.0-2':'fr-FR' }}
-      &euro;
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="amount">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Montant total</mat-header-cell>
+      <mat-cell *matCellDef="let ranking" data-label="Montant total">
+        <span
+          *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.amount||0 |number:'1.0-2':'fr-FR' }}&euro;</span>
+        <span
+          *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.amount||0 |number:'1.0-2':'fr-FR' }}&euro;</b></span>
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="weight">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Poids</mat-header-cell>
-    <mat-cell *matCellDef="let ranking" data-label="Poids">{{ranking.weight||0 | weight}}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="weight">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Poids</mat-header-cell>
+      <mat-cell *matCellDef="let ranking" data-label="Poids">
+        <span *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.weight||0 | weight}}</span>
+        <span *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.weight||0 | weight}}</b></span>
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="time_spent_in_minutes">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Temps total</mat-header-cell>
-    <mat-cell *matCellDef="let ranking" data-label="Temps total"> {{ranking.time_spent_in_minutes||0 | time: {small:
-      true} }}
-    </mat-cell>
+    <ng-container matColumnDef="time_spent_in_minutes">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Temps total</mat-header-cell>
+      <mat-cell *matCellDef="let ranking" data-label="Temps total">
+        <span *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.time_spent_in_minutes||0 | time: {small:true} }}</span>
+        <span *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.time_spent_in_minutes||0 | time: {small:true} }}</b></span>
+      </mat-cell>
 
-  </ng-container>
-  <ng-container matColumnDef="unique_point_quete_count">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Lieux de quête</mat-header-cell>
-    <mat-cell *matCellDef="let ranking" data-label="Lieux de quête">{{ranking.unique_point_quete_count}}</mat-cell>
-  </ng-container>
+    </ng-container>
+    <ng-container matColumnDef="unique_point_quete_count">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Lieux de quête</mat-header-cell>
+      <mat-cell *matCellDef="let ranking" data-label="Lieux de quête">
+        <span *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.unique_point_quete_count}}</span>
+        <span *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.unique_point_quete_count}}</b></span>
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="year">
-    <mat-header-cell *matHeaderCellDef>Année</mat-header-cell>
-    <mat-cell *matCellDef="let ranking" data-label="Année">{{ranking.year}}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="year">
+      <mat-header-cell *matHeaderCellDef>Année</mat-header-cell>
+      <mat-cell *matCellDef="let ranking" data-label="Année">
+        <span *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.year}}</span>
+        <span *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.year}}</b></span>
+      </mat-cell>
+    </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
-</mat-table>
-<mat-paginator *ngIf="enabled" [length]="1000" [pageSize]="10" [pageSizeOptions]="[ 5, 10, 25]"></mat-paginator>
-<mat-progress-bar *ngIf="enabled && dataSource.loading$ | async" mode="query"></mat-progress-bar>
+  </mat-table>
+  <mat-paginator *ngIf="enabled" [length]="dataSource.count()" [pageSize]="10" [pageSizeOptions]="[ 5, 10, 25]"></mat-paginator>
+  <mat-progress-bar *ngIf="enabled && dataSource.loading$ | async" mode="query"></mat-progress-bar>
 </div>
