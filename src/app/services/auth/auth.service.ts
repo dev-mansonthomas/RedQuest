@@ -73,7 +73,6 @@ export class AuthService {
         this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
           .then(user => user.user.sendEmailVerification())
           .catch(error => {
-            console.log(error);
             if (error.code === this.AUTH_ACCOUNT_ALREADY_EXISTING) {
               this.signInWithEmailPassword(email, password);
             }

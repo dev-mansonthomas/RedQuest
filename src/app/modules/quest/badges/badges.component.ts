@@ -71,7 +71,6 @@ export class BadgesComponent implements OnInit {
       this.queteur.badges.forEach(b1 => setTimeout(() =>
         this.badges.find(b2 => b2.id === b1.id).level = b1.level, Math.random() * 2000 + 1000));
       /// this.queteur.badges.forEach(b1 => setTimeout(this.setLevel, 6000, this.badges.find(b2 => b2.id === b1.id), b1.level));
-      console.log('QUETEZUR badsge', data);
     });
   }
 
