@@ -87,7 +87,6 @@ export class RegistrationStep2Component implements OnInit {
         if (this.registeredUser.nivol) {
           this.registeredUser.nivol = this.registeredUser.nivol.toUpperCase();
         }
-        console.log(this.registeredUser);
         this.functions.registerQueteur(this.registeredUser)
           .subscribe(token => {
             this.registeredUser.queteur_registration_token = token.queteur_registration_token;

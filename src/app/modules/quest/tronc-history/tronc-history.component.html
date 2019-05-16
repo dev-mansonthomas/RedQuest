@@ -4,12 +4,13 @@
   <button matLine>
   </button>
   <p matLine>
-    Départ le <b>{{troncStat.depart| date:'medium':'+0200':'fr-FR'}}</b> sur le lieu suivant: <b>{{troncStat.point_quete}}</b>
+    Départ le <b>{{troncStat.depart| date:'medium':'+0200':'fr-FR'}}</b> sur le lieu suivant:
+    <b>{{troncStat.point_quete}}</b>
   </p>
   <p matLine>
     <mat-chip-list>
       <mat-chip color="warn" selected (click)="seeMore()">{{troncStat.amount | number}}€</mat-chip>
-      <mat-chip color="primary" selected (click)="seeMore()">{{troncStat.time_spent_in_hours*60 | time}}</mat-chip>
+      <mat-chip color="primary" selected (click)="seeMore()">{{troncStat.time_spent_in_hours * 60 | time}}</mat-chip>
       <mat-chip color="accent" selected (click)="seeMore()">{{troncStat.weight | weight}}</mat-chip>
     </mat-chip-list>
   </p>

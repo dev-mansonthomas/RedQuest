@@ -4,6 +4,10 @@
   <p *ngIf="!enabled">
     Cette section est encore en travaux et sera bientôt accessible !
   </p>
+  <p *ngIf="statsTroncCurrentYear.length === 0 && data.length === 0">
+    Vous n'avez pas encore quêté cette année, et il n'y a pas de données datant des années précédentes.
+    Dès que vous aurez quêté, vous verrez ici un récapitulatif des troncs que vous aurez ramenés.
+  </p>
 </section>
 
 <div *ngIf="enabled">

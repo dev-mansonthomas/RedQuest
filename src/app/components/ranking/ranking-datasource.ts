@@ -17,7 +17,6 @@ export class RankingDatasource implements DataSource<UlRankingByAmount> {
   }
 
   connect(collectionViewer: CollectionViewer): Observable<UlRankingByAmount[] | ReadonlyArray<UlRankingByAmount>> {
-    console.log('Connecting data source');
     return this.objSubject.asObservable();
   }
 
@@ -36,7 +35,6 @@ export class RankingDatasource implements DataSource<UlRankingByAmount> {
     this.firestoreService.getUlStatsOrderedBy(sortBy, sortDirection, ul_id, year)
       .pipe(
         catchError(error => of(error)),
-        tap(f => console.log('[FirestoreDataSource] Retrieved objects:', f)),
         finalize(() => this.loadingSubject.next(false)))
       .subscribe((objs: UlRankingByAmount[]) => {
         this.data = objs;

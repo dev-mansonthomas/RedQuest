@@ -16,9 +16,9 @@ import {HistoriqueTroncQueteur} from '../../../model/historiqueTroncQueteur';
 export class QueteurHistoryComponent implements OnInit {
 
   enabled = environment.history_enabled;
-  statsTroncCurrentYear: HistoriqueTroncQueteur[];
+  statsTroncCurrentYear: HistoriqueTroncQueteur[] = [];
 
-  data: QueteurStats[];
+  data: QueteurStats[] = [];
   selectedYear: number;
 
   constructor(
@@ -33,7 +33,6 @@ export class QueteurHistoryComponent implements OnInit {
   }
 
   private retrieveStats(queteurId) {
-    console.log(new Date().getFullYear());
     this.firestoreService.getQueteurStats(queteurId)
       .subscribe(doc => {
         this.data = doc.docs
