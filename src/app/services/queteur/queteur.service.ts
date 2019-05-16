@@ -20,7 +20,7 @@ export class QueteurService {
   gotIt = <T>(o: Subscriber<T>, q: T) => {
     o.next(q);
     o.complete();
-  }
+  };
 
   isSlotsUpdateActivated(): Observable<boolean> {
     return this.getQueteur().pipe(map(queteur => queteur.rqAutonomousDepartAndReturn));
@@ -52,6 +52,7 @@ export class QueteurService {
     console.log('QueteurService getQueteur user:', authId);
     this.firestore.getStoredQueteur(authId)
       .then(queteur => {
+        queteur.queteur_id = Number(queteur.queteur_id);
         this.gotIt<Queteur>(observer, queteur);
       })
       .catch(() => {

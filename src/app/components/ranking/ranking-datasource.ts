@@ -53,6 +53,6 @@ export class RankingDatasource implements DataSource<UlRankingByAmount> {
   }
 
   count() {
-    return this.data.length;
+    return this.data ? this.data.length : 0;
   }
 }
