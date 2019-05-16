@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {Queteur} from 'src/app/model/queteur';
 import {CloudFunctionService} from 'src/app/services/cloud-functions/cloud-function.service';
 import {FirestoreService} from 'src/app/services/firestore/firestore.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-registration-step-2',
@@ -15,6 +16,8 @@ export class RegistrationStep2Component implements OnInit {
   @Input() registeredUser: Queteur;
   @Input() isBenevole1j: boolean;
   @Input() userAuthId: string;
+
+  loading = false;
 
   registrationForm: FormGroup;
 
@@ -70,16 +73,21 @@ export class RegistrationStep2Component implements OnInit {
   }
 
   registerUser() {
-    this.firestore.isQueteurAlreadyRegistered((this.nivol.value as string).toUpperCase())
+    this.loading = true;
+    this.firestore.isQueteurAlreadyRegistered(this.nivol.value as string)
       .then(alreadyRegistered => {
         if (alreadyRegistered) {
           this.error = `Vous êtes déjà inscris sous cette adresse: ${alreadyRegistered.email}`;
+          this.loading = false;
           return;
         }
         Object.assign(this.registeredUser, this.registrationForm.value);
-        this.registeredUser.birthdate = new Date(this.registeredUser.birthdate).toISOString().slice(0, 10); // to format 'YYYY-MM-DD'
+        this.registeredUser.birthdate = moment(new Date(this.registeredUser.birthdate)).format('YYYY-MM-DD');
         this.registeredUser.mobile = '+33' + this.registeredUser.mobile;
-        this.registeredUser.nivol = this.registeredUser.nivol.toUpperCase();
+        if (this.registeredUser.nivol) {
+          this.registeredUser.nivol = this.registeredUser.nivol.toUpperCase();
+        }
+        console.log(this.registeredUser);
         this.functions.registerQueteur(this.registeredUser)
           .subscribe(token => {
             this.registeredUser.queteur_registration_token = token.queteur_registration_token;
@@ -99,10 +107,12 @@ export class RegistrationStep2Component implements OnInit {
 
   closeModalAndConfirmRegistration() {
     this.functions.findQueteurById();
+    this.loading = false;
     this.zone.run(() => this.router.navigate(['registration/confirmation']));
   }
 
   closeModalAndDisplayError() {
+    this.loading = false;
     this.error = 'Erreur lors de l\'inscription !';
   }
 
