@@ -67,15 +67,21 @@ export class FirestoreService {
   }
 
   isQueteurAlreadyRegistered(nivol: string): Promise<Queteur> {
-    return this.firestoreDB.firestore
-      .collection('queteurs')
-      .where('nivol', '==', nivol)
-      .get()
-      .then(query => {
-        if (query.docs.length !== 0) {
-          return query.docs[0].data() as Queteur;
-        }
-        return undefined;
-      });
+    return new Promise<Queteur>(resolve => {
+      if (nivol) {
+        this.firestoreDB.firestore
+          .collection('queteurs')
+          .where('nivol', '==', nivol.toUpperCase())
+          .get()
+          .then(query => {
+            if (query.docs.length !== 0) {
+              resolve(query.docs[0].data() as Queteur);
+            }
+            resolve(undefined);
+          });
+      } else {
+        resolve(undefined);
+      }
+    });
   }
 }
