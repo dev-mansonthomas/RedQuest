@@ -24,8 +24,6 @@ export class RegisterTroncStateComponent {
   stepMinute = 15;
   now = new Date();
 
-  //  selectedTronc: Tronc = Tronc.aTronc();
-
   errorMessage: string;
 
   step1Form: FormGroup;
@@ -34,33 +32,29 @@ export class RegisterTroncStateComponent {
   get tronc() {
     return this.step1Form.get('tronc');
   }
+
   get startDate() {
     return this.step2Form.get('startDate');
   }
 
   @Input() confirmation: { error: boolean, message: string };
+
   private getRoundTime(m = 10, a = new Date().getTime()) {
     // get next time that is modulo 'm' (if it is 17h21 and m=10 -> returns 17h30)
     const mo = a % (m * 60 * 1000);
     const b = mo > 0 ? a - a % (m * 60 * 1000) + m * 60 * 1000 : a;
     return new Date(b);
   }
+
   constructor() {
-    this.step1Form = new FormGroup({ 'tronc': new FormControl('', Validators.required) });
-    this.step2Form = new FormGroup({ 'startDate': new FormControl('', Validators.required) });
+    this.step1Form = new FormGroup({'tronc': new FormControl('', Validators.required)});
+    this.step2Form = new FormGroup({'startDate': new FormControl('', Validators.required)});
   }
 
   refresh() {
     this.refreshEvent.emit();
     this.stepper.reset();
-    //    this.selectedTronc = Tronc.aTronc();
-  }
-
-  getTroncs(): Tronc[] {
-    if (this.type === 'departure') {
-      return this.troncs.filter(tronc => tronc.depart === undefined);
-    }
-    return this.troncs.filter(tronc => tronc.depart && tronc.arrivee === undefined);
+    console.log(this.troncs);
   }
 
   selectTronc() {
@@ -72,16 +66,15 @@ export class RegisterTroncStateComponent {
 
   minDep = () => this.step1Form.get('tronc').value ? new Date(this.type === 'departure' ?
     this.step1Form.get('tronc').value.depart_theorique :
-    this.step1Form.get('tronc').value.depart) : new Date()
+    this.step1Form.get('tronc').value.depart) : new Date();
 
   updateTroncDate() {
-    const selectedTronc = this.step1Form.getRawValue();
-    if (selectedTronc.depart === undefined) {
+    const selectedTronc = this.step1Form.getRawValue().tronc;
+    if (this.type === 'departure') {
       selectedTronc.depart = this.step2Form.get('startDate').value;
     } else {
       selectedTronc.arrivee = this.step2Form.get('startDate').value;
     }
-    console.log(selectedTronc);
     this.troncUpdate.emit(selectedTronc);
     this.isEditable = false;
     this.stepper.next();
