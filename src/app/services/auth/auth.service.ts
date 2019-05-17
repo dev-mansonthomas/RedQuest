@@ -71,7 +71,7 @@ export class AuthService {
     return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {
         this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
-          .then(user => user.user.sendEmailVerification())
+          // .then(user => user.user.sendEmailVerification()) disabled for 2018
           .catch(error => {
             if (error.code === this.AUTH_ACCOUNT_ALREADY_EXISTING) {
               this.signInWithEmailPassword(email, password);
