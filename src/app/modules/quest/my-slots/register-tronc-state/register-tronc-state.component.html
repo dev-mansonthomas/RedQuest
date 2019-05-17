@@ -35,7 +35,7 @@
           </div>
         </div>
         <div *ngIf="tronc?.value?.latitude" fxFlex="50Ò">
-          <app-quest-point [latitude]="tronc.value.latitude" [longitude]="tronc.value.longitude"></app-quest-point>
+          <!--<app-quest-point [latitude]="tronc.value.latitude" [longitude]="tronc.value.longitude"></app-quest-point>-->
         </div>
       </div>
       <div>
@@ -49,7 +49,7 @@
         <button mat-flat-button color="warn" matStepperPrevious>Précédent</button>
       </div>
       <div *ngIf="tronc.value">
-        <owl-date-time-inline formControlName="startDate" [stepMinute]="stepMinute" [min]="minDep()">
+        <owl-date-time-inline formControlName="startDate" [stepMinute]="stepMinute">
         </owl-date-time-inline>
       </div>
       <div>
@@ -67,13 +67,13 @@
         Enregister un départ du tronc n° {{tronc.value.tronc_id}} à
         <b>{{startDate.value| date:'H'}}h{{startDate.value| date:'mm'}}</b> le
         <b>{{startDate.value| date:'fullDate':'+0200':'fr-FR'}}</b> à destination de
-        {{tronc.value.localization}}
+        {{tronc.value.name}}
       </div>
       <div *ngIf="tronc.value && type != 'departure'">
         Enregister un retour du tronc n° {{tronc.value.tronc_id}} à
         <b>{{startDate.value| date:'H'}}h{{startDate.value| date:'mm'}}</b> le
         <b>{{startDate.value| date:'fullDate':'+0200':'fr-FR'}}</b> en provenance de
-        {{tronc.value.localization}}
+        {{tronc.value.name}}
       </div>
       <div>
         <button mat-flat-button color="warn" (click)="updateTroncDate()">Confirmer</button>

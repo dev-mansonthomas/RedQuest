@@ -105,7 +105,6 @@ export class RegistrationStep2Component implements OnInit {
   }
 
   closeModalAndConfirmRegistration() {
-    this.functions.findQueteurById();
     this.loading = false;
     this.zone.run(() => this.router.navigate(['registration/confirmation']));
   }
