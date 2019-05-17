@@ -1,0 +1,19 @@
+<section class="jumb">
+  <h2>Mon Unité Locale</h2>
+</section>
+
+<mat-card *ngIf="ulDetails">
+  <mat-card-header>
+    <mat-card-title>{{ulDetails.name}}</mat-card-title>
+    <mat-card-subtitle>{{ulDetails.address}}</mat-card-subtitle>
+  </mat-card-header>
+  <app-map [longitude]="ulDetails.longitude" [latitude]="ulDetails.latitude"></app-map>
+  <mat-card-content>
+    <u>Détails:</u>
+    <ul>
+      <li>Nom: {{ulDetails.name}}</li>
+      <li>Adresse: <br/> {{ulDetails.address}} <br/> {{ulDetails.postal_code}}<br/> {{ulDetails.city}}</li>
+      <li>Email: {{ulDetails.email}}</li>
+    </ul>
+  </mat-card-content>
+</mat-card>

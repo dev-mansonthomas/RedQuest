@@ -5,6 +5,7 @@ import {HomepageComponent} from './components/homepage/homepage.component';
 import {TipsComponent} from './components/tips/tips.component';
 import {AuthGuard} from './auth-guard';
 import {QueteurResolverService} from './services/queteur/queteur.service';
+import {LocalUnitComponent} from './components/local-unit/local-unit.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent, canActivate: [AuthGuard], resolve: {queteur: QueteurResolverService}},
@@ -19,6 +20,7 @@ const routes: Routes = [
   },
   {path: 'tips', component: TipsComponent, canActivate: [AuthGuard]},
   {path: 'ranking', component: RankingComponent, canActivate: [AuthGuard], resolve: {queteur: QueteurResolverService}},
+  {path: 'local-unit', component: LocalUnitComponent, canActivate: [AuthGuard], resolve: {queteur: QueteurResolverService}},
   {path: '**', redirectTo: ''}
 ];
 

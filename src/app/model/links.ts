@@ -8,5 +8,6 @@ export const AllLinks = [
     { label: 'Astuces de quête', icon: 'contact_support', route: 'tips' },
     ...MyLinks,
     { label: 'Ranking', icon: 'cake', route: 'ranking' },
+    {label: 'Mon unité locale', icon: 'add_location', route: '/local-unit'},
     { label: 'Mon compte', icon: 'face', route: '/registration/compte' }
 ];
