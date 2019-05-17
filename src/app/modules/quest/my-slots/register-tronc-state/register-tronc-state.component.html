@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <button mat-button color="priamry" (click)="refresh()">Rafraîchir</button>
+  <button class="refresh-button" mat-raised-button color="warn" (click)="refresh()">Rafraîchir <mat-icon>autorenew</mat-icon></button>
 </div>
 <span *ngIf="troncs.length === 0 && type==='departure'">Il n'y a aucun tronc prêt pour un départ</span>
 <span *ngIf="troncs.length === 0 && type==='arrival'">Vous n'êtes pas en train de quêter!</span>
@@ -13,7 +13,7 @@
           <mat-form-field>
             <mat-label>Tronc</mat-label>
             <mat-select required formControlName="tronc">
-              <mat-option *ngFor="let t of getTroncs()" [value]="t">[{{t.tronc_id}}] {{t.name}}</mat-option>
+              <mat-option *ngFor="let t of troncs" [value]="t">[{{t.tronc_id}}] {{t.name}}</mat-option>
             </mat-select>
           </mat-form-field>
           <div *ngIf="tronc.value">
@@ -21,12 +21,12 @@
             <ul>
               <li>Queteur id: {{tronc.value.tronc_queteur_id}}</li>
               <li>Tronc n° {{tronc.value.tronc_id}}</li>
-              <li *ngIf="tronc.value.depart">
-                Parti depuis le
+              <li *ngIf="type === 'arrival'">
+                Parti depuis
                 <b>{{tronc.value.depart| date:'H'}}h{{tronc.value.depart| date:'mm'}}</b> le
                 <b>{{tronc.value.depart| date:'fullDate':'+0200':'fr-FR'}}</b>
               </li>
-              <li *ngIf="!tronc.value.depart">
+              <li *ngIf="type === 'departure'">
                 Départ planifié à
                 <b>{{tronc.value.depart_theorique| date:'H'}}h{{tronc.value.depart_theorique| date:'mm'}}</b> le
                 <b>{{tronc.value.depart_theorique| date:'fullDate':'+0200':'fr-FR'}}</b>

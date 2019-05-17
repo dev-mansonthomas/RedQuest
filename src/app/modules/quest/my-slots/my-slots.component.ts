@@ -3,7 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {Tronc} from '../../../model/tronc';
 import {CloudFunctionService} from '../../../services/cloud-functions/cloud-function.service';
 import {QueteurService} from '../../../services/queteur/queteur.service';
-import * as moment from 'moment';
+import * as moment from 'moment-timezone';
 import {ActivatedRoute} from '@angular/router';
 import {Queteur} from '../../../model/queteur';
 
@@ -34,7 +34,7 @@ export class MySlotsComponent implements OnInit {
     this.loadTroncs();
     this.route.data.subscribe((data: { queteur: Queteur }) => {
       this.queteurService.isSlotsUpdateActivated()
-        .subscribe(activated => this.slotsReadOnly = (!activated && this.ulWithSlotsEditable.indexOf(data.queteur.ul_id) === -1));
+        .subscribe(activated => this.slotsReadOnly = false); // (!activated && this.ulWithSlotsEditable.indexOf(data.queteur.ul_id) === -1));
     });
   }
 
@@ -50,10 +50,10 @@ export class MySlotsComponent implements OnInit {
     this.registerState = state;
   }
 
-  handleTroncDeparture(tronc: { tronc: Tronc }) {
+  handleTroncDeparture(tronc: Tronc) {
     const update = {
-      date: moment(tronc.tronc.depart).format('YYYY-MM-DD HH:mm:ss'),
-      tqId: tronc.tronc.tronc_queteur_id,
+      date: moment(tronc.depart).subtract(2, 'hours').format('YYYY-MM-DD HH:mm:ss'),
+      tqId: tronc.tronc_queteur_id,
       isDepart: true
     };
     this.cloudFunctions.troncStateUpdate(update).subscribe(
@@ -66,21 +66,34 @@ export class MySlotsComponent implements OnInit {
       });
   }
 
-  handleTroncArrival(tronc: { tronc: Tronc }) {
+  handleTroncArrival(tronc: Tronc) {
     const update = {
-      date: moment(tronc.tronc.arrivee).format('YYYY-MM-DD HH:mm:ss'),
-      tqId: tronc.tronc.tronc_id,
+      date: moment(tronc.arrivee).subtract(2, 'hours').format('YYYY-MM-DD HH:mm:ss'),
+      tqId: tronc.tronc_queteur_id,
       isDepart: false
     };
     this.cloudFunctions.troncStateUpdate(update);
   }
 
   getTroncsDeparture() {
-    return this.troncs ? this.troncs.filter(tronc => tronc.depart === undefined) : [];
+    return this.troncs
+      ? this.troncs.filter(tronc => tronc.depart === undefined
+        || tronc.depart === null
+        || tronc.depart.getFullYear() === 1970
+      )
+      : [];
   }
 
   getTroncsArrival(): Tronc[] {
-    return this.troncs ? this.troncs.filter(tronc => tronc.depart && tronc.arrivee === undefined) : [];
+    return this.troncs
+      ? this.troncs.filter(
+        tronc => (tronc.depart
+          && tronc.depart.getFullYear() !== 1970)
+          && (tronc.arrivee === undefined
+            || tronc.arrivee === null
+            || tronc.arrivee.getFullYear() === 1970)
+      )
+      : [];
   }
 
 }
