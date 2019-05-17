@@ -3,6 +3,9 @@ import {Component, OnInit} from '@angular/core';
 import {Tronc} from '../../../model/tronc';
 import {CloudFunctionService} from '../../../services/cloud-functions/cloud-function.service';
 import {QueteurService} from '../../../services/queteur/queteur.service';
+import * as moment from 'moment';
+import {ActivatedRoute} from '@angular/router';
+import {Queteur} from '../../../model/queteur';
 
 export type TroncState = 'departure' | 'arrival';
 
@@ -19,15 +22,20 @@ export class MySlotsComponent implements OnInit {
 
   slotsReadOnly = true;
 
+  ulWithSlotsEditable = [];
+
 
   constructor(private cloudFunctions: CloudFunctionService,
-              private queteurService: QueteurService) {
+              private queteurService: QueteurService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.loadTroncs();
-    this.queteurService.isSlotsUpdateActivated()
-      .subscribe(activated => this.slotsReadOnly = !activated);
+    this.route.data.subscribe((data: { queteur: Queteur }) => {
+      this.queteurService.isSlotsUpdateActivated()
+        .subscribe(activated => this.slotsReadOnly = (!activated && this.ulWithSlotsEditable.indexOf(data.queteur.ul_id) === -1));
+    });
   }
 
   refresh() {
@@ -42,10 +50,10 @@ export class MySlotsComponent implements OnInit {
     this.registerState = state;
   }
 
-  handleTroncDeparture(tronc: Tronc) {
+  handleTroncDeparture(tronc: { tronc: Tronc }) {
     const update = {
-      date: tronc.depart.toISOString().slice(0, 19).replace('T', ' '), // to format 'YYYY-MM-DD HH:mm:ss'
-      tqId: tronc.tronc_queteur_id,
+      date: moment(tronc.tronc.depart).format('YYYY-MM-DD HH:mm:ss'),
+      tqId: tronc.tronc.tronc_queteur_id,
       isDepart: true
     };
     this.cloudFunctions.troncStateUpdate(update).subscribe(
@@ -58,10 +66,10 @@ export class MySlotsComponent implements OnInit {
       });
   }
 
-  handleTroncArrival(tronc: Tronc) {
+  handleTroncArrival(tronc: { tronc: Tronc }) {
     const update = {
-      date: tronc.arrivee.toISOString().slice(0, 19).replace('T', ' '), // to format 'YYYY-MM-DD HH:mm:ss'
-      tqId: tronc.tronc_id,
+      date: moment(tronc.tronc.arrivee).format('YYYY-MM-DD HH:mm:ss'),
+      tqId: tronc.tronc.tronc_id,
       isDepart: false
     };
     this.cloudFunctions.troncStateUpdate(update);

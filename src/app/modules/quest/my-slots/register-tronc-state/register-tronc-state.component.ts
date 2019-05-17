@@ -81,6 +81,7 @@ export class RegisterTroncStateComponent {
     } else {
       selectedTronc.arrivee = this.step2Form.get('startDate').value;
     }
+    console.log(selectedTronc);
     this.troncUpdate.emit(selectedTronc);
     this.isEditable = false;
     this.stepper.next();
