@@ -32,7 +32,7 @@ export class QueteurHistoryComponent implements OnInit {
     this.cloudFunctions.historiqueTroncQueteur().subscribe(statsTQ => this.statsTroncCurrentYear = statsTQ);
   }
 
-  private retrieveStats(queteurId) {
+  private retrieveStats(queteurId: number) {
     this.firestoreService.getQueteurStats(queteurId)
       .subscribe(doc => {
         this.data = doc.docs
