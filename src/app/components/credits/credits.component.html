@@ -1,0 +1,56 @@
+<section class="jumb">
+  <h2>A propos de RedQuest</h2>
+
+  <h3>Coded with love, by:</h3>
+  <div class="flex-container">
+    <div fxLayout="row wrap" fxLayoutGap="32px" fxLayoutGap.lt-sm="16px" fxLayoutAlign="flex-start"
+         fxLayout.lt-sm="column">
+      <mat-card fxFlex="0 1 calc(50% - 32px)"
+                fxFlex.lt-md="0 1 calc(50% - 32px)"
+                fxFlex.lt-sm="100%">
+        <mat-card-header>
+          <div mat-card-avatar class="thomas-header-image"></div>
+          <mat-card-title>Thomas Manson</mat-card-title>
+          <mat-card-subtitle>Paris 1&2</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+
+      <mat-card fxFlex="0 1 calc(50% - 32px)"
+                fxFlex.lt-md="0 1 calc(50% - 32px)"
+                fxFlex.lt-sm="100%">
+        <mat-card-header>
+          <div mat-card-avatar class="matthieu-header-image"></div>
+          <mat-card-title>Matthieu Lemonnier</mat-card-title>
+          <mat-card-subtitle>Paris 5</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+
+      <mat-card fxFlex="0 1 calc(50% - 32px)"
+                fxFlex.lt-md="0 1 calc(50% - 32px)"
+                fxFlex.lt-sm="100%">
+        <mat-card-header>
+          <div mat-card-avatar class="nicolas-header-image"></div>
+          <mat-card-title>Nicolas Deroche</mat-card-title>
+          <mat-card-subtitle>Aide extérieure</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </div>
+
+  <h3>A l'aide de:</h3>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let dependence of dependences">
+            <img mat-list-avatar [src]="dependence.image">
+            <h4 mat-line>{{dependence.name}}</h4>
+            <p mat-line> {{dependence.version}} </p>
+          </mat-list-item>
+        </mat-list>
+        Et d'autres...
+      </mat-card-content>
+    </mat-card-header>
+  </mat-card>
+
+</section>

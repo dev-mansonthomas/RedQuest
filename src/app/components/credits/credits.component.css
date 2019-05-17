@@ -1,0 +1,32 @@
+.flex-container {
+  display: block;
+}
+
+mat-card {
+  margin-bottom: 32px;
+}
+
+@media screen and (max-width: 599px) {
+  mat-card {
+    margin-bottom: 16px;
+  }
+}
+
+.thomas-header-image {
+  background-image: url('~src/assets/thomas_manson.jpg');
+  background-size: cover;
+}
+
+.matthieu-header-image {
+  background-image: url('~src/assets/matthieu_lemonnier.jpg');
+  background-size: cover;
+}
+
+.nicolas-header-image {
+  background-image: url('~src/assets/nicolas_deroche.png');
+  background-size: cover;
+}
+
+.mat-list-icon {
+  color: rgba(0, 0, 0, 0.54);
+}

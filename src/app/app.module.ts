@@ -19,6 +19,7 @@ import { RankingComponent } from './components/ranking/ranking.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { TipsComponent } from './components/tips/tips.component';
 import { SharedModule } from './shared.module';
+import { CreditsComponent } from './components/credits/credits.component';
 import { LocalUnitComponent } from './components/local-unit/local-unit.component';
 import { MapComponent } from './components/map/map.component';
 
@@ -31,6 +32,7 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     RankingComponent,
     HomepageComponent,
     TipsComponent,
+    CreditsComponent,
     LocalUnitComponent,
     MapComponent
   ],
