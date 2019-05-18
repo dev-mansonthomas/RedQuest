@@ -34,7 +34,7 @@ export class MySlotsComponent implements OnInit {
     this.loadTroncs();
     this.route.data.subscribe((data: { queteur: Queteur }) => {
       this.queteurService.isSlotsUpdateActivated()
-        .subscribe(activated => this.slotsReadOnly = false); // (!activated && this.ulWithSlotsEditable.indexOf(data.queteur.ul_id) === -1));
+        .subscribe(activated => this.slotsReadOnly = (!activated && this.ulWithSlotsEditable.indexOf(data.queteur.ul_id) === -1));
     });
   }
 
