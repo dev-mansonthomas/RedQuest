@@ -10,7 +10,7 @@ export class TimePipe implements PipeTransform {
     if (hours === 0) {
       return args ? this.minutesText(minutes, args.small) : this.minutesText(minutes);
     } else {
-      const remainingMinutes = minutes - (hours * 60);
+      const remainingMinutes = Math.floor(minutes - (hours * 60));
       return args ? this.hoursAndminutesText(hours, remainingMinutes, args.small) : this.hoursAndminutesText(hours, remainingMinutes);
     }
   }
