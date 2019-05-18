@@ -39,16 +39,6 @@ export class AuthService {
       );
   }
 
-  signInTwitterLogin() {
-    return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .then(() => {
-        this.angularFireAuth.auth.signInWithRedirect(
-          new firebase.auth.TwitterAuthProvider()
-        );
-      }
-      );
-  }
-
   signInFacebookLogin() {
     return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {

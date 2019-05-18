@@ -17,7 +17,8 @@ export class QueteurService {
 
   constructor(private authService: AuthService,
               private firestore: FirestoreService,
-              private cloudFunctions: CloudFunctionService) {
+              private cloudFunctions: CloudFunctionService,
+              private router: Router) {
   }
 
   gotIt = <T>(o: Subscriber<T>, q: T) => {
@@ -69,6 +70,9 @@ export class QueteurService {
       })
       .catch(() => {
         observer.error('Queteur is not found');
+        if (window.location.pathname.indexOf('login') !== -1) {
+          this.router.navigate(['registration/needed']);
+        }
       });
   }
 }
