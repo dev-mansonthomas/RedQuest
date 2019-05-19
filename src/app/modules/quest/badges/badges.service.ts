@@ -4,6 +4,8 @@ import {QueteurStats} from '../../../model/queteur-stats';
 import {map} from 'rxjs/operators';
 import {Badges} from '../../../model/badges';
 import {Observable} from 'rxjs';
+import {TimePipe} from '../../../pipes/time.pipe';
+import {WeightPipe} from '../../../pipes/weight.pipe';
 
 @Injectable({
   providedIn: 'root'
@@ -26,13 +28,22 @@ export class BadgesService {
   private badgesLevels(currentYearStats: QueteurStats) {
     console.log('stats:', currentYearStats);
     return new Badges(
-      this.percentageLevel(currentYearStats),
-      this.numberOfDaysLevel(currentYearStats),
-      this.numberOfLocationsLevel(currentYearStats),
-      this.numberOfTroncsLevel(currentYearStats),
-      this.amountCbLevel(currentYearStats),
-      this.timeSpentLevel(currentYearStats),
-      this.weightLevel(currentYearStats)
+      {
+        level: currentYearStats.amount_year_objective ? this.percentageLevel(currentYearStats) : undefined,
+        value: currentYearStats.amount_year_objective
+          ? ((currentYearStats.amount / currentYearStats.amount_year_objective) * 100) + '%'
+          : undefined,
+        more: currentYearStats.amount_year_objective ? currentYearStats.amount_year_objective : undefined
+      },
+      {level: this.numberOfDaysLevel(currentYearStats), value: currentYearStats.number_of_days_quete + ' jours'},
+      {level: this.numberOfLocationsLevel(currentYearStats), value: currentYearStats.number_of_point_quete + ' lieux'},
+      {level: this.numberOfTroncsLevel(currentYearStats), value: currentYearStats.number_of_tronc_queteur + ' troncs'},
+      {level: this.amountCbLevel(currentYearStats), value: currentYearStats.amount_cb + '€'},
+      {
+        level: this.timeSpentLevel(currentYearStats),
+        value: new TimePipe().transform(currentYearStats.time_spent_in_minutes)
+      },
+      {level: this.weightLevel(currentYearStats), value: new WeightPipe().transform(currentYearStats.weight)}
     );
   }
 
@@ -55,7 +66,7 @@ export class BadgesService {
     const amountCb = currentYearStats.amount_cb;
     if (amountCb < 5) {
       return 0;
-    } else if (amountCb >= 5 && amountCb < 100) {
+    } else if (amountCb < 100) {
       return 1;
     } else if (amountCb < 300) {
       return 2;

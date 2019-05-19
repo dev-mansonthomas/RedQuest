@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>{{badge.name}}</h1>
+<h2>{{badge.desc}}</h2>
+<div mat-dialog-content>
+  <u>Details:</u>
+  <ul>
+    <li>Pas débloqué: {{badge.levelsDesc.none}}</li>
+    <li><span class="ba l1">Bronze</span>: {{badge.levelsDesc.bronze}}</li>
+    <li><span class="ba l2">Argent</span>: {{badge.levelsDesc.argent}}</li>
+    <li><span class="ba l3">Or</span>: {{badge.levelsDesc.or}}</li>
+    <li><span class="ba l4">Rubis</span>: {{badge.levelsDesc.rubis}}</li>
+  </ul>
+  <span *ngIf="badge.more">{{badge.more}}</span>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Fermer</button>
+</div>
