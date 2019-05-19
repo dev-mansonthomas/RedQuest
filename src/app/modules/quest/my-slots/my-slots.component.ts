@@ -22,7 +22,7 @@ export class MySlotsComponent implements OnInit {
 
   slotsReadOnly = true;
 
-  ulWithSlotsEditable = [508];
+  ulWithSlotsEditable = [508, 539];
 
 
   constructor(private cloudFunctions: CloudFunctionService,
