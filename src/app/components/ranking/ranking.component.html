@@ -28,11 +28,11 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="tronc_count">
+    <ng-container matColumnDef="number_of_tronc_queteur">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre de troncs</mat-header-cell>
       <mat-cell *matCellDef="let ranking" data-label="Nombre de troncs">
-        <span *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.tronc_count||0}}</span>
-        <span *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.tronc_count||0}}</b></span>
+        <span *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.number_of_tronc_queteur||0}}</span>
+        <span *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.number_of_tronc_queteur||0}}</b></span>
       </mat-cell>
     </ng-container>
 

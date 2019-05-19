@@ -18,7 +18,7 @@ export class RankingComponent implements AfterViewInit, OnInit {
   enabled = environment.ranking_enabled;
 
   dataSource: RankingDatasource;
-  displayedColumns = ['last_name', 'tronc_count', 'amount', 'weight', 'time_spent_in_minutes',
+  displayedColumns = ['last_name', 'number_of_tronc_queteur', 'amount', 'weight', 'time_spent_in_minutes',
     'unique_point_quete_count', 'year'];
   years = [2016, 2017, 2018, 2019];
 
