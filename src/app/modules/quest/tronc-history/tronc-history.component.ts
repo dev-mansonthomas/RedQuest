@@ -19,7 +19,6 @@ export class TroncHistoryComponent implements OnInit {
   }
 
   seeMore() {
-    console.log('coucou');
     this.dialog.open(TroncHistoryDialogComponent, {data: this.troncStat});
   }
 

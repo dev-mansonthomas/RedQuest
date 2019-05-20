@@ -73,7 +73,7 @@ span.ba {
   padding-bottom:45px !important
 }
 .badge {
-  z-index: 9999;
+  z-index: 8;
   position: absolute;
   top: 0;
   right: 0;
@@ -91,4 +91,9 @@ strong { font-size:1.5em}
   padding-top:5px;
   font-size: 20px;
   letter-spacing: 3px;
+}
+
+.see-more {
+  font-weight: normal !important;
+  font-size: x-small;
 }

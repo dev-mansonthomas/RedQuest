@@ -12,6 +12,8 @@
         </mat-icon></button>
 
       <button mat-button routerLinkActive="selected" [routerLink]="['ranking']">Ranking</button>
+      <button mat-button routerLinkActive="selected" [routerLink]="['local-unit']">Mon unité locale</button>
+      <button mat-button routerLinkActive="selected" [routerLink]="['credits']">A propos</button>
     </ng-container>
     <span fxFlex></span>
     <button *ngIf="authentified && queteur" mat-button [matMenuTriggerFor]="menuUser" routerLinkActive="selected">

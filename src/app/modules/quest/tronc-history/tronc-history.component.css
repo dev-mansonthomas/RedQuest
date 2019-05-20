@@ -1,16 +1,21 @@
 ::ng-deep .mat-chip-list-wrapper .mat-standard-chip {
   margin: 0.5em !important;
+  margin-bottom: 1em !important;
 }
 
 .tronc-index {
   width: auto !important;
   min-height: 32px !important;
   height: 1px !important;
-  margin: 0;
+  margin: 0 0.2em !important;
 }
 
 .mat-list-item {
   height: auto !important;
+}
+
+::ng-deep .mat-list-base .mat-list-item .mat-list-text>* {
+  margin: 0.2em !important;
 }
 
 ::ng-deep .mat-list-base .mat-list-item .mat-list-item-content {

@@ -5,12 +5,16 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 export class TimePipe implements PipeTransform {
 
-  transform(minutes: number, args?: any): string {
+  transform(minutesDecimal: number, args?: any): string {
+    const minutes = Math.floor(minutesDecimal);
+    if (minutes === 0) {
+      return (args && args.small) ? '0min' : '0 minutes' ;
+    }
     const hours = Math.floor(minutes / 60);
     if (hours === 0) {
       return args ? this.minutesText(minutes, args.small) : this.minutesText(minutes);
     } else {
-      const remainingMinutes = minutes - (hours * 60);
+      const remainingMinutes = Math.floor(minutes - (hours * 60));
       return args ? this.hoursAndminutesText(hours, remainingMinutes, args.small) : this.hoursAndminutesText(hours, remainingMinutes);
     }
   }

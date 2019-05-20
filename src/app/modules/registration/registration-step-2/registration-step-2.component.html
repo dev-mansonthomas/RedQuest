@@ -31,7 +31,7 @@
 
     <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
       <mat-form-field fxFlex>
-        <input matInput [matDatepicker]="picker" placeholder="Date de naissance" required formControlName="birthdate">
+        <input matInput [matDatepicker]="picker" placeholder="Date de naissance" required formControlName="birthdate" (focus)="picker.open()">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         <mat-hint>Pour nous assurer que les mineurs ne sont pas envoyés sur des lieux de quêtes dans des conditions
@@ -45,7 +45,7 @@
       </mat-form-field>
     </div>
     <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
-      <mat-form-field fxFlex hintLabel="Veuillez entrer votre NIVOL sans les 0 au début.">
+      <mat-form-field fxFlex hintLabel="Veuillez entrer votre NIVOL sans les 0 au début." *ngIf="!isBenevole1j">
         <input matInput type="text" placeholder="Nivol" required formControlName="nivol">
         <a matSuffix target="_blank" href="https://docs.google.com/document/d/1OKUckdQhvPFFo6xH86kPSnL6R7RyVqSz3PZzRIIvgR8"><mat-icon color="warn">info</mat-icon></a>
       </mat-form-field>
@@ -62,6 +62,7 @@
     <div *ngIf="error" class="alert alert-danger" role="alert">
       {{error}}
     </div>
+    <mat-progress-bar *ngIf="loading" mode="query" color="warn"></mat-progress-bar>
     <div fxLayout="row" fxLayoutAlign="center">
       <button [disabled]="registrationForm.invalid" mat-flat-button color="warn" type="button" (click)="registerUser()"
         data-toggle="modal" data-target="#waiting" data-backdrop="static" data-keyboard="false">S'inscrire </button>

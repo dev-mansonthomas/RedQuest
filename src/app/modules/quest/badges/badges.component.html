@@ -12,7 +12,7 @@
   </p>
 
   <span *ngIf="enabled"
-    style="position: absolute; right: 25px; top: 45px; font-size:80px; color:lightblue; font-weight:bolder; text-shadow: 0 0 2px black">{{score/(levels[levels.length-1].mult*badges.length)|percent}}</span>
+    style="position: absolute; right: 25px; top: 45px; font-size:40px; color:lightblue; font-weight:bolder; text-shadow: 0 0 2px black">{{score/(levels[levels.length-1].mult*badges.length)|percent}}</span>
 </section>
 
 
@@ -50,20 +50,23 @@
 
 <mat-grid-list *ngIf="enabled" [cols]="breakpoint" rowHeight="200" (window:resize)="onResize($event)" gutterSize="20">
   <mat-grid-tile class="rcqbadge " *ngFor="let badge of badges" [class.earned]="badge.level > 0"
-    [class.mat-elevation-z4]="badge.level > 0" [class.mat-elevation-z1]="badge.level == 0" fxLayout="row"
-    fxLayoutGap="15px" fxLayoutAlign="start center" style='background:floralwhite'>
+    [class.mat-elevation-z4]="badge.level > 0" [class.mat-elevation-z1]="badge.level === 0" fxLayout="row"
+    fxLayoutGap="15px" fxLayoutAlign="start center" style='background:floralwhite'
+  (click)="seeLevelsDetails(badge)">
     <span class="tag level{{badge.level}}">{{levels[badge.level].name}}</span>
     <div fxFlex="15px"></div>
     <div fxFlex="140px">
       <span [@collect]="badge.level" class="fa-stack fa-4x levela{{badge.level}}">
         <i class="fas fa-certificate fa-stack-2x"></i>
-        <i class="fas {{badge.icon}} fa-stack-1x fa-inverse"></i>
+        <i class="{{badge.icon}} fa-stack-1x fa-inverse"></i>
       </span>
     </div>
     <div fxFlex fxLayout="column" fxLayoutAlign="stretch" fxFill>
       <div fxFlex="15px"></div>
       <h2>{{badge.name}}</h2>
       <span>{{badge.desc}}</span>
+      <span>{{badge['value']}}</span>
+      <span class="see-more">Cliquez pour voir les niveaux</span>
     </div>
     <div fxFlex="15px"></div>
   </mat-grid-tile>

@@ -13,6 +13,7 @@ export class AuthService {
   private AUTH_USER_NOT_FOUND = 'auth/user-not-found'; // l'utilisateur n'existe pas dans la base de données
   private AUTH_INVALID_EMAIL = 'auth/invalid-email'; // le texte entré par l'utilisateur n'est pas une adresse email
   private AUTH_INVALID_PASSWORD = ''; // Le password n'est pas correct
+  private AUTH_ACCOUNT_ALREADY_EXISTING = 'auth/email-already-in-use';
 
   private user: Observable<firebase.User>;
   private userDetails: firebase.User;
@@ -33,16 +34,6 @@ export class AuthService {
       .then(() => {
         this.angularFireAuth.auth.signInWithRedirect(
           new firebase.auth.GoogleAuthProvider()
-        );
-      }
-      );
-  }
-
-  signInTwitterLogin() {
-    return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .then(() => {
-        this.angularFireAuth.auth.signInWithRedirect(
-          new firebase.auth.TwitterAuthProvider()
         );
       }
       );
@@ -70,9 +61,13 @@ export class AuthService {
     return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {
         this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
-          .then(user => user.user.sendEmailVerification());
-      }
-      );
+          // .then(user => user.user.sendEmailVerification()) disabled for 2018
+          .catch(error => {
+            if (error.code === this.AUTH_ACCOUNT_ALREADY_EXISTING) {
+              this.signInWithEmailPassword(email, password);
+            }
+          });
+      });
   }
 
   isLoggedIn(redirect = true): Observable<boolean> {

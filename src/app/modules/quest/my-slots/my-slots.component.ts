@@ -3,6 +3,9 @@ import {Component, OnInit} from '@angular/core';
 import {Tronc} from '../../../model/tronc';
 import {CloudFunctionService} from '../../../services/cloud-functions/cloud-function.service';
 import {QueteurService} from '../../../services/queteur/queteur.service';
+import * as moment from 'moment-timezone';
+import {ActivatedRoute} from '@angular/router';
+import {Queteur} from '../../../model/queteur';
 
 export type TroncState = 'departure' | 'arrival';
 
@@ -19,15 +22,20 @@ export class MySlotsComponent implements OnInit {
 
   slotsReadOnly = true;
 
+  ulWithSlotsEditable = [508, 595];
+
 
   constructor(private cloudFunctions: CloudFunctionService,
-              private queteurService: QueteurService) {
+              private queteurService: QueteurService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.loadTroncs();
-    this.queteurService.isSlotsUpdateActivated()
-      .subscribe(activated => this.slotsReadOnly = !activated);
+    this.route.data.subscribe((data: { queteur: Queteur }) => {
+      this.queteurService.isSlotsUpdateActivated()
+        .subscribe(activated => this.slotsReadOnly = (!activated && this.ulWithSlotsEditable.indexOf(data.queteur.ul_id) === -1));
+    });
   }
 
   refresh() {
@@ -44,7 +52,7 @@ export class MySlotsComponent implements OnInit {
 
   handleTroncDeparture(tronc: Tronc) {
     const update = {
-      date: tronc.depart.toISOString().slice(0, 19).replace('T', ' '), // to format 'YYYY-MM-DD HH:mm:ss'
+      date: moment(tronc.depart).subtract(2, 'hours').format('YYYY-MM-DD HH:mm:ss'),
       tqId: tronc.tronc_queteur_id,
       isDepart: true
     };
@@ -60,19 +68,32 @@ export class MySlotsComponent implements OnInit {
 
   handleTroncArrival(tronc: Tronc) {
     const update = {
-      date: tronc.arrivee.toISOString().slice(0, 19).replace('T', ' '), // to format 'YYYY-MM-DD HH:mm:ss'
-      tqId: tronc.tronc_id,
+      date: moment(tronc.arrivee).subtract(2, 'hours').format('YYYY-MM-DD HH:mm:ss'),
+      tqId: tronc.tronc_queteur_id,
       isDepart: false
     };
     this.cloudFunctions.troncStateUpdate(update);
   }
 
   getTroncsDeparture() {
-    return this.troncs ? this.troncs.filter(tronc => tronc.depart === undefined) : [];
+    return this.troncs
+      ? this.troncs.filter(tronc => tronc.depart === undefined
+        || tronc.depart === null
+        || tronc.depart.getFullYear() === 1970
+      )
+      : [];
   }
 
   getTroncsArrival(): Tronc[] {
-    return this.troncs ? this.troncs.filter(tronc => tronc.depart && tronc.arrivee === undefined) : [];
+    return this.troncs
+      ? this.troncs.filter(
+        tronc => (tronc.depart
+          && tronc.depart.getFullYear() !== 1970)
+          && (tronc.arrivee === undefined
+            || tronc.arrivee === null
+            || tronc.arrivee.getFullYear() === 1970)
+      )
+      : [];
   }
 
 }

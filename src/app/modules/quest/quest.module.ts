@@ -11,6 +11,7 @@ import {QuestPointComponent} from 'src/app/modules/quest/quest-point/quest-point
 import {QueteurResolverService} from 'src/app/services/queteur/queteur.service';
 import {TroncHistoryComponent} from './tronc-history/tronc-history.component';
 import {TroncHistoryDialogComponent} from './tronc-history-dialog/tronc-history-dialog.component';
+import {BadgeLevelsComponent} from './badge-levels/badge-levels.component';
 
 const ROUTES: Routes = [
   {path: '', component: QueteurHistoryComponent, resolve: {queteur: QueteurResolverService}},
@@ -23,10 +24,15 @@ const ROUTES: Routes = [
 @NgModule({
   imports: [
     CommonModule, SharedModule, RouterModule.forChild(ROUTES)],
-  entryComponents: [TroncHistoryDialogComponent],
+  entryComponents: [TroncHistoryDialogComponent, BadgeLevelsComponent],
   declarations: [
     QueteurHistoryComponent, MySlotsComponent,
-    BadgesComponent, RegisterTroncStateComponent, QuestPointComponent, TroncHistoryComponent, TroncHistoryDialogComponent
+    BadgesComponent,
+    RegisterTroncStateComponent,
+    QuestPointComponent,
+    TroncHistoryComponent,
+    TroncHistoryDialogComponent,
+    BadgeLevelsComponent
   ]
 })
 export class QuestModule {

@@ -8,3 +8,7 @@
   display: flex;
   justify-content: center;
 }
+
+.refresh-button {
+  margin: 1em;
+}
