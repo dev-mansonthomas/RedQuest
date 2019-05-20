@@ -56,7 +56,7 @@
     <span class="tag level{{badge.level}}">{{levels[badge.level].name}}</span>
     <div fxFlex="15px"></div>
     <div fxFlex="140px">
-      <span [@collect]="badge.level" class="fa-stack fa-4x levela{{badge.level}}">
+      <span [@collect]="badge.level" class="fa-stack fa-4x">
         <i class="fas fa-certificate fa-stack-2x"></i>
         <i class="{{badge.icon}} fa-stack-1x fa-inverse"></i>
       </span>
@@ -66,7 +66,14 @@
       <h2>{{badge.name}}</h2>
       <span>{{badge.desc}}</span>
       <span>{{badge['value']}}</span>
-      <span class="see-more">Cliquez pour voir les niveaux</span>
+      <div fxFlex="15px"></div>
+      <div class="progressbar">
+        <div class="pcent" [ngStyle]="{'width':badge.progress+'%'}"></div>
+        <div *ngFor="let l of badge.levels; let i=index" class="lev lev{{i}}">{{l}}</div>
+        <i *ngIf="badge.progress >= 80" [class.gotit]='badge.progress >= 80' class="fa fa-crown"></i>
+      </div>
+      <div fxFlex="15px"></div>
+      <span class="see-more">Détail des niveaux...</span>
     </div>
     <div fxFlex="15px"></div>
   </mat-grid-tile>
