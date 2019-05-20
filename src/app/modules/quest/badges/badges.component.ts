@@ -51,9 +51,11 @@ export class BadgesComponent implements OnInit {
         or: 'de 4 à 8%',
         rubis: 'plus de 8%'
       },
+      levels: ['0%', '2%', '4%', '8%'],
       id: 'objective_percentage',
       more: '',
-      level: 0
+      level: 0,
+      progress: 0
     },
     {
       icon: 'fas fa-calendar',
@@ -66,8 +68,10 @@ export class BadgesComponent implements OnInit {
         or: 'de 7 à 9 jours',
         rubis: 'tous les jours'
       },
+      levels: ['1j', '4j', '7j', '9j'],
       id: 'number_of_days',
-      level: 0
+      level: 0,
+      progress: 0
     },
     {
       icon: 'fas fa-map-marked-alt',
@@ -80,9 +84,11 @@ export class BadgesComponent implements OnInit {
         or: 'de 6 à 10 lieux (60 à 80% *)',
         rubis: 'plus de 10 lieux (plus de 80% *)'
       },
+      levels: ['0', '3', '6', '10'],
       id: 'number_of_locations',
       more: '* si votre UL a moins de 10 points de quête, tenir compte des pourcentages.',
-      level: 0
+      level: 0,
+      progress: 0
     },
     {
       icon: 'fas fa-running',
@@ -95,8 +101,10 @@ export class BadgesComponent implements OnInit {
         or: 'de 10 à 20 troncs',
         rubis: 'plus de 20 troncs'
       },
+      levels: ['2x', '5x', '10x', '20x'],
       id: 'number_of_troncs',
-      level: 0
+      level: 0,
+      progress: 0
     },
     {
       icon: 'fas fa-credit-card',
@@ -109,8 +117,10 @@ export class BadgesComponent implements OnInit {
         or: 'de 300 à 500€',
         rubis: 'plus de 500€'
       },
+      levels: ['5€', '100€', '300€', '500€'],
       id: 'amount_cb',
-      level: 0
+      level: 0,
+      progress: 0
     },
     {
       icon: 'fas fa-hourglass',
@@ -123,8 +133,10 @@ export class BadgesComponent implements OnInit {
         or: 'de 6 à 12h',
         rubis: 'plus de 12h'
       },
+      levels: ['1h', '3h', '6h', '12h'],
       id: 'time_spent',
-      level: 0
+      level: 0,
+      progress: 0
     },
     {
       icon: 'fas fa-weight-hanging',
@@ -137,8 +149,10 @@ export class BadgesComponent implements OnInit {
         or: 'de 15 à 30kg',
         rubis: 'plus de 30kg'
       },
+      levels: ['600kg', '5kg', '15kg', '30kg'],
       id: 'weight',
-      level: 0
+      level: 0,
+      progress: 0
     }
   ];
 
@@ -176,6 +190,7 @@ export class BadgesComponent implements OnInit {
             const badge = this.badges.find(b2 => b2.id === b1.id);
             badge.level = b1.level;
             badge['value'] = b1.value;
+            badge['progress'] = Math.min(80, b1.level * 20 + Math.random() * 20);
             if (b1.more) {
               badge.more = b1.more;
             }
