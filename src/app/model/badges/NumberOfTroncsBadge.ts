@@ -1,6 +1,6 @@
-import {Badge} from './Badge';
-import {BadgeLevelsDesc} from './BadgeLevelsDesc';
-import {QueteurStats} from '../queteur-stats';
+import { Badge } from './Badge';
+import { BadgeLevelsDesc } from './BadgeLevelsDesc';
+import { QueteurStats } from '../queteur-stats';
 
 export class NumberOfTroncsBadge extends Badge {
 
@@ -23,31 +23,10 @@ export class NumberOfTroncsBadge extends Badge {
       ''
     );
   }
-
-
-  bronzeLowBound(): number {
-    return 2;
-  }
-
-  argentLowBound(): number {
-    return 5;
-  }
-
-  orLowBound(): number {
-    return 10;
-  }
-
-  rubisLowBound(): number {
-    return 20;
-  }
-
-  computeDisplayValue(kpi: number): string {
-    return kpi + ' troncs';
-  }
-
-  kpiFromStats(stats: QueteurStats): number {
-    return stats.number_of_tronc_queteur;
-  }
-
-
+  bronzeLowBound = () => 2;
+  argentLowBound = () => 5;
+  orLowBound = () => 10;
+  rubisLowBound = () => 20;
+  computeDisplayValue = (kpi: number) => kpi > 1 ? `${kpi} troncs` : `${kpi} tronc`;
+  kpiFromStats = (stats: QueteurStats) => stats.number_of_tronc_queteur;
 }

@@ -1,16 +1,19 @@
-<h1 mat-dialog-title>{{badge.name}}</h1>
-<h2>{{badge.desc}}</h2>
-<div mat-dialog-content>
-  <u>Details:</u>
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center">
+    <span>Badge "{{badge.name}}"</span>
+    <button mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <div mat-dialog-content>
+      <h3>Objectif: {{badge.desc}}</h3>
   <ul>
-    <li>Pas débloqué: {{badge.levelsDesc.none}}</li>
-    <li><span class="ba l1">Bronze</span>: {{badge.levelsDesc.bronze}}</li>
-    <li><span class="ba l2">Argent</span>: {{badge.levelsDesc.argent}}</li>
-    <li><span class="ba l3">Or</span>: {{badge.levelsDesc.or}}</li>
-    <li><span class="ba l4">Rubis</span>: {{badge.levelsDesc.rubis}}</li>
+    <li><span class="ba l0">Pas débloqué</span> {{badge.levelDesc.none}}</li>
+    <li><span class="ba l1">Bronze</span> {{badge.levelDesc.bronze}}</li>
+    <li><span class="ba l2">Argent</span> {{badge.levelDesc.argent}}</li>
+    <li><span class="ba l3">Or</span> {{badge.levelDesc.or}}</li>
+    <li><span class="ba l4">Rubis</span> {{badge.levelDesc.rubis}}</li>
   </ul>
   <span *ngIf="badge.more">{{badge.more}}</span>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Fermer</button>
-</div>
+

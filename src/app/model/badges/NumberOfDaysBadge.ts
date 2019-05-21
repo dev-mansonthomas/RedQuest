@@ -1,6 +1,6 @@
-import {Badge} from './Badge';
-import {BadgeLevelsDesc} from './BadgeLevelsDesc';
-import {QueteurStats} from '../queteur-stats';
+import { Badge } from './Badge';
+import { BadgeLevelsDesc } from './BadgeLevelsDesc';
+import { QueteurStats } from '../queteur-stats';
 
 export class NumberOfDaysBadge extends Badge {
 
@@ -23,27 +23,10 @@ export class NumberOfDaysBadge extends Badge {
     );
   }
 
-  bronzeLowBound(): number {
-    return 1;
-  }
-
-  argentLowBound(): number {
-    return 4;
-  }
-
-  orLowBound(): number {
-    return 7;
-  }
-
-  rubisLowBound(): number {
-    return 9;
-  }
-
-  computeDisplayValue(kpi: number): string {
-    return kpi + ' jours';
-  }
-
-  kpiFromStats(stats: QueteurStats): number {
-    return stats.number_of_days_quete;
-  }
+  bronzeLowBound = () => 1;
+  argentLowBound = () => 4;
+  orLowBound = () => 7;
+  rubisLowBound = () => 9;
+  computeDisplayValue = (kpi: number) => kpi > 1 ? `${kpi} jours` : `${kpi} jour`;
+  kpiFromStats = (stats: QueteurStats) => stats.number_of_days_quete;
 }
