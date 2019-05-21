@@ -7,6 +7,13 @@ import {environment} from '../../../../environments/environment';
 import {BadgesService} from './badges.service';
 import {MatDialog} from '@angular/material';
 import {BadgeLevelsComponent} from '../badge-levels/badge-levels.component';
+import {ObjectivePercentageBadge} from '../../../model/badges/ObjectivePercentageBadge';
+import {AmountCbBadge} from '../../../model/badges/AmountCbBadge';
+import {NumberOfDaysBadge} from '../../../model/badges/NumberOfDaysBadge';
+import {NumberOfLocationsBadge} from '../../../model/badges/NumberOfLocationsBadge';
+import {NumberOfTroncsBadge} from '../../../model/badges/NumberOfTroncsBadge';
+import {TimeSpentBadge} from '../../../model/badges/TimeSpentBadge';
+import {WeightBadge} from '../../../model/badges/WeightBadge';
 
 const ze2 = [style({transform: 'translateX(-100%) rotateY(540deg)'}), animate(700)];
 
@@ -40,120 +47,13 @@ export class BadgesComponent implements OnInit {
   ];
 
   badges = [
-    {
-      icon: 'fas fa-percentage',
-      name: 'Objectif de l\'UL',
-      desc: 'Participer à l\'objectif de l\'UL.',
-      levelsDesc: {
-        none: '0%',
-        bronze: 'de 0 à 2%',
-        argent: 'de 2 à 4%',
-        or: 'de 4 à 8%',
-        rubis: 'plus de 8%'
-      },
-      levels: ['0%', '2%', '4%', '8%'],
-      id: 'objective_percentage',
-      more: '',
-      level: 0,
-      progress: 0
-    },
-    {
-      icon: 'fas fa-calendar',
-      name: 'Nombre de jours',
-      desc: 'Quêter un maximum de jours.',
-      levelsDesc: {
-        none: 'si vous n\'avez pas quêté',
-        bronze: 'de 1 à 4 jours',
-        argent: 'de 4 à 7 jours',
-        or: 'de 7 à 9 jours',
-        rubis: 'tous les jours'
-      },
-      levels: ['1j', '4j', '7j', '9j'],
-      id: 'number_of_days',
-      level: 0,
-      progress: 0
-    },
-    {
-      icon: 'fas fa-map-marked-alt',
-      name: 'Nombre de lieux',
-      desc: 'Quêter dans un maximum de points de quête distincts.',
-      levelsDesc: {
-        none: 'si vous n\'avez pas quêté',
-        bronze: 'de 0 à 3 lieux (0 à 30% *)',
-        argent: 'de 3 à 6 lieux (30 à 60% *)',
-        or: 'de 6 à 10 lieux (60 à 80% *)',
-        rubis: 'plus de 10 lieux (plus de 80% *)'
-      },
-      levels: ['0', '3', '6', '10'],
-      id: 'number_of_locations',
-      more: '* si votre UL a moins de 10 points de quête, tenir compte des pourcentages.',
-      level: 0,
-      progress: 0
-    },
-    {
-      icon: 'fas fa-running',
-      name: 'Nombre de troncs',
-      desc: 'Quêter un maximum de fois.',
-      levelsDesc: {
-        none: '0 ou 1 tronc',
-        bronze: 'de 2 à 5 troncs',
-        argent: 'de 5 à 10 troncs',
-        or: 'de 10 à 20 troncs',
-        rubis: 'plus de 20 troncs'
-      },
-      levels: ['2x', '5x', '10x', '20x'],
-      id: 'number_of_troncs',
-      level: 0,
-      progress: 0
-    },
-    {
-      icon: 'fas fa-credit-card',
-      name: 'Sans contact ?',
-      desc: 'Quêter un maximum de fois par CB.',
-      levelsDesc: {
-        none: 'moins de 5€',
-        bronze: 'de 5 à 100 €',
-        argent: 'de 100 à 300€',
-        or: 'de 300 à 500€',
-        rubis: 'plus de 500€'
-      },
-      levels: ['5€', '100€', '300€', '500€'],
-      id: 'amount_cb',
-      level: 0,
-      progress: 0
-    },
-    {
-      icon: 'fas fa-hourglass',
-      name: 'Temps écoulé',
-      desc: 'Quêter un maximum de temps.',
-      levelsDesc: {
-        none: 'moins d\'une heure',
-        bronze: 'de 1 à 3h',
-        argent: 'de 3 à 6h',
-        or: 'de 6 à 12h',
-        rubis: 'plus de 12h'
-      },
-      levels: ['1h', '3h', '6h', '12h'],
-      id: 'time_spent',
-      level: 0,
-      progress: 0
-    },
-    {
-      icon: 'fas fa-weight-hanging',
-      name: 'Poids',
-      desc: 'Quêter le plus lourd possible.',
-      levelsDesc: {
-        none: 'moins de 600g',
-        bronze: 'de 600g à 5kg',
-        argent: 'de 5 à 15kg',
-        or: 'de 15 à 30kg',
-        rubis: 'plus de 30kg'
-      },
-      levels: ['600kg', '5kg', '15kg', '30kg'],
-      id: 'weight',
-      level: 0,
-      progress: 0
-    }
+    new ObjectivePercentageBadge(),
+    new AmountCbBadge(),
+    new NumberOfDaysBadge(),
+    new NumberOfLocationsBadge(),
+    new NumberOfTroncsBadge(),
+    new TimeSpentBadge(),
+    new WeightBadge()
   ];
 
   constructor(private route: ActivatedRoute,
@@ -165,37 +65,8 @@ export class BadgesComponent implements OnInit {
     this.setCol(window.innerWidth);
     this.route.data.subscribe((data: { queteur: Queteur }) => {
       this.queteur = data.queteur;
-      this.badgesService.loadQueteurBadgesLevels(data.queteur.queteur_id)
-        .subscribe(badges => {
-          this.queteur.badges = [
-            {id: 'number_of_days', level: badges.number_of_days.level, value: badges.number_of_days.value},
-            {id: 'number_of_locations', level: badges.number_of_locations.level, value: badges.number_of_locations.value},
-            {id: 'number_of_troncs', level: badges.number_of_troncs.level, value: badges.number_of_troncs.value},
-            {id: 'amount_cb', level: badges.amount_cb.level, value: badges.amount_cb.value},
-            {id: 'time_spent', level: badges.time_spent.level, value: badges.time_spent.value},
-            {id: 'weight', level: badges.weight.level, value: badges.weight.value},
-            {
-              id: 'objective_percentage',
-              level: badges.objective_percentage ? badges.objective_percentage.level : undefined,
-              value: badges.objective_percentage ? badges.objective_percentage.value : undefined,
-              more: badges.objective_percentage ? `L\'objectif de votre Unité Locale est de ${badges.objective_percentage.more}` : undefined
-            }
-          ];
-          if (!badges.objective_percentage.level) {
-            this.queteur.badges = this.queteur.badges.filter(badge => badge.id !== 'objective_percentage');
-            this.badges = this.badges.filter(badge => badge.id !== 'objective_percentage');
-          }
-          console.log('badges:', badges);
-          this.queteur.badges.forEach(b1 => setTimeout(() => {
-            const badge = this.badges.find(b2 => b2.id === b1.id);
-            badge.level = b1.level;
-            badge['value'] = b1.value;
-            badge['progress'] = Math.min(80, b1.level * 20 + Math.random() * 20);
-            if (b1.more) {
-              badge.more = b1.more;
-            }
-          }, Math.random() * 2000 + 1000));
-        });
+      this.badgesService.loadQueteurBadgesLevels(this.badges, data.queteur.queteur_id)
+        .subscribe(badges => this.badges = badges);
     });
   }
 
@@ -211,30 +82,6 @@ export class BadgesComponent implements OnInit {
       }
     });
     return p;
-  }
-
-  setLevel(badge, level: number) {
-    console.log('SetLevel', badge, level);
-    badge.level++;
-    if (badge.level < level) {
-      setTimeout(this.setLevel, 1000, badge, level);
-    }
-  }
-
-  private random(reset = false) {
-    if (reset) {
-      this.badges.forEach(b => b.level = 0);
-    }
-    const idx = Math.floor(Math.random() * this.badges.length);
-    console.log(idx, this.score, this.badges.length * this.levels[this.levels.length - 1].mult);
-    if (this.badges[idx].level < 4) {
-      this.badges[idx].level++;
-    } else if (this.score < this.badges.length * this.levels[this.levels.length - 1].mult) {
-      this.random();
-    }
-    if (this.score < this.badges.length * this.levels[this.levels.length - 1].mult) {
-      setTimeout(this.random, 500 + Math.random() * 1000);
-    }
   }
 
   seeLevelsDetails(badge: any) {
