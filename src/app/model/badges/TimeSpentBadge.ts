@@ -1,7 +1,7 @@
-import {Badge} from './Badge';
-import {QueteurStats} from '../queteur-stats';
-import {BadgeLevelsDesc} from './BadgeLevelsDesc';
-import {TimePipe} from '../../pipes/time.pipe';
+import { Badge } from './Badge';
+import { QueteurStats } from '../queteur-stats';
+import { BadgeLevelsDesc } from './BadgeLevelsDesc';
+import { TimePipe } from '../../pipes/time.pipe';
 
 export class TimeSpentBadge extends Badge {
 
@@ -25,28 +25,10 @@ export class TimeSpentBadge extends Badge {
     );
   }
 
-  bronzeLowBound(): number {
-    return 60;
-  }
-
-  argentLowBound(): number {
-    return 180;
-  }
-
-  orLowBound(): number {
-    return 360;
-  }
-
-  rubisLowBound(): number {
-    return 720;
-  }
-
-  computeDisplayValue(kpi: number): string {
-    return new TimePipe().transform(kpi);
-  }
-
-  kpiFromStats(stats: QueteurStats): number {
-    return stats.time_spent_in_minutes;
-  }
-
+  bronzeLowBound = () => 60;
+  argentLowBound = () => 180;
+  orLowBound = () => 360;
+  rubisLowBound = () => 720;
+  computeDisplayValue = (kpi: number) => new TimePipe().transform(kpi);
+  kpiFromStats = (stats: QueteurStats) => stats.time_spent_in_minutes;
 }

@@ -1,6 +1,6 @@
-import {Badge} from './Badge';
-import {BadgeLevelsDesc} from './BadgeLevelsDesc';
-import {QueteurStats} from '../queteur-stats';
+import { Badge } from './Badge';
+import { BadgeLevelsDesc } from './BadgeLevelsDesc';
+import { QueteurStats } from '../queteur-stats';
 
 export class NumberOfLocationsBadge extends Badge {
   private totalNumberOfLocations = 0;
@@ -24,48 +24,23 @@ export class NumberOfLocationsBadge extends Badge {
       '* si votre UL a moins de 10 points de quête, tenir compte des pourcentages.');
   }
 
-  bronzeLowBound(): number {
-    return 0;
-  }
-
-  argentLowBound(): number {
-    if (this.totalNumberOfLocations < 10) {
-      return 30;
-    }
-    return 3;
-  }
-
-  orLowBound(): number {
-    if (this.totalNumberOfLocations < 10) {
-      return 30;
-    }
-    return 6;
-  }
-
-  rubisLowBound(): number {
-    if (this.totalNumberOfLocations < 10) {
-      return 30;
-    }
-    return 10;
-  }
-
-  update(stats: QueteurStats) {
-    const kpi = this.kpiFromStats(stats);
-    this.level = this.calculateLevel(stats.number_of_point_quete);
-    this.value = this.computeDisplayValue(stats.number_of_point_quete);
-    this.calculateProgressWithTimeout(kpi);
-  }
-
-  computeDisplayValue(kpi: number): string {
-    return kpi + ' lieux';
-  }
-
+  bronzeLowBound = () => 0;
+  argentLowBound = () => this.totalNumberOfLocations < 10 ? 30 : 3;
+  orLowBound = () => this.totalNumberOfLocations < 10 ? 30 : 6;
+  rubisLowBound = () => this.totalNumberOfLocations < 10 ? 30 : 10;
+  computeDisplayValue = (kpi: number) => kpi > 1 ? `${kpi} lieux` : `${kpi} lieu`;
   kpiFromStats(stats: QueteurStats): number {
     this.totalNumberOfLocations = stats.total_number_of_point_quete;
     if (this.totalNumberOfLocations > 10) {
       return stats.number_of_point_quete;
     }
     return stats.number_of_point_quete / this.totalNumberOfLocations * 100;
+  }
+  update(stats: QueteurStats) {
+    const kpi = this.kpiFromStats(stats);
+    this.level = this.calculateLevel(stats.number_of_point_quete);
+    this.value = this.computeDisplayValue(stats.number_of_point_quete);
+    this.calculateProgressWithTimeout(kpi);
   }
 
 }

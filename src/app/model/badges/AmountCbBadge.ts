@@ -1,6 +1,6 @@
-import {Badge} from './Badge';
-import {QueteurStats} from '../queteur-stats';
-import {BadgeLevelsDesc} from './BadgeLevelsDesc';
+import { Badge } from './Badge';
+import { QueteurStats } from '../queteur-stats';
+import { BadgeLevelsDesc } from './BadgeLevelsDesc';
 
 export class AmountCbBadge extends Badge {
 
@@ -23,29 +23,10 @@ export class AmountCbBadge extends Badge {
       ''
     );
   }
-
-  bronzeLowBound(): number {
-    return 5.0;
-  }
-
-  argentLowBound(): number {
-    return 100.0;
-  }
-
-  orLowBound(): number {
-    return 300.0;
-  }
-
-  rubisLowBound(): number {
-    return 500.0;
-  }
-
-  computeDisplayValue(kpi: number): string {
-    return kpi + '€';
-  }
-
-  kpiFromStats(stats: QueteurStats): number {
-    return stats.amount_cb;
-  }
-
+  bronzeLowBound = () => 5.0;
+  argentLowBound = () => 100.0;
+  orLowBound = () => 300.0;
+  rubisLowBound = () => 500.0;
+  computeDisplayValue = (kpi: number) => `${kpi} €`;
+  kpiFromStats = (stats: QueteurStats) => stats.amount_cb;
 }

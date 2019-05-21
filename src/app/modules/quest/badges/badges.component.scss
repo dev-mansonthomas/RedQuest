@@ -1,10 +1,6 @@
 
-$bronze : #b4a996;
-$argent : #d7d7d8;
-$or : #ecb731;
-$rubis : #ed1b2e;
-$gris : #999;
-$bleu : #3f51b5;
+@import '../../../badges';
+
 @keyframes couronne {
   0% { opacity: 0; }
   75% { opacity: 0.1; transform: rotate(90deg) scale(0.2); }
@@ -14,7 +10,7 @@ $bleu : #3f51b5;
 span.ba {
   padding: 3px 8px; 
   border-radius:20px;
-  color:white;
+  color:$blanc;
   font-weight: bold;
   margin: 0 5px;
   &.l1 {
@@ -31,16 +27,20 @@ span.ba {
   }
 }
 div.progressbar {
+  $b: 1px solid $bleu;
   height:20px;
   position: relative;
   box-shadow: 0 0 3px #222;
-  background: linear-gradient(90deg, #fff 0%,#fff 19%, $bronze 20%, $bronze 39%, $argent 40%, $argent 59%, $or 60%,$or 79%, $rubis 80%);
+  background: linear-gradient(90deg, $blanc 0%,$blanc 20%, $bronze 20%, $bronze 40%, $argent 40%, $argent 60%, $or 60%,$or 80%, $rubis 80%);
   .pcent {
     margin:6px 0;
-    height:8px;
-    background-color:$bleu;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    height:7px;
+    background-color:$bleuclair;
+    border-top:$b;
+    border-bottom:$b;
+    border-right:$b;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
     transition: width 3s ease-out;
   }
   .lev {
@@ -58,9 +58,12 @@ div.progressbar {
 
   .gotit {
     position: absolute;
-    top: 3px;
-    right: 10px;
-    color: white;
+    top: 0;
+    right: 0;
+    width:20%;
+    text-align:center;
+    color: $blanc;
+    text-shadow: 0 0 3px black;
     animation-duration: 3s;
     animation-name: couronne;
   }
@@ -87,7 +90,7 @@ div.progressbar {
       color: $rubis;
     }
     &.total {
-      color: lightblue;
+      color: $bleuclair;
     }
     i.fa-certificate {
       text-shadow: 1px 3px 4px black;
@@ -111,7 +114,7 @@ div.progressbar {
   letter-spacing: 1px;
   transform: rotate(45deg);
   padding: 10px 0;
-  color: white;
+  color: $blanc;
   &.level0 { color: $gris; background: whitesmoke; border:2px dashed $gris; font-size:0.8em }
   &.level1 { background-color: $bronze; }
   &.level2 { background-color: $argent; }
@@ -126,7 +129,7 @@ div.progressbar {
   position: absolute;
   top: 0;
   right: 0;
-  color: white;
+  color: $blanc;
   background: tomato;
   border-radius: 23px;
   font-size: 18px;

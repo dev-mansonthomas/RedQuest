@@ -1,7 +1,7 @@
-import {Badge} from './Badge';
-import {QueteurStats} from '../queteur-stats';
-import {BadgeLevelsDesc} from './BadgeLevelsDesc';
-import {WeightPipe} from '../../pipes/weight.pipe';
+import { Badge } from './Badge';
+import { QueteurStats } from '../queteur-stats';
+import { BadgeLevelsDesc } from './BadgeLevelsDesc';
+import { WeightPipe } from '../../pipes/weight.pipe';
 
 export class WeightBadge extends Badge {
 
@@ -25,27 +25,10 @@ export class WeightBadge extends Badge {
     );
   }
 
-  bronzeLowBound(): number {
-    return 600;
-  }
-
-  argentLowBound(): number {
-    return 5000;
-  }
-
-  orLowBound(): number {
-    return 15000;
-  }
-
-  rubisLowBound(): number {
-    return 30000;
-  }
-
-  computeDisplayValue(kpi: number): string {
-    return new WeightPipe().transform(kpi);
-  }
-
-  kpiFromStats(stats: QueteurStats): number {
-    return stats.weight;
-  }
+  bronzeLowBound = () => 600;
+  argentLowBound = () => 5000;
+  orLowBound = () => 15000;
+  rubisLowBound = () => 30000;
+  computeDisplayValue = (kpi: number) => new WeightPipe().transform(kpi);
+  kpiFromStats = (stats: QueteurStats) => stats.weight;
 }
