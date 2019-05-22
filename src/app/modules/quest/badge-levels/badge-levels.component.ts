@@ -1,23 +1,12 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {HistoriqueTroncQueteur} from '../../../model/historiqueTroncQueteur';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-badge-levels',
   templateUrl: './badge-levels.component.html',
   styleUrls: ['./badge-levels.component.scss']
 })
-export class BadgeLevelsComponent implements OnInit {
+export class BadgeLevelsComponent {
 
-  constructor(public dialogRef: MatDialogRef<BadgeLevelsComponent>,
-              @Inject(MAT_DIALOG_DATA) public badge: any) {
-  }
-
-  ngOnInit() {
-  }
-
-  onNoClick() {
-    this.dialogRef.close();
-  }
-
+  constructor(@Inject(MAT_DIALOG_DATA) public badge: any) { }
 }

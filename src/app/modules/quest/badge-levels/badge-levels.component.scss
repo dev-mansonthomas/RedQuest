@@ -1,25 +1,35 @@
-$bronze : #b4a996;
-$argent : #d7d7d8;
-$or : #ecb731;
-$redcross : #ed1b2e;
+@import '../../../badges';
+
+ul {
+  list-style: none;
+}
 span.ba {
   padding: 3px 8px;
   border-radius:20px;
-  color:white;
+  color:$blanc;
   font-weight: bold;
   margin: 0 5px;
-&.l1 {
-   background-color: $bronze;
- }
-&.l2 {
-   background-color: $argent;
- }
-&.l3 {
-   background-color: $or;
- }
-&.l4 {
-   background-color: $redcross;
- }
+  width:100px;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 0 0 3px black;
+  &.l0 {
+    background-color: $blanc;
+    border:1px solid $gris;
+  }
+  &.l1 {
+    background-color: $bronze;
+  }
+  &.l2 {
+    background-color: $argent; 
+  }
+  &.l3 {
+    background-color: $or; 
+  }
+  &.l4 {
+    background-color: $rubis; 
+  }
 }
 
 li {
