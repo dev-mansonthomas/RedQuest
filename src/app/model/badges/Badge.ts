@@ -38,7 +38,6 @@ export abstract class Badge {
   calculateProgressWithTimeout(kpi: number) {
     setTimeout(() => {
         this.progress = this.computeProgress(kpi);
-        console.log(this.id, this.progress);
       },
       Math.random() * 2000 + 1000);
   }
