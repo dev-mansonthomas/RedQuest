@@ -82,7 +82,7 @@ install firebase tools:
 
 To test authentication:
 
-`firebase list`
+`firebase projects:list`
 
 `firebase use --add {project-id}`
 
