@@ -17,7 +17,7 @@ export class RegisterTroncStateComponent {
   @Input() type: TroncState;
   @Input() troncs: Tronc[];
 
-  @ViewChild(MatStepper) stepper: MatStepper;
+  @ViewChild(MatStepper, {static: false}) stepper: MatStepper;
 
   format = 'HH:mm [le] YYYY-MM-DD';
   isEditable = true;
