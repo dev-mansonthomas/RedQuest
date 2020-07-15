@@ -5,7 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Queteur} from 'src/app/model/queteur';
 import {environment} from '../../../../environments/environment';
 import {BadgesService} from './badges.service';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {BadgeLevelsComponent} from '../badge-levels/badge-levels.component';
 import {ObjectivePercentageBadge} from '../../../model/badges/ObjectivePercentageBadge';
 import {AmountCbBadge} from '../../../model/badges/AmountCbBadge';
