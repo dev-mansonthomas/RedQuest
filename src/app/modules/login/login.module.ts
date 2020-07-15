@@ -16,7 +16,6 @@ const ROUTES: Routes = [{
 
 @NgModule({
     imports: [CommonModule, SharedModule, RouterModule.forChild(ROUTES)],
-    declarations: [LoginComponent, LostPasswordDialogComponent],
-    entryComponents: [LostPasswordDialogComponent]
+    declarations: [LoginComponent, LostPasswordDialogComponent]
 })
 export class LoginModule { }
