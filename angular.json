@@ -38,9 +38,9 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-            "localize": [
-              "fr"
-            ],
+              "localize": [
+                "fr"
+              ],
               "progress": true,
               "optimization": true,
               "outputHashing": "all",
@@ -76,9 +76,9 @@
                   "with": "src/environments/environment.dev.ts"
                 }
               ],
-            "localize": [
-              "fr"
-            ],
+              "localize": [
+                "fr"
+              ],
               "progress": true,
               "showCircularDependencies": true,
               "verbose": false,
@@ -99,9 +99,9 @@
                   "with": "src/environments/environment.test.ts"
                 }
               ],
-            "localize": [
-              "fr"
-            ],
+              "localize": [
+                "fr"
+              ],
               "progress": true,
               "optimization": true,
               "outputHashing": "all",
@@ -209,5 +209,8 @@
       }
     }
   },
-  "defaultProject": "red-quest"
+  "defaultProject": "red-quest",
+  "cli": {
+    "analytics": "9b92d574-3410-43ae-bce7-6aadf88fb14f"
+  }
 }
