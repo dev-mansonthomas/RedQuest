@@ -3,20 +3,20 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {HistoriqueTroncQueteur} from '../../../model/historiqueTroncQueteur';
 
 @Component({
-  selector: 'app-tronc-history-dialog',
-  templateUrl: './tronc-history-dialog.component.html',
-  styleUrls: ['./tronc-history-dialog.component.css']
+    selector: 'app-tronc-history-dialog',
+    templateUrl: './tronc-history-dialog.component.html',
+    styleUrls: ['./tronc-history-dialog.component.css']
 })
 export class TroncHistoryDialogComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<TroncHistoryDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public troncStat: HistoriqueTroncQueteur) { }
+    constructor(public dialogRef: MatDialogRef<TroncHistoryDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public troncStat: HistoriqueTroncQueteur) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
-  onNoClick() {
-    this.dialogRef.close();
-  }
+    onNoClick() {
+        this.dialogRef.close();
+    }
 
 }

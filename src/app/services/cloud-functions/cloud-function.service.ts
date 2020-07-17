@@ -10,43 +10,43 @@ import {Queteur} from '../../model/queteur';
 import {HistoriqueTroncQueteur} from '../../model/historiqueTroncQueteur';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CloudFunctionService {
-  baseUrl = environment.cloudFunctionsBaseUrl;
+    baseUrl = environment.cloudFunctionsBaseUrl;
 
-  constructor(private firebaseFunctions: AngularFireFunctions, private http: HttpClient) {
-  }
+    constructor(private firebaseFunctions: AngularFireFunctions, private http: HttpClient) {
+    }
 
-  findQueteurById(): Observable<any> {
-    const func = this.firebaseFunctions.httpsCallable('findQueteurById');
-    return func({});
-  }
+    findQueteurById(): Observable<any> {
+        const func = this.firebaseFunctions.httpsCallable('findQueteurById');
+        return func({});
+    }
 
-  findULDetailsByToken(token: string): Observable<ULDetails> {
-    return this.http.get<ULDetails>(this.baseUrl + 'findULDetailsByToken?token=' + token);
-  }
+    findULDetailsByToken(token: string): Observable<ULDetails> {
+        return this.http.get<ULDetails>(this.baseUrl + 'findULDetailsByToken?token=' + token);
+    }
 
-  registerQueteur(user: Queteur): Observable<any> {
-    return this.firebaseFunctions.httpsCallable('registerQueteur')(user)
-      .pipe(map(value => JSON.parse(value)));
-  }
+    registerQueteur(user: Queteur): Observable<any> {
+        return this.firebaseFunctions.httpsCallable('registerQueteur')(user)
+            .pipe(map(value => JSON.parse(value)));
+    }
 
-  retrievePreparedTroncs(): Observable<any> {
-    return this.firebaseFunctions.httpsCallable('tronc_listPrepared')({})
-      .pipe(map(value => JSON.parse(value, (k, v) => {
-        if (k === 'depart_theorique' || k === 'depart' || k === 'arrivee') {
-          return new Date(v);
-        }
-        return v;
-      })));
-  }
+    retrievePreparedTroncs(): Observable<any> {
+        return this.firebaseFunctions.httpsCallable('tronc_listPrepared')({})
+            .pipe(map(value => JSON.parse(value, (k, v) => {
+                if (k === 'depart_theorique' || k === 'depart' || k === 'arrivee') {
+                    return new Date(v);
+                }
+                return v;
+            })));
+    }
 
-  troncStateUpdate(troncUpdate: {isDepart: boolean, date: string, tqId: number}): Observable<any> {
-    return this.firebaseFunctions.httpsCallable('tronc_setDepartOrRetour')(troncUpdate);
-  }
+    troncStateUpdate(troncUpdate: {isDepart: boolean; date: string; tqId: number}): Observable<any> {
+        return this.firebaseFunctions.httpsCallable('tronc_setDepartOrRetour')(troncUpdate);
+    }
 
-  historiqueTroncQueteur(): Observable<HistoriqueTroncQueteur[]> {
-    return this.firebaseFunctions.httpsCallable('historiqueTroncQueteur')({});
-  }
+    historiqueTroncQueteur(): Observable<HistoriqueTroncQueteur[]> {
+        return this.firebaseFunctions.httpsCallable('historiqueTroncQueteur')({});
+    }
 }

@@ -3,20 +3,20 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  firebaseConfig: {
-    apiKey: 'YOUR_API_KEY',
-    authDomain: 'AUTH_DOMAIN',
-    databaseURL: 'DATABASE_URL',
-    projectId: 'PROJECT_ID',
-    storageBucket: 'STORAGE_BUCKET',
-    messagingSenderId: 'MESSAGING_SENDER_ID'
-  },
-  cloudFunctionsBaseUrl: 'CLOUD_FUNCTIONS_BASE_URL',
-  google_maps_key: 'YOUR_GOOGLE_MAPS_EMBED_API_KEY',
-  ranking_enabled: true,
-  history_enabled: true,
-  badges_enabled: true
+    production: false,
+    firebaseConfig: {
+        apiKey: 'YOUR_API_KEY',
+        authDomain: 'AUTH_DOMAIN',
+        databaseURL: 'DATABASE_URL',
+        projectId: 'PROJECT_ID',
+        storageBucket: 'STORAGE_BUCKET',
+        messagingSenderId: 'MESSAGING_SENDER_ID'
+    },
+    cloudFunctionsBaseUrl: 'CLOUD_FUNCTIONS_BASE_URL',
+    google_maps_key: 'YOUR_GOOGLE_MAPS_EMBED_API_KEY',
+    ranking_enabled: true,
+    history_enabled: true,
+    badges_enabled: true
 };
 
 /*

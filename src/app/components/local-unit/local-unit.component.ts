@@ -6,23 +6,24 @@ import {Queteur} from '../../model/queteur';
 import {ULDetails} from '../../model/ULDetails';
 
 @Component({
-  selector: 'app-local-unit',
-  templateUrl: './local-unit.component.html',
-  styleUrls: ['./local-unit.component.css']
+    selector: 'app-local-unit',
+    templateUrl: './local-unit.component.html',
+    styleUrls: ['./local-unit.component.css']
 })
 export class LocalUnitComponent implements OnInit {
 
-  ulDetails: ULDetails;
+    ulDetails: ULDetails;
 
-  constructor(private firestoreService: FirestoreService,
-              private functionsService: CloudFunctionService,
-              private route: ActivatedRoute) {
-  }
+    constructor(private firestoreService: FirestoreService,
+        private functionsService: CloudFunctionService,
+        private route: ActivatedRoute) {
+    }
 
-  ngOnInit() {
-    this.route.data.subscribe((data: { queteur: Queteur }) => {
-      this.functionsService.findULDetailsByToken(data.queteur.ul_registration_token).subscribe(ulDetails => this.ulDetails = ulDetails);
-    });
-  }
+    ngOnInit() {
+        this.route.data.subscribe((data: { queteur: Queteur }) => {
+            this.functionsService.findULDetailsByToken(data.queteur.ul_registration_token).subscribe(
+                ulDetails => this.ulDetails = ulDetails);
+        });
+    }
 
 }
