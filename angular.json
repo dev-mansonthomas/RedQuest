@@ -24,7 +24,7 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/ng-pick-datetime/assets/style/picker.min.css",
+              "node_modules/ng-pick-datetime-ex/assets/style/picker.min.css",
               "src/custom-theme.scss",
               "src/styles.scss"
             ],
@@ -37,9 +37,6 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ],
-              "localize": [
-                "fr"
               ],
               "progress": true,
               "optimization": true,
@@ -75,9 +72,6 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.dev.ts"
                 }
-              ],
-              "localize": [
-                "fr"
               ],
               "progress": true,
               "showCircularDependencies": true,

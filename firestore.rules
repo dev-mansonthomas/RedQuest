@@ -1,0 +1,18 @@
+rules_version = "2";
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+  	match /queteurs/{queteur} {
+    	allow write, update: if request.auth.uid != null
+      		&& !exists(/databases/$(database)/documents/queteurs/$(request.auth.uid))
+          && (request.resource.data.registration_approved == false || request.resource.data.registration_approved==null);
+      allow read: if request.auth.uid != null ;
+    }
+
+    match /{document=**} {
+    allow write: if false;
+      allow read: if request.auth.uid != null
+      && get(/databases/$(database)/documents/queteurs/$(request.auth.uid)).data.registration_approved == true;
+    }
+  }
+}
