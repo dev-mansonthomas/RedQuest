@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HistoriqueTroncQueteur} from '../../../model/historiqueTroncQueteur';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {TroncHistoryDialogComponent} from '../tronc-history-dialog/tronc-history-dialog.component';
 
 @Component({

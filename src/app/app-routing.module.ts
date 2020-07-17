@@ -10,14 +10,14 @@ import {LocalUnitComponent} from './components/local-unit/local-unit.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent, canActivate: [AuthGuard], resolve: {queteur: QueteurResolverService}},
-  {path: 'login', loadChildren: './modules/login/login.module#LoginModule'},
+  {path: 'login', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule)},
   {
     path: 'registration',
-    loadChildren: './modules/registration/registration.module#RegistrationModule'
+    loadChildren: () => import('./modules/registration/registration.module').then(m => m.RegistrationModule)
   },
   {
     path: 'quest', canActivate: [AuthGuard],
-    loadChildren: './modules/quest/quest.module#QuestModule'
+    loadChildren: () => import('./modules/quest/quest.module').then(m => m.QuestModule)
   },
   {path: 'tips', component: TipsComponent, canActivate: [AuthGuard]},
   {path: 'ranking', component: RankingComponent, canActivate: [AuthGuard], resolve: {queteur: QueteurResolverService}},

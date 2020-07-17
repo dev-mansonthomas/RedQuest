@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 
-import * as firebase from 'firebase/app';
+import { auth, User } from 'firebase/app';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -15,52 +15,47 @@ export class AuthService {
   private AUTH_INVALID_PASSWORD = ''; // Le password n'est pas correct
   private AUTH_ACCOUNT_ALREADY_EXISTING = 'auth/email-already-in-use';
 
-  private user: Observable<firebase.User>;
-  private userDetails: firebase.User;
+  private userDetails: User;
 
   constructor(private router: Router, private angularFireAuth: AngularFireAuth) {
-    this.user = this.angularFireAuth.user;
-    this.user.subscribe(user => {
-      this.userDetails = user;
-    });
-    this.angularFireAuth.auth.getRedirectResult().then(result => {
+    this.angularFireAuth.getRedirectResult().then(result => {
       this.userDetails = result.user;
     });
-    this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    this.angularFireAuth.setPersistence("local");
   }
 
   signInGoogleLogin() {
-    return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    return this.angularFireAuth.setPersistence("local")
       .then(() => {
-        this.angularFireAuth.auth.signInWithRedirect(
-          new firebase.auth.GoogleAuthProvider()
+        this.angularFireAuth.signInWithRedirect(
+          new auth.GoogleAuthProvider()
         );
       }
       );
   }
 
   signInFacebookLogin() {
-    return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    return this.angularFireAuth.setPersistence("local")
       .then(() => {
-        this.angularFireAuth.auth.signInWithRedirect(
-          new firebase.auth.FacebookAuthProvider()
+        this.angularFireAuth.signInWithRedirect(
+          new auth.FacebookAuthProvider()
         );
       }
       );
   }
 
   signInWithEmailPassword(email: string, password: string) {
-    return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    return this.angularFireAuth.setPersistence("local")
       .then(() => {
-        return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
+        return this.angularFireAuth.signInWithEmailAndPassword(email, password);
       }
       );
   }
 
   createUserWithEmailPassword(email: string, password: string) {
-    return this.angularFireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    return this.angularFireAuth.setPersistence("local")
       .then(() => {
-        this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
+        this.angularFireAuth.createUserWithEmailAndPassword(email, password)
           // .then(user => user.user.sendEmailVerification()) disabled for 2018
           .catch(error => {
             if (error.code === this.AUTH_ACCOUNT_ALREADY_EXISTING) {
@@ -71,7 +66,7 @@ export class AuthService {
   }
 
   isLoggedIn(redirect = true): Observable<boolean> {
-    return this.user.pipe(map((user) => {
+    return this.angularFireAuth.user.pipe(map((user) => {
       if (user !== null) {
         return true;
       }
@@ -82,11 +77,11 @@ export class AuthService {
     }));
   }
 
-  onUserConnected = (): Observable<firebase.User> => this.user;
+  onUserConnected = (): Observable<firebase.User> => this.angularFireAuth.user;
   getConnectedUser = (): firebase.User => this.userDetails;
 
-  logout = () => this.angularFireAuth.auth.signOut().then(() => this.router.navigate(['/login']));
-  sendResetPasswordEmail = (email: string): Promise<void> => this.angularFireAuth.auth.sendPasswordResetEmail(email);
+  logout = () => this.angularFireAuth.signOut().then(() => this.router.navigate(['/login']));
+  sendResetPasswordEmail = (email: string): Promise<void> => this.angularFireAuth.sendPasswordResetEmail(email);
 
   public handleAuthError(error): string {
     switch (error.code) {

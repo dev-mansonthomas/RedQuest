@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatSort} from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import {ActivatedRoute} from '@angular/router';
 
 import {FirestoreService} from 'src/app/services/firestore/firestore.service';
@@ -25,8 +26,8 @@ export class RankingComponent implements AfterViewInit, OnInit {
   ul_id: number;
   year = new Date().getFullYear();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   queteur: Queteur;
 
   constructor(private firestoreService: FirestoreService,

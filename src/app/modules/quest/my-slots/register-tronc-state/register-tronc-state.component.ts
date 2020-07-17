@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {Tronc} from '../../../../model/tronc';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {TroncState} from '../my-slots.component';
-import {MatStepper} from '@angular/material';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-register-tronc-state',
@@ -17,7 +17,7 @@ export class RegisterTroncStateComponent {
   @Input() type: TroncState;
   @Input() troncs: Tronc[];
 
-  @ViewChild(MatStepper) stepper: MatStepper;
+  @ViewChild(MatStepper, {static: false}) stepper: MatStepper;
 
   format = 'HH:mm [le] YYYY-MM-DD';
   isEditable = true;
