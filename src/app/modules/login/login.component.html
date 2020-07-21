@@ -23,7 +23,10 @@
       <hr fxFlex>
     </div>
   </mat-card-content>
-  <form autocomplete="off" novalidate [formGroup]="loginForm" fxLayout="column" (submit)="loginWithEmailPassword()">
+  <div *ngIf="loading">
+    Loading....
+  </div>
+  <form autocomplete="off" novalidate [formGroup]="loginForm" fxLayout="column" (submit)="loginWithEmailPassword()" *ngIf="!loading">
     <mat-card-content fxLayout="column" fxLayoutGap="30px">
       <mat-form-field fxFlex appearance="outline" hideRequiredMarker="true">
         <mat-label>Email</mat-label>

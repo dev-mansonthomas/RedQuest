@@ -11,7 +11,6 @@ import {ULDetails} from '../../../model/ULDetails';
 })
 export class RegistrationConfirmationComponent implements OnInit {
   queteur: Queteur;
-
   ulDetails: ULDetails;
 
   constructor(private route: ActivatedRoute,

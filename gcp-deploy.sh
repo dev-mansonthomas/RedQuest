@@ -36,7 +36,7 @@ setProject "rq-${COUNTRY}-${ENV}"
 gcloud auth list
 
 
-echo "Deploying ${TARGET}"
+echo "Deploying rq-${COUNTRY}-${ENV}"
 
 
 ng build --configuration "${ENV}" && firebase deploy

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
+import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../../services/auth/auth.service';
 import { LostPasswordDialogComponent } from './lostpassword.dialog.component';
 
@@ -15,7 +16,6 @@ export class LoginComponent implements OnInit {
 
   loading = false;
   returnUrl: string;
-
   errorMessage: string;
 
   loginForm = new FormGroup({
@@ -34,12 +34,14 @@ export class LoginComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
+    private cookieService: CookieService,
     private zone: NgZone,
     public dialog: MatDialog) {
   }
 
   ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl']+"&loading=true" || '/';
+    this.loading = this.cookieService.get('login-loading') === 'true';
     this.authService.onUserConnected().subscribe(user => {
       if (user) {
         this.zone.run(() => this.router.navigate(['/']));
@@ -52,6 +54,7 @@ export class LoginComponent implements OnInit {
 
   loginWithGoogle() {
     this.loading = true;
+    this.cookieService.set('login-loading', 'true');
     this.authService.signInGoogleLogin()
       .then(() => {
         this.zone.run(() => this.router.navigate([this.returnUrl]));
@@ -59,6 +62,8 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithFacebook() {
+    this.loading = true;
+    this.cookieService.set('login-loading', 'true');
     this.authService.signInFacebookLogin().then(() => this.zone.run(() => this.router.navigate([this.returnUrl])));
   }
 
