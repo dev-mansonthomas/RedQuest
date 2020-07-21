@@ -6,11 +6,12 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestore, SETTINGS } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFireFunctions, REGION } from '@angular/fire/functions';
+import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import localeFrExtra from '@angular/common/locales/extra/fr';
 
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,11 +43,12 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
         AppRoutingModule,
         SharedModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFireFunctionsModule,
         AngularFireDatabaseModule,
         BrowserAnimationsModule
     ],
     providers: [
-        AngularFirestore, AngularFireAuth, AngularFireFunctions,
+        AngularFirestore, AngularFireAuth, CookieService,
         { provide: REGION, useValue: 'europe-west1' },
         { provide: SETTINGS, useValue: {} }
     ],

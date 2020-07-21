@@ -13,12 +13,12 @@
   <div *ngIf="queteurRegistrationNotRefused()">
     <h3>Vos informations:</h3>
     <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-      <b fxFlex="50">Prénom:</b> <span fxFlex="50">{{queteur.first_name}}</span>
-      <b fxFlex="50">Nom:</b> <span fxFlex="50">{{queteur.last_name}}</span>
-      <b fxFlex="50">Email:</b> <span fxFlex="50">{{queteur.email}}</span>
-      <b fxFlex="50">Nivol:</b> <span fxFlex="50">{{queteur.nivol}}</span>
-      <b fxFlex="50">Date de naissance:</b> <span fxFlex="50">{{queteur.birthdate}}</span>
-      <b fxFlex="50">Numéro de téléphone:</b> <span fxFlex="50">{{queteur.mobile}}</span>
+      <b fxFlex="20">Prénom</b> <span fxFlex="80">{{queteur.first_name}}</span>
+      <b fxFlex="20">Nom</b> <span fxFlex="80">{{queteur.last_name}}</span>
+      <b fxFlex="20">Email</b> <span fxFlex="80">{{queteur.email}}</span>
+      <b fxFlex="20">Nivol</b> <span fxFlex="80">{{queteur.nivol}}</span>
+      <b fxFlex="20">Date de naissance</b> <span fxFlex="80">{{queteur.birthdate}}</span>
+      <b fxFlex="20">Numéro de téléphone</b> <span fxFlex="80">{{queteur.mobile}}</span>
     </div>
   </div>
 </section>
@@ -26,5 +26,5 @@
   Pour anonymiser vos données, veuillez contacter l'Unité Locale {{ulDetails.name}} par email à l'adresse : <a
   [href]="'mailto:'+ulDetails.email">{{ulDetails.email}}</a>
 </div>
-<a mat-stroked-button href="https://goo.gl/UpTLAK" target="_blank" style="margin: 1em;"> Règlement Général sur la Protection des
+<a mat-stroked-button href="https://bit.ly/rcq-rgpd" target="_blank" style="margin: 1em;"> Règlement Général sur la Protection des
   Données</a>
