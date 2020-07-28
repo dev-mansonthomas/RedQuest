@@ -64,6 +64,8 @@ export class RegistrationComponent implements OnInit {
       'password': new FormControl('', Validators.required),
       'confirmPassword': new FormControl('', Validators.required)
     }, [this.checkPasswords]);
+
+
     this.route.queryParamMap.subscribe(queryParams => {
       this.uuid = queryParams.get('uuid');
       this.getULDetails(this.uuid)
@@ -71,6 +73,8 @@ export class RegistrationComponent implements OnInit {
           this.ulDetails = details;
         });
     });
+
+
     this.authService.onUserConnected().subscribe(user => {
       if (user) {
         this.registeredUser = this.initUser();

@@ -6,6 +6,7 @@ import {AllLinks, MyLinks} from './model/links';
 import {Queteur} from './model/queteur';
 import {environment} from 'src/environments/environment';
 import {ActivatedRoute, Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(
     private authService: AuthService,
     private queteurService: QueteurService,
+    private cookieService: CookieService,
     private router: Router) {
   }
 
@@ -44,9 +46,15 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   logout = () => {
+    this.cookieService.set('login-loading', 'false');
     this.authentified = false;
     this.connected = false;
     this.authService.logout();
+  };
+
+  login = () => {
+    this.cookieService.set('login-loading', 'false');
+    this.router.navigate(['login']);
   };
 
   private handleQueteur(queteur: Queteur) {

@@ -7,7 +7,14 @@
 
 <mat-card class="login mat-elevation-z0" style="margin:0 15%">
   <mat-card-title></mat-card-title>
-  <mat-card-content fxLayout="column" fxLayoutGap="30px">
+
+
+  <div *ngIf="loading" style="text-align:center;">
+    Connexion en cours... Veuillez patienter :) <br/>
+    <img src="assets/loading.gif" alt="Connexion en cours... Veuillez patienter :)"/>
+  </div>
+
+  <mat-card-content fxLayout="column" fxLayoutGap="30px" *ngIf="!loading">
     <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" style="zoom:1.6" class="socialButtons">
       <button mat-flat-button class="btn-facebook" title="Facebook" (click)="loginWithFacebook()">
         <i class="fa fa-facebook fa-lg"></i>
@@ -23,9 +30,6 @@
       <hr fxFlex>
     </div>
   </mat-card-content>
-  <div *ngIf="loading">
-    Loading....
-  </div>
   <form autocomplete="off" novalidate [formGroup]="loginForm" fxLayout="column" (submit)="loginWithEmailPassword()" *ngIf="!loading">
     <mat-card-content fxLayout="column" fxLayoutGap="30px">
       <mat-form-field fxFlex appearance="outline" hideRequiredMarker="true">

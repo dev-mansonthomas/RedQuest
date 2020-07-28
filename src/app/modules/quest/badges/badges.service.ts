@@ -24,11 +24,14 @@ export class BadgesService {
   }
 
   private updateBadgesLevels(badges: Badge[], currentYearStats: QueteurStats): Badge[] {
-    if (!(currentYearStats.amount_year_objective && currentYearStats.amount_year_objective > 0)) {
-      badges = badges.filter(badge => badge.id !== 'objective_percentage');
+    if(currentYearStats)
+    {//stats are defined in firebase
+      if (!(currentYearStats.amount_year_objective && currentYearStats.amount_year_objective > 0)) {
+        badges = badges.filter(badge => badge.id !== 'objective_percentage');
+      }
+      badges.forEach(badge => badge.update(currentYearStats));
+      return badges;
     }
-    badges.forEach(badge => badge.update(currentYearStats));
-    return badges;
   }
 
 

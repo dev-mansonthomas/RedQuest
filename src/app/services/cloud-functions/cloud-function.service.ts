@@ -33,7 +33,7 @@ export class CloudFunctionService {
   }
 
   retrievePreparedTroncs(): Observable<any> {
-    return this.firebaseFunctions.httpsCallable('tronc_listPrepared')({})
+    return this.firebaseFunctions.httpsCallable('troncListPrepared')({})
       .pipe(map(value => JSON.parse(value, (k, v) => {
         if (k === 'depart_theorique' || k === 'depart' || k === 'arrivee') {
           return new Date(v);
@@ -43,7 +43,7 @@ export class CloudFunctionService {
   }
 
   troncStateUpdate(troncUpdate: {isDepart: boolean, date: string, tqId: number}): Observable<any> {
-    return this.firebaseFunctions.httpsCallable('tronc_setDepartOrRetour')(troncUpdate);
+    return this.firebaseFunctions.httpsCallable('troncSetDepartOrRetour')(troncUpdate);
   }
 
   historiqueTroncQueteur(): Observable<HistoriqueTroncQueteur[]> {

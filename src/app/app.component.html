@@ -43,7 +43,7 @@
       <mat-icon>vpn_key</mat-icon>Se déconnecter
     </button>
   </ng-container>
-  <button mat-menu-item *ngIf="!authentified" routerLinkActive="selected" [routerLink]="['login']">
+  <button mat-menu-item *ngIf="!authentified" routerLinkActive="selected" (click)="login()">
     <mat-icon>vpn_key</mat-icon>Se connecter
   </button>
 </mat-menu>
