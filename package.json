@@ -36,7 +36,9 @@
     "tslib": "^2.0.0",
     "typeface-indie-flower": "0.0.72",
     "typeface-titillium-web": "0.0.72",
-    "zone.js": "~0.10.3"
+    "zone.js": "~0.10.3",
+    "elliptic": ">=6.5.3",
+    "dot-prop": ">=5.1.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1000.4",

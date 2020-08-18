@@ -14,6 +14,8 @@ then
   exit 1
 fi
 
+#Conflict of Node version 10 is required for RedCrossQuest, and RedQuest can use 14
+PATH="/usr/local/opt/node@14/bin/:$PATH"
 
 function setProject
 {

@@ -11,16 +11,16 @@
           arrow_drop_down
         </mat-icon></button>
 
-      <button mat-button routerLinkActive="selected" [routerLink]="['ranking']">Ranking</button>
+      <button mat-button routerLinkActive="selected" [routerLink]="['ranking']" *ngIf="ulPrefs!= null && ulPrefs.rq_display_queteur_ranking!='NON'">Qui est au top?</button>
       <button mat-button routerLinkActive="selected" [routerLink]="['local-unit']">Mon unité locale</button>
       <button mat-button routerLinkActive="selected" [routerLink]="['credits']">A propos</button>
     </ng-container>
     <span fxFlex></span>
-    <button *ngIf="authentified && queteur" mat-button [matMenuTriggerFor]="menuUser" routerLinkActive="selected">
+    <button *ngIf="authenticated && queteur" mat-button [matMenuTriggerFor]="menuUser" routerLinkActive="selected">
       {{queteur.first_name}}
       <mat-icon> arrow_drop_down </mat-icon>
     </button>
-    <button mat-button *ngIf="!authentified" routerLinkActive="selected" [routerLink]="['login']">
+    <button mat-button *ngIf="!authenticated" routerLinkActive="selected" [routerLink]="['login']">
       Se connecter
     </button>
   </mat-toolbar-row>
@@ -43,7 +43,7 @@
       <mat-icon>vpn_key</mat-icon>Se déconnecter
     </button>
   </ng-container>
-  <button mat-menu-item *ngIf="!authentified" routerLinkActive="selected" (click)="login()">
+  <button mat-menu-item *ngIf="!authenticated" routerLinkActive="selected" (click)="login()">
     <mat-icon>vpn_key</mat-icon>Se connecter
   </button>
 </mat-menu>
@@ -60,13 +60,12 @@
       <mat-icon>{{link.icon}}</mat-icon>{{link.label}}
     </button>
   </ng-container>
-  <button mat-menu-item *ngIf="!authentified" [routerLink]="['login']">
+  <button mat-menu-item *ngIf="!authenticated" [routerLink]="['login']">
     <mat-icon>vpn_key</mat-icon> Se connecter
   </button>
-  <button mat-menu-item *ngIf="authentified" (click)="logout()">
+  <button mat-menu-item *ngIf="authenticated" (click)="logout()">
     <mat-icon>vpn_key</mat-icon>Se déconnecter
   </button>
-
 </mat-menu>
 <div fxLayout="row" fxFill>
   <div fxFlex.gt-xs="80" fxFlex.xs="92" fxFlexOffset.gt-xs="10" fxFlexOffset.xs="4" fxLayout="column" zstyle='background:yellow'>

@@ -12,8 +12,7 @@ import { QueteurResolverService } from 'src/app/services/queteur/queteur.service
 
 const ROUTES: Routes = [{
     path: '',
-    component: RegistrationComponent,
-    resolve: { queteur: QueteurResolverService }
+    component: RegistrationComponent
 }, {
     path: 'confirmation',
     component: RegistrationConfirmationComponent,

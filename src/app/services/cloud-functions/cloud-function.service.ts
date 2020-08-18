@@ -8,6 +8,7 @@ import {ULDetails} from '../../model/ULDetails';
 import {map} from 'rxjs/operators';
 import {Queteur} from '../../model/queteur';
 import {HistoriqueTroncQueteur} from '../../model/historiqueTroncQueteur';
+import {ULPrefs} from '../../model/ULPrefs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,9 @@ import {HistoriqueTroncQueteur} from '../../model/historiqueTroncQueteur';
 export class CloudFunctionService {
   baseUrl = environment.cloudFunctionsBaseUrl;
 
-  constructor(private firebaseFunctions: AngularFireFunctions, private http: HttpClient) {
+  constructor(private firebaseFunctions: AngularFireFunctions,
+              private http: HttpClient)
+  {
   }
 
   findQueteurById(): Observable<any> {
@@ -25,6 +28,15 @@ export class CloudFunctionService {
 
   findULDetailsByToken(token: string): Observable<ULDetails> {
     return this.http.get<ULDetails>(this.baseUrl + 'findULDetailsByToken?token=' + token);
+  }
+
+  getULPrefs(): Observable<any> {
+    return this.firebaseFunctions.httpsCallable('getULPrefs')(ULPrefs)
+        .pipe(
+            map(
+                value =>value
+            )
+        );
   }
 
   registerQueteur(user: Queteur): Observable<any> {

@@ -5,6 +5,29 @@ Run `npm install`
 
 Enjoy
 
+## GCloud setup
+
+### Install command line tools
+
+Install gcloud sdk
+
+see : https://cloud.google.com/sdk/docs/downloads-interactive
+
+Install firebase tools
+
+`npm install -g firebase-tools`
+
+### Setup rights in Google Cloud Platform with IAM
+
+### Login & set default project
+
+Login :
+`gcloud init`
+use the gmail account (or gsuite account) that was used in the previous chapter
+
+Set the correct project : 
+`gcloud config set project rq-fr-dev`
+
 
 # RedQuest
 
