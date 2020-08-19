@@ -19,6 +19,8 @@ Install firebase tools
 
 ### Setup rights in Google Cloud Platform with IAM
 
+Add the gmail or GSuite account as project owner
+
 ### Login & set default project
 
 Login :
