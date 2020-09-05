@@ -1,7 +1,8 @@
 import { Badge } from './Badge';
-import { QueteurStats } from '../queteur-stats';
 import { BadgeLevelsDesc } from './BadgeLevelsDesc';
+
 import { TimePipe } from '../../pipes/time.pipe';
+import { QueteurStats } from '../queteur-stats';
 
 export class TimeSpentBadge extends Badge {
 

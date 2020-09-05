@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 import { auth, User } from 'firebase/app';
 import { Observable } from 'rxjs';
@@ -21,11 +21,11 @@ export class AuthService {
     this.angularFireAuth.getRedirectResult().then(result => {
       this.userDetails = result.user;
     });
-    this.angularFireAuth.setPersistence("local");
+    this.angularFireAuth.setPersistence('local');
   }
 
   signInGoogleLogin() {
-    return this.angularFireAuth.setPersistence("local")
+    return this.angularFireAuth.setPersistence('local')
       .then(() => {
         this.angularFireAuth.signInWithRedirect(
           new auth.GoogleAuthProvider()
@@ -35,7 +35,7 @@ export class AuthService {
   }
 
   signInFacebookLogin() {
-    return this.angularFireAuth.setPersistence("local")
+    return this.angularFireAuth.setPersistence('local')
       .then(() => {
         this.angularFireAuth.signInWithRedirect(
           new auth.FacebookAuthProvider()
@@ -45,7 +45,7 @@ export class AuthService {
   }
 
   signInWithEmailPassword(email: string, password: string) {
-    return this.angularFireAuth.setPersistence("local")
+    return this.angularFireAuth.setPersistence('local')
       .then(() => {
         return this.angularFireAuth.signInWithEmailAndPassword(email, password);
       }
@@ -53,7 +53,7 @@ export class AuthService {
   }
 
   createUserWithEmailPassword(email: string, password: string) {
-    return this.angularFireAuth.setPersistence("local")
+    return this.angularFireAuth.setPersistence('local')
       .then(() => {
         this.angularFireAuth.createUserWithEmailAndPassword(email, password)
           // .then(user => user.user.sendEmailVerification()) disabled for 2018

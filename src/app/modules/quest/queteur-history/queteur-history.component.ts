@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import {FirestoreService} from '../../../services/firestore/firestore.service';
-import {QueteurStats} from '../../../model/queteur-stats';
-import {Queteur} from 'src/app/model/queteur';
-import {environment} from '../../../../environments/environment';
-import {CloudFunctionService} from '../../../services/cloud-functions/cloud-function.service';
-import {HistoriqueTroncQueteur} from '../../../model/historiqueTroncQueteur';
+import { Queteur } from 'src/app/model/queteur';
+
+import { environment } from '../../../../environments/environment';
+import { HistoriqueTroncQueteur } from '../../../model/historiqueTroncQueteur';
+import { QueteurStats } from '../../../model/queteur-stats';
+import { CloudFunctionService } from '../../../services/cloud-functions/cloud-function.service';
+import { FirestoreService } from '../../../services/firestore/firestore.service';
 
 @Component({
   selector: 'app-queteur-history',
@@ -29,7 +30,7 @@ export class QueteurHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe((data: { queteur: Queteur }) => this.retrieveStats(data.queteur.queteur_id));
-    this.cloudFunctions.historiqueTroncQueteur().subscribe(statsTQ => this.statsTroncCurrentYear = statsTQ);
+    this.cloudFunctions.historiqueTroncQueteur$().subscribe(statsTQ => this.statsTroncCurrentYear = statsTQ);
   }
 
   private retrieveStats(queteurId: number) {

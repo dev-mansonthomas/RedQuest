@@ -1,5 +1,5 @@
-<mat-toolbar color="accent">
-  <mat-toolbar-row fxShow fxHide.xs="true" fxLayout="row" fxLayoutAlign="start center">
+<mat-toolbar color="accent" style='position:fixed; z-index:888'>
+  <mat-toolbar-row fxShow fxHide.xs="true" fxLayout="row" fxLayoutAlign="start center" >
     <span [routerLink]="['']" style="cursor: pointer; outline: none">
       <mat-icon fontSet="fa" fontIcon="fa-plus"></mat-icon>
       RedQuest <small class="mat-small projId" *ngIf="!env.production">{{env.firebaseConfig.projectId}}</small>
@@ -68,7 +68,7 @@
     <mat-icon>vpn_key</mat-icon><span>Se déconnecter</span>
   </button>
 </mat-menu>
-<div fxLayout="row" fxFill>
+<div fxLayout="row" fxFlexFill style='padding-top:64px'>
   <div fxFlex.gt-xs="80" fxFlex.xs="92" fxFlexOffset.gt-xs="10" fxFlexOffset.xs="4" fxLayout="column">
     <router-outlet></router-outlet>
   </div>

@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {HistoriqueTroncQueteur} from '../../../model/historiqueTroncQueteur';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {TroncHistoryDialogComponent} from '../tronc-history-dialog/tronc-history-dialog.component';
+
+import { HistoriqueTroncQueteur } from '../../../model/historiqueTroncQueteur';
+import { TroncHistoryDialogComponent } from '../tronc-history-dialog/tronc-history-dialog.component';
 
 @Component({
   selector: 'app-tronc-history',
@@ -19,7 +20,7 @@ export class TroncHistoryComponent implements OnInit {
   }
 
   seeMore() {
-    this.dialog.open(TroncHistoryDialogComponent, {data: this.troncStat});
+    this.dialog.open(TroncHistoryDialogComponent, { data: this.troncStat });
   }
 
 }

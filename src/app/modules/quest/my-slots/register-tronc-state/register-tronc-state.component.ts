@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {Tronc} from '../../../../model/tronc';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {TroncState} from '../my-slots.component';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
+
+import { Tronc } from '../../../../model/tronc';
+import { TroncState } from '../my-slots.component';
 
 @Component({
   selector: 'app-register-tronc-state',
@@ -17,7 +18,7 @@ export class RegisterTroncStateComponent {
   @Input() type: TroncState;
   @Input() troncs: Tronc[];
 
-  @ViewChild(MatStepper, {static: false}) stepper: MatStepper;
+  @ViewChild(MatStepper, { static: false }) stepper: MatStepper;
 
   format = 'HH:mm [le] YYYY-MM-DD';
   isEditable = true;
@@ -47,8 +48,8 @@ export class RegisterTroncStateComponent {
   }
 
   constructor() {
-    this.step1Form = new FormGroup({'tronc': new FormControl('', Validators.required)});
-    this.step2Form = new FormGroup({'startDate': new FormControl('', Validators.required)});
+    this.step1Form = new FormGroup({ 'tronc': new FormControl('', Validators.required) });
+    this.step2Form = new FormGroup({ 'startDate': new FormControl('', Validators.required) });
   }
 
   refresh() {
@@ -65,7 +66,7 @@ export class RegisterTroncStateComponent {
 
   minDep = () => this.step1Form.get('tronc').value ? new Date(this.type === 'departure' ?
     this.step1Form.get('tronc').value.depart_theorique :
-    this.step1Form.get('tronc').value.depart) : new Date();
+    this.step1Form.get('tronc').value.depart) : new Date()
 
   updateTroncDate() {
     const selectedTronc = this.step1Form.getRawValue().tronc;

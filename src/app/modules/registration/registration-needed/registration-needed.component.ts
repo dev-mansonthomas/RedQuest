@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -11,13 +12,13 @@ import { CookieService } from 'ngx-cookie-service';
   sup { font-size:0.4em}
   `]
 })
-export class RegistrationNeededComponent {
+export class RegistrationNeededComponent implements OnInit {
   google = [{ a: 'G', c: '#4285F4' }, { a: 'o', c: '#DB4437' }, { a: 'o', c: '#F4B400' },
   { a: 'g', c: '#4285F4' }, { a: 'l', c: '#0F9D58' }, { a: 'e', c: '#DB4437' }];
 
   constructor(private cookieService: CookieService) {
   }
-  
+
   ngOnInit() {
     this.cookieService.set('login-loading', 'false');
   }

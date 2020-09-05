@@ -1,14 +1,16 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
-import {FirestoreService} from 'src/app/services/firestore/firestore.service';
-import {UlRankingByAmount} from 'src/app/model/UlRankingByAmount';
-import {CloudFunctionService} from 'src/app/services/cloud-functions/cloud-function.service';
-import {Queteur} from 'src/app/model/queteur';
-import {environment} from '../../../environments/environment';
-import {RankingDatasource} from './ranking-datasource';
+import { UlRankingByAmount } from 'src/app/model/UlRankingByAmount';
+import { Queteur } from 'src/app/model/queteur';
+import { CloudFunctionService } from 'src/app/services/cloud-functions/cloud-function.service';
+import { FirestoreService } from 'src/app/services/firestore/firestore.service';
+
+import { RankingDatasource } from './ranking-datasource';
+
+import { environment } from '../../../environments/environment';
 
 @Component({
   templateUrl: './ranking.component.html',
@@ -26,13 +28,13 @@ export class RankingComponent implements AfterViewInit, OnInit {
   ul_id: number;
   year = new Date().getFullYear();
 
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   queteur: Queteur;
 
   constructor(private firestoreService: FirestoreService,
-              private functionsService: CloudFunctionService,
-              private route: ActivatedRoute) {
+    private functionsService: CloudFunctionService,
+    private route: ActivatedRoute) {
   }
 
 

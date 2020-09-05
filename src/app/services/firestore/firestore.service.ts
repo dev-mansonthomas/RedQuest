@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore, QueryDocumentSnapshot, QuerySnapshot} from '@angular/fire/firestore';
 
-import {Queteur} from '../../model/queteur';
-import {UlRankingByAmount} from '../../model/UlRankingByAmount';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+
+import {UlRankingByAmount} from '../../model/UlRankingByAmount';
+import {Queteur} from '../../model/queteur';
 
 
 @Injectable({
@@ -34,7 +35,7 @@ export class FirestoreService {
         return query.limit(pageSize);
       }
     ).get();
-  };
+  }
 
 
   getQueteurStats(queteur_id: number) {

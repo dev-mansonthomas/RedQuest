@@ -1,12 +1,13 @@
-import {Injectable} from '@angular/core';
-import {Resolve, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-import {Observable, of, EMPTY, Subscriber} from 'rxjs';
-import {take, mergeMap, map} from 'rxjs/operators';
-import {FirestoreService} from '../firestore/firestore.service';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 
-import {Queteur} from '../../model/queteur';
-import {AuthService} from '../auth/auth.service';
-import {CloudFunctionService} from '../cloud-functions/cloud-function.service';
+import { of, EMPTY, Observable, Subscriber } from 'rxjs';
+import { map, mergeMap, take } from 'rxjs/operators';
+
+import { Queteur } from '../../model/queteur';
+import { AuthService } from '../auth/auth.service';
+import { CloudFunctionService } from '../cloud-functions/cloud-function.service';
+import { FirestoreService } from '../firestore/firestore.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,15 @@ export class QueteurService {
   currentQueteur: Queteur;
 
   constructor(private authService: AuthService,
-              private firestore: FirestoreService,
-              private cloudFunctions: CloudFunctionService,
-              private router: Router) {
+    private firestore: FirestoreService,
+    private cloudFunctions: CloudFunctionService,
+    private router: Router) {
   }
 
   gotIt = <T>(o: Subscriber<T>, q: T) => {
     o.next(q);
     o.complete();
-  };
+  }
 
   isSlotsUpdateActivated(): Observable<boolean> {
     return this.getQueteur().pipe(map(queteur => queteur.rqAutonomousDepartAndReturn));
@@ -89,8 +90,11 @@ export class QueteurResolverService implements Resolve<Queteur> {
     return this.qs.getQueteur().pipe(
       take(1),
       mergeMap(queteur => {
-        if (queteur) {
+        if (queteur?.registration_approved) {
           return of(queteur);
+        } else if (queteur) {
+          this.router.navigate(['registration/confirmation']);
+          return EMPTY;
         }
         console.error('QueteurResolverService not found', queteur);
         this.router.navigate(['/registration/needed']);

@@ -1,7 +1,7 @@
-import { QueteurStats } from '../queteur-stats';
 import { Badge } from './Badge';
 import { BadgeLevelsDesc } from './BadgeLevelsDesc';
 
+import { QueteurStats } from '../queteur-stats';
 
 export class ObjectivePercentageBadge extends Badge {
 

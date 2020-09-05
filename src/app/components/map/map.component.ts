@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
+
 import {environment} from '../../../environments/environment';
 
 @Component({

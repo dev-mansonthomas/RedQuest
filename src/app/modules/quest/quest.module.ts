@@ -1,17 +1,18 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {QueteurHistoryComponent} from './queteur-history/queteur-history.component';
-import {MySlotsComponent} from './my-slots/my-slots.component';
-import {BadgesComponent} from './badges/badges.component';
-import {RegisterTroncStateComponent} from './my-slots/register-tronc-state/register-tronc-state.component';
-import {SharedModule} from 'src/app/shared.module';
 import {QuestPointComponent} from 'src/app/modules/quest/quest-point/quest-point.component';
 import {QueteurResolverService} from 'src/app/services/queteur/queteur.service';
-import {TroncHistoryComponent} from './tronc-history/tronc-history.component';
-import {TroncHistoryDialogComponent} from './tronc-history-dialog/tronc-history-dialog.component';
+import {SharedModule} from 'src/app/shared.module';
+
 import {BadgeLevelsComponent} from './badge-levels/badge-levels.component';
+import {BadgesComponent} from './badges/badges.component';
+import {MySlotsComponent} from './my-slots/my-slots.component';
+import {RegisterTroncStateComponent} from './my-slots/register-tronc-state/register-tronc-state.component';
+import {QueteurHistoryComponent} from './queteur-history/queteur-history.component';
+import {TroncHistoryDialogComponent} from './tronc-history-dialog/tronc-history-dialog.component';
+import {TroncHistoryComponent} from './tronc-history/tronc-history.component';
 
 const ROUTES: Routes = [
     {path: '', component: QueteurHistoryComponent, resolve: {queteur: QueteurResolverService}},

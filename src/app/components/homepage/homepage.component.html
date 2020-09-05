@@ -2,6 +2,10 @@
   <div fxFlex="300px" class='hero'></div>
   <div fxFlex="300px">
 
+    <div *ngIf="ulPrefs$ | async as prefs">
+      <pre>{{prefs|json}}</pre>
+
+    </div>
     <div *ngIf="ulStats" fxLayout="row wrap" fxLayoutAlign="space-between center">
       <b fxFlex="13">Montant total</b> <span fxFlex="87">{{ulStats.amount}}</span>
       <b fxFlex="13">Part de Carte Bleue</b> <span fxFlex="87">{{ulStats.amount_cb}}</span>
@@ -21,8 +25,8 @@
 
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="center" fxLayoutGap="50px grid">
-    <div *ngFor="let link of links" [routerLink]="[link.route]" fxLayout="column" fxLayoutAlign="center center"
-      fxLayoutGap="5px" class="lien">
+    <div *ngFor="let link of links" [routerLink]="[link.route]" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px"
+      class="lien">
       <button mat-fab color="warn">
         <mat-icon>{{link.icon}}</mat-icon>
       </button>

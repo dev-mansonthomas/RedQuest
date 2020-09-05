@@ -1,11 +1,12 @@
-import {Component, Input, NgZone, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import {Queteur} from 'src/app/model/queteur';
-import {CloudFunctionService} from 'src/app/services/cloud-functions/cloud-function.service';
-import {FirestoreService} from 'src/app/services/firestore/firestore.service';
 import * as moment from 'moment';
+
+import { Queteur } from '../../../model/queteur';
+import { CloudFunctionService } from '../../../services/cloud-functions/cloud-function.service';
+import { FirestoreService } from '../../../services/firestore/firestore.service';
 
 @Component({
   selector: 'app-registration-step-2',
@@ -45,8 +46,7 @@ export class RegistrationStep2Component implements OnInit {
     return this.registrationForm.get('nivol');
   }
 
-  get benevole_referent()
-  {
+  get benevole_referent() {
     return this.registrationForm.get('benevole_referent');
   }
 
@@ -60,30 +60,26 @@ export class RegistrationStep2Component implements OnInit {
 
   error: string;
 
-  constructor(private router: Router,
-              private zone: NgZone,
-              private functions: CloudFunctionService,
-              private firestore: FirestoreService)
-  {
-  }
+  constructor(
+    private router: Router, private zone: NgZone, private functions: CloudFunctionService, private firestore: FirestoreService) { }
 
 
-  ngOnInit()
-  {
+  ngOnInit() {
     this.registrationForm = new FormGroup(
-        {
-      'last_name' : new FormControl(this.registeredUser.last_name, Validators.required),
-      'first_name': new FormControl(this.registeredUser.first_name, Validators.required),
-      'man'       : new FormControl(1, Validators.required),
-      'email'     : new FormControl({value:this.registeredUser.email, disabled:this.registeredUser.email}, [Validators.required, Validators.email]),
-      'birthdate' : new FormControl(this.registeredUser.birthdate, Validators.required),
-      'mobile'    : new FormControl(this.registeredUser.mobile, [Validators.required, Validators.pattern('[0-9]{9}')]),
-      'nivol'     : !this.isBenevole1j
-        ? new FormControl(this.registeredUser.nivol, [Validators.required, Validators.pattern('[1-9][0-9]{3,11}[a-zA-Z]')])
-        : new FormControl(),
-      'benevole_referent': new FormControl(),
-      'secteur'   : new FormControl({value: this.registeredUser.secteur, disabled: this.isBenevole1j}, Validators.required)
-    });
+      {
+        'last_name': new FormControl(this.registeredUser.last_name, Validators.required),
+        'first_name': new FormControl(this.registeredUser.first_name, Validators.required),
+        'man': new FormControl(1, Validators.required),
+        'email': new FormControl({ value: this.registeredUser.email, disabled: this.registeredUser.email },
+          [Validators.required, Validators.email]),
+        'birthdate': new FormControl(this.registeredUser.birthdate, Validators.required),
+        'mobile': new FormControl(this.registeredUser.mobile, [Validators.required, Validators.pattern('[0-9]{9}')]),
+        'nivol': !this.isBenevole1j
+          ? new FormControl(this.registeredUser.nivol, [Validators.required, Validators.pattern('[1-9][0-9]{3,11}[a-zA-Z]')])
+          : new FormControl(),
+        'benevole_referent': new FormControl(),
+        'secteur': new FormControl({ value: this.registeredUser.secteur, disabled: this.isBenevole1j }, Validators.required)
+      });
   }
 
   registerUser() {
@@ -101,7 +97,7 @@ export class RegistrationStep2Component implements OnInit {
         if (this.registeredUser.nivol) {
           this.registeredUser.nivol = this.registeredUser.nivol.toUpperCase();
         }
-        this.functions.registerQueteur(this.registeredUser)
+        this.functions.registerQueteur$(this.registeredUser)
           .subscribe(token => {
             this.registeredUser.queteur_registration_token = token.queteur_registration_token;
             this.storeNewQueteur();

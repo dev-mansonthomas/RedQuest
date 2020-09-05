@@ -1,7 +1,8 @@
 import { Badge } from './Badge';
-import { QueteurStats } from '../queteur-stats';
 import { BadgeLevelsDesc } from './BadgeLevelsDesc';
+
 import { WeightPipe } from '../../pipes/weight.pipe';
+import { QueteurStats } from '../queteur-stats';
 
 export class WeightBadge extends Badge {
 

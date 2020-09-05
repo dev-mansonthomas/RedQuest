@@ -1,12 +1,13 @@
-import {Component, NgZone, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Observable} from 'rxjs';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import {CloudFunctionService} from 'src/app/services/cloud-functions/cloud-function.service';
-import {ULDetails} from 'src/app/model/ULDetails';
-import {AuthService} from 'src/app/services/auth/auth.service';
-import {Queteur} from 'src/app/model/queteur';
+import { Observable } from 'rxjs';
+
+import { ULDetails } from '../../model/ULDetails';
+import { Queteur } from '../../model/queteur';
+import { AuthService } from '../../services/auth/auth.service';
+import { CloudFunctionService } from '../../services/cloud-functions/cloud-function.service';
 
 @Component({
   selector: 'app-registration',
@@ -43,10 +44,10 @@ export class RegistrationComponent implements OnInit {
   userAuthId: string;
 
   constructor(private route: ActivatedRoute,
-              private functions: CloudFunctionService,
-              private router: Router,
-              private zone: NgZone,
-              private authService: AuthService) {
+    private functions: CloudFunctionService,
+    private router: Router,
+    private zone: NgZone,
+    private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -99,7 +100,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   getULDetails(token: string): Observable<ULDetails> {
-    return this.functions.findULDetailsByToken(token);
+    return this.functions.findULDetailsByToken$(token);
   }
 
   isBenevole1j() {
@@ -121,6 +122,6 @@ export class RegistrationComponent implements OnInit {
     const pass = group.get('password').value;
     const confirmPass = group.get('confirmPassword').value;
 
-    return pass === confirmPass ? null : {notSame: true};
+    return pass === confirmPass ? null : { notSame: true };
   }
 }

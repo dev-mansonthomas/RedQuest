@@ -1,9 +1,11 @@
-import {DataSource} from '@angular/cdk/table';
-import {CollectionViewer} from '@angular/cdk/collections';
-import {BehaviorSubject, Observable, of} from 'rxjs';
-import {FirestoreService} from '../../services/firestore/firestore.service';
-import {catchError, finalize, map, tap} from 'rxjs/operators';
-import {UlRankingByAmount} from '../../model/UlRankingByAmount';
+import { CollectionViewer } from '@angular/cdk/collections';
+import { DataSource } from '@angular/cdk/table';
+
+import { of, BehaviorSubject, Observable } from 'rxjs';
+import { catchError, finalize } from 'rxjs/operators';
+
+import { UlRankingByAmount } from '../../model/UlRankingByAmount';
+import { FirestoreService } from '../../services/firestore/firestore.service';
 
 export class RankingDatasource implements DataSource<UlRankingByAmount> {
 
@@ -26,10 +28,10 @@ export class RankingDatasource implements DataSource<UlRankingByAmount> {
   }
 
   selectUlStats(sortBy: string,
-                ul_id: number,
-                year: number,
-                sortDirection: 'desc' | 'asc' = 'desc',
-                pageSize = 10
+    ul_id: number,
+    year: number,
+    sortDirection: 'desc' | 'asc' = 'desc',
+    pageSize = 10
   ) {
     this.loadingSubject.next(true);
     this.firestoreService.getUlStatsOrderedBy(sortBy, sortDirection, ul_id, year)

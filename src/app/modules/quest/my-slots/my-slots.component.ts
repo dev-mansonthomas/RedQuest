@@ -1,11 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import {Tronc} from '../../../model/tronc';
-import {CloudFunctionService} from '../../../services/cloud-functions/cloud-function.service';
-import {QueteurService} from '../../../services/queteur/queteur.service';
 import * as moment from 'moment-timezone';
-import {ActivatedRoute} from '@angular/router';
-import {Queteur} from '../../../model/queteur';
+
+import { Queteur } from '../../../model/queteur';
+import { Tronc } from '../../../model/tronc';
+import { CloudFunctionService } from '../../../services/cloud-functions/cloud-function.service';
+import { QueteurService } from '../../../services/queteur/queteur.service';
 
 export type TroncState = 'departure' | 'arrival';
 
@@ -18,7 +19,7 @@ export class MySlotsComponent implements OnInit {
   registerState: TroncState = 'departure';
   troncs: Tronc[];
 
-  confirmation = {error: false, message: ''};
+  confirmation = { error: false, message: '' };
 
   slotsReadOnly = true;
 
@@ -26,8 +27,8 @@ export class MySlotsComponent implements OnInit {
 
 
   constructor(private cloudFunctions: CloudFunctionService,
-              private queteurService: QueteurService,
-              private route: ActivatedRoute) {
+    private queteurService: QueteurService,
+    private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -43,7 +44,7 @@ export class MySlotsComponent implements OnInit {
   }
 
   loadTroncs() {
-    this.cloudFunctions.retrievePreparedTroncs().subscribe(troncs => this.troncs = troncs);
+    this.cloudFunctions.retrievePreparedTroncs$().subscribe(troncs => this.troncs = troncs);
   }
 
   switchStateTo(state: TroncState) {
@@ -56,7 +57,7 @@ export class MySlotsComponent implements OnInit {
       tqId: tronc.tronc_queteur_id,
       isDepart: true
     };
-    this.cloudFunctions.troncStateUpdate(update).subscribe(
+    this.cloudFunctions.troncStateUpdate$(update).subscribe(
       next => {
         this.confirmation.message = 'C\'est validé!';
       },
@@ -72,7 +73,7 @@ export class MySlotsComponent implements OnInit {
       tqId: tronc.tronc_queteur_id,
       isDepart: false
     };
-    this.cloudFunctions.troncStateUpdate(update);
+    this.cloudFunctions.troncStateUpdate$(update);
   }
 
   getTroncsDeparture() {

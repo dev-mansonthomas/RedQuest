@@ -1,6 +1,7 @@
 import { Badge } from './Badge';
-import { QueteurStats } from '../queteur-stats';
 import { BadgeLevelsDesc } from './BadgeLevelsDesc';
+
+import { QueteurStats } from '../queteur-stats';
 
 export class AmountCbBadge extends Badge {
 

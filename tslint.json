@@ -31,6 +31,46 @@
       true,
       140
     ],
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "lowercase-last",
+        "named-imports-order": "lowercase-first",
+        "grouped-imports": true,
+        "groups": [
+          {
+            "name": "app",
+            "match": "^app.*",
+            "order": 4
+          },
+          {
+            "name": "angular modules",
+            "match": "^@angular",
+            "order": 1
+          },
+          {
+            "name": "internal modules",
+            "match": "^@",
+            "order": 2
+          },
+          {
+            "name": "parent dir",
+            "match": "^[.][.].*",
+            "order": 6
+          },
+          {
+            "name": "relative dir",
+            "match": "^[.].*",
+            "order": 5
+          },
+          {
+            "name": "node_modules",
+            "match": ".*",
+            "order": 3
+          }
+        ]
+      }
+    ],
     "member-access": false,
     "member-ordering": [
       true,

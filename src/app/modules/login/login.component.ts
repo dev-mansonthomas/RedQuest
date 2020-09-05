@@ -1,11 +1,13 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { CookieService } from 'ngx-cookie-service';
-import { AuthService } from '../../services/auth/auth.service';
+
 import { LostPasswordDialogComponent } from './lostpassword.dialog.component';
+
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -40,7 +42,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl']+"&loading=true" || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] + '&loading=true' || '/';
     this.loading = this.cookieService.get('login-loading') === 'true';
     this.authService.onUserConnected().subscribe(user => {
       if (user) {

@@ -1,14 +1,16 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {AuthService} from './services/auth/auth.service';
-import {QueteurService} from './services/queteur/queteur.service';
-import {AllLinks, MyLinks} from './model/links';
-import {Queteur} from './model/queteur';
-import {environment} from 'src/environments/environment';
-import {ActivatedRoute, Router} from '@angular/router';
-import {CookieService} from 'ngx-cookie-service';
-import {CloudFunctionService} from './services/cloud-functions/cloud-function.service';
-import {ULPrefs} from './model/ULPrefs';
+import { CookieService } from 'ngx-cookie-service';
+
+import { ULPrefs } from './model/ULPrefs';
+import { AllLinks, MyLinks } from './model/links';
+import { Queteur } from './model/queteur';
+import { AuthService } from './services/auth/auth.service';
+import { CloudFunctionService } from './services/cloud-functions/cloud-function.service';
+import { QueteurService } from './services/queteur/queteur.service';
+
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +44,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.queteurService.getQueteur()
       .subscribe(queteur => {
         this.handleQueteur(queteur);
-        this.functionsService.getULPrefs().subscribe(ulPrefs => this.ulPrefs = ulPrefs);
+        this.functionsService.getULPrefs$().subscribe(ulPrefs => this.ulPrefs = ulPrefs);
       }, () => {
         if (window.location.pathname.indexOf('login') === -1 && window.location.pathname.indexOf('registration') === -1) {
           this.router.navigate(['registration/needed']);
@@ -55,22 +57,18 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.authenticated = false;
     this.connected = false;
     this.authService.logout();
-  };
+  }
 
   login = () => {
     this.cookieService.set('login-loading', 'false');
     this.router.navigate(['login']);
-  };
+  }
 
-  private handleQueteur(queteur: Queteur)
-  {
+  private handleQueteur(queteur: Queteur) {
     this.queteur = queteur;
-    if (queteur.registration_approved)
-    {
+    if (queteur.registration_approved) {
       this.connected = true;
-    }
-    else
-    {
+    } else {
       this.router.navigate(['registration/confirmation']);
     }
   }

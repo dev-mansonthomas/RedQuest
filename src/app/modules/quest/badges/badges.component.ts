@@ -1,21 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {ActivatedRoute} from '@angular/router';
-
-import {Queteur} from 'src/app/model/queteur';
-import {environment} from '../../../../environments/environment';
-import {BadgesService} from './badges.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {BadgeLevelsComponent} from '../badge-levels/badge-levels.component';
-import {ObjectivePercentageBadge} from '../../../model/badges/ObjectivePercentageBadge';
-import {AmountCbBadge} from '../../../model/badges/AmountCbBadge';
-import {NumberOfDaysBadge} from '../../../model/badges/NumberOfDaysBadge';
-import {NumberOfLocationsBadge} from '../../../model/badges/NumberOfLocationsBadge';
-import {NumberOfTroncsBadge} from '../../../model/badges/NumberOfTroncsBadge';
-import {TimeSpentBadge} from '../../../model/badges/TimeSpentBadge';
-import {WeightBadge} from '../../../model/badges/WeightBadge';
+import { ActivatedRoute } from '@angular/router';
 
-const ze2 = [style({transform: 'translateX(-100%) rotateY(540deg)'}), animate(700)];
+import { Queteur } from 'src/app/model/queteur';
+
+import { BadgesService } from './badges.service';
+
+import { environment } from '../../../../environments/environment';
+import { AmountCbBadge } from '../../../model/badges/AmountCbBadge';
+import { NumberOfDaysBadge } from '../../../model/badges/NumberOfDaysBadge';
+import { NumberOfLocationsBadge } from '../../../model/badges/NumberOfLocationsBadge';
+import { NumberOfTroncsBadge } from '../../../model/badges/NumberOfTroncsBadge';
+import { ObjectivePercentageBadge } from '../../../model/badges/ObjectivePercentageBadge';
+import { TimeSpentBadge } from '../../../model/badges/TimeSpentBadge';
+import { WeightBadge } from '../../../model/badges/WeightBadge';
+import { BadgeLevelsComponent } from '../badge-levels/badge-levels.component';
+
+const ze2 = [style({ transform: 'translateX(-100%) rotateY(540deg)' }), animate(700)];
 
 @Component({
   selector: 'app-badges',
@@ -23,11 +25,11 @@ const ze2 = [style({transform: 'translateX(-100%) rotateY(540deg)'}), animate(70
   styleUrls: ['./badges.component.scss'],
   animations: [
     trigger('collect', [
-      state('0', style({color: 'white'})),
-      state('1', style({color: '#b4a996'})),
-      state('2', style({color: '#d7d7d8'})),
-      state('3', style({color: '#ecb731'})),
-      state('4', style({color: '#ed1b2e'})),
+      state('0', style({ color: 'white' })),
+      state('1', style({ color: '#b4a996' })),
+      state('2', style({ color: '#d7d7d8' })),
+      state('3', style({ color: '#ecb731' })),
+      state('4', style({ color: '#ed1b2e' })),
       transition('0 => *', ze2), transition('1 => *', ze2),
       transition('2 => *', ze2), transition('3 => *', ze2),
     ])
@@ -39,11 +41,11 @@ export class BadgesComponent implements OnInit {
   queteur: Queteur;
   breakpoint: number;
   levels = [
-    {name: 'A collecter', mult: 0},
-    {name: 'Bronze', mult: 1},
-    {name: 'Argent', mult: 2},
-    {name: 'Or', mult: 4},
-    {name: 'Rubis', mult: 8}
+    { name: 'A collecter', mult: 0 },
+    { name: 'Bronze', mult: 1 },
+    { name: 'Argent', mult: 2 },
+    { name: 'Or', mult: 4 },
+    { name: 'Rubis', mult: 8 }
   ];
 
   badges = [
@@ -57,8 +59,8 @@ export class BadgesComponent implements OnInit {
   ];
 
   constructor(private route: ActivatedRoute,
-              private badgesService: BadgesService,
-              private dialog: MatDialog) {
+    private badgesService: BadgesService,
+    private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -85,6 +87,6 @@ export class BadgesComponent implements OnInit {
   }
 
   seeLevelsDetails(badge: any) {
-    this.dialog.open(BadgeLevelsComponent, {data: badge});
+    this.dialog.open(BadgeLevelsComponent, { data: badge });
   }
 }
