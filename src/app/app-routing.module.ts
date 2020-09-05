@@ -9,7 +9,8 @@ import {CreditsComponent} from './components/credits/credits.component';
 import {LocalUnitComponent} from './components/local-unit/local-unit.component';
 
 const routes: Routes = [
-  {path: '', component: HomepageComponent, canActivate: [AuthGuard], resolve: {queteur: QueteurResolverService}},
+  {path: '', redirectTo: '/quest/badges', pathMatch: 'full'},
+  {path: 'home', component: HomepageComponent, canActivate: [AuthGuard], resolve: {queteur: QueteurResolverService}},
   {path: 'login', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule)},
   {
     path: 'registration',

@@ -10,17 +10,17 @@ export class CreditsComponent implements OnInit {
     dependences = [
         {
             name: 'Angular',
-            version: '7.2',
+            version: '10.0',
             image: 'assets/angular.png'
         },
         {
             name: 'typescript',
-            version: '3.2',
+            version: '3.9',
             image: 'assets/ts.png'
         },
         {
             name: 'Firebase',
-            version: '5.11',
+            version: '7.17',
             image: 'assets/firebase.png'
         },
         {
@@ -28,18 +28,13 @@ export class CreditsComponent implements OnInit {
             image: 'assets/google_cloud.png'
         },
         {
-            name: 'Hammer.js',
-            version: '2.0',
-            image: 'assets/hammerjs.png'
-        },
-        {
             name: 'momentjs',
-            version: '2.24',
+            version: '2.27',
             image: 'assets/momentjs.svg'
         },
         {
             name: 'rxjs',
-            version: '6.4',
+            version: '6.6',
             image: 'assets/rxjs.png'
         }
     ];

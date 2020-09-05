@@ -3,10 +3,12 @@
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
 // Plus imports for other components in your app.
-@import "~typeface-titillium-web/index.css";
-@import "~typeface-indie-flower/index.css";
+@import "~typeface-comfortaa/index.css";
+
+@import 'palette';
+
 $rcq-typography: mat-typography-config(
-    $font-family: 'Titillium web, Indie flower, "Helvetica Neue", sans-serif'
+    $font-family: 'Comfortaa, sans-serif'
     );
 // Override typography for all Angular Material, including mat-base-typography and all components.
 @include angular-material-typography($rcq-typography);
@@ -19,14 +21,14 @@ $rcq-typography: mat-typography-config(
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$red-quest-primary: mat-palette($mat-indigo);
-$red-quest-accent: mat-palette($mat-pink, A200, A100, A400);
+$red-quest-primary: mat-palette($rcq-palette, 500, 200, 800);
+$red-quest-accent: mat-palette($rcq-palette, 800, 200, 900) ; //A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$red-quest-warn: mat-palette($mat-red);
+// $red-quest-warn: mat-palette($mat-blue);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$red-quest-theme: mat-light-theme($red-quest-primary, $red-quest-accent, $red-quest-warn);
+$red-quest-theme: mat-light-theme($red-quest-primary, $red-quest-accent) ; //, $red-quest-warn);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component

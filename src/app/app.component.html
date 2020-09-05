@@ -1,17 +1,18 @@
-<mat-toolbar color="warn">
+<mat-toolbar color="accent">
   <mat-toolbar-row fxShow fxHide.xs="true" fxLayout="row" fxLayoutAlign="start center">
     <span [routerLink]="['']" style="cursor: pointer; outline: none">
       <mat-icon fontSet="fa" fontIcon="fa-plus"></mat-icon>
-      RedQuest <small class="mat-small projId"
-        *ngIf="!env.production">{{env.firebaseConfig.projectId}}</small></span>
+      RedQuest <small class="mat-small projId" *ngIf="!env.production">{{env.firebaseConfig.projectId}}</small>
+    </span>
     <ng-container *ngIf="connected">
-        <span fxFlex="50px"></span>
+      <span fxFlex="50px"></span>
       <button mat-button routerLinkActive="selected" [routerLink]="['tips']">Astuces de quête</button>
       <button mat-button routerLinkActive="selected" [matMenuTriggerFor]="menu">Ma quête<mat-icon>
           arrow_drop_down
         </mat-icon></button>
 
-      <button mat-button routerLinkActive="selected" [routerLink]="['ranking']" *ngIf="ulPrefs!= null && ulPrefs.rq_display_queteur_ranking!='NON'">Qui est au top?</button>
+      <button mat-button routerLinkActive="selected" [routerLink]="['ranking']"
+        *ngIf="ulPrefs!= null && ulPrefs.rq_display_queteur_ranking!='NON'">Qui est au top?</button>
       <button mat-button routerLinkActive="selected" [routerLink]="['local-unit']">Mon unité locale</button>
       <button mat-button routerLinkActive="selected" [routerLink]="['credits']">A propos</button>
     </ng-container>
@@ -40,11 +41,11 @@
       <mat-icon>face</mat-icon>Mon compte
     </button>
     <button mat-menu-item (click)="logout()">
-      <mat-icon>vpn_key</mat-icon>Se déconnecter
+      <mat-icon>vpn_key</mat-icon><span>Se déconnecter</span>
     </button>
   </ng-container>
   <button mat-menu-item *ngIf="!authenticated" routerLinkActive="selected" (click)="login()">
-    <mat-icon>vpn_key</mat-icon>Se connecter
+    <mat-icon>vpn_key</mat-icon><span>Se connecter</span>
   </button>
 </mat-menu>
 
@@ -61,14 +62,14 @@
     </button>
   </ng-container>
   <button mat-menu-item *ngIf="!authenticated" [routerLink]="['login']">
-    <mat-icon>vpn_key</mat-icon> Se connecter
+    <mat-icon>vpn_key</mat-icon><span>Se connecter</span>
   </button>
   <button mat-menu-item *ngIf="authenticated" (click)="logout()">
-    <mat-icon>vpn_key</mat-icon>Se déconnecter
+    <mat-icon>vpn_key</mat-icon><span>Se déconnecter</span>
   </button>
 </mat-menu>
 <div fxLayout="row" fxFill>
-  <div fxFlex.gt-xs="80" fxFlex.xs="92" fxFlexOffset.gt-xs="10" fxFlexOffset.xs="4" fxLayout="column" zstyle='background:yellow'>
+  <div fxFlex.gt-xs="80" fxFlex.xs="92" fxFlexOffset.gt-xs="10" fxFlexOffset.xs="4" fxLayout="column">
     <router-outlet></router-outlet>
   </div>
 </div>
