@@ -93,9 +93,6 @@
                   "with": "src/environments/environment.test.ts"
                 }
               ],
-              "localize": [
-                "fr"
-              ],
               "progress": true,
               "optimization": true,
               "outputHashing": "all",

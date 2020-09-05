@@ -1,5 +1,4 @@
 export class ULPrefs {
-  public badges: any;
   constructor(
     public ul_id: number,
     public rq_display_daily_stats: boolean,

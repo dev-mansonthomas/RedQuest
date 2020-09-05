@@ -45,8 +45,17 @@ export class RegistrationStep2Component implements OnInit {
     return this.registrationForm.get('nivol');
   }
 
+  get benevole_referent()
+  {
+    return this.registrationForm.get('benevole_referent');
+  }
+
   get secteur() {
     return this.registrationForm.get('secteur');
+  }
+
+  get email() {
+    return this.registrationForm.get('email');
   }
 
   error: string;
@@ -54,21 +63,26 @@ export class RegistrationStep2Component implements OnInit {
   constructor(private router: Router,
               private zone: NgZone,
               private functions: CloudFunctionService,
-              private firestore: FirestoreService) {
+              private firestore: FirestoreService)
+  {
   }
 
 
-  ngOnInit() {
-    this.registrationForm = new FormGroup({
-      'last_name': new FormControl(this.registeredUser.last_name, Validators.required),
+  ngOnInit()
+  {
+    this.registrationForm = new FormGroup(
+        {
+      'last_name' : new FormControl(this.registeredUser.last_name, Validators.required),
       'first_name': new FormControl(this.registeredUser.first_name, Validators.required),
-      'man': new FormControl(1, Validators.required),
-      'birthdate': new FormControl(this.registeredUser.birthdate, Validators.required),
-      'mobile': new FormControl(this.registeredUser.mobile, [Validators.required, Validators.pattern('[0-9]{9}')]),
-      'nivol': !this.isBenevole1j
+      'man'       : new FormControl(1, Validators.required),
+      'email'     : new FormControl({value:this.registeredUser.email, disabled:this.registeredUser.email}, [Validators.required, Validators.email]),
+      'birthdate' : new FormControl(this.registeredUser.birthdate, Validators.required),
+      'mobile'    : new FormControl(this.registeredUser.mobile, [Validators.required, Validators.pattern('[0-9]{9}')]),
+      'nivol'     : !this.isBenevole1j
         ? new FormControl(this.registeredUser.nivol, [Validators.required, Validators.pattern('[1-9][0-9]{3,11}[a-zA-Z]')])
         : new FormControl(),
-      'secteur': new FormControl({value: this.registeredUser.secteur, disabled: this.isBenevole1j}, Validators.required)
+      'benevole_referent': new FormControl(),
+      'secteur'   : new FormControl({value: this.registeredUser.secteur, disabled: this.isBenevole1j}, Validators.required)
     });
   }
 
@@ -113,6 +127,4 @@ export class RegistrationStep2Component implements OnInit {
     this.loading = false;
     this.error = 'Erreur lors de l\'inscription !';
   }
-
-
 }
