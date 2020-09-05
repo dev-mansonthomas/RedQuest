@@ -25,5 +25,5 @@ export class ObjectivePercentageBadge extends Badge {
   orLowBound = () => 4;
   rubisLowBound = () => 8;
   computeDisplayValue = (kpi: number) => `${kpi}%`;
-  kpiFromStats = (stats: QueteurStats) => stats.amount / stats.amount_year_objective * 100;
+  kpiFromStats = (stats: QueteurStats) => Math.round((stats.amount / stats.amount_year_objective * 100 + Number.EPSILON) * 100) / 100;
 }

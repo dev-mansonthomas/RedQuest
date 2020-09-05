@@ -9,6 +9,7 @@ import {map} from 'rxjs/operators';
 import {Queteur} from '../../model/queteur';
 import {HistoriqueTroncQueteur} from '../../model/historiqueTroncQueteur';
 import {ULPrefs} from '../../model/ULPrefs';
+import {ULStats} from '../../model/ULStats';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,15 @@ export class CloudFunctionService {
 
   getULPrefs(): Observable<any> {
     return this.firebaseFunctions.httpsCallable('getULPrefs')(ULPrefs)
+        .pipe(
+            map(
+                value =>value
+            )
+        );
+  }
+
+  getULStats(): Observable<any> {
+    return this.firebaseFunctions.httpsCallable('getULStats')(ULStats)
         .pipe(
             map(
                 value =>value

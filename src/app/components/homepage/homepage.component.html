@@ -1,5 +1,25 @@
 <div fxLayout="column" fxLayoutAlign="center">
   <div fxFlex="300px" class='hero'></div>
+  <div fxFlex="300px">
+
+    <div *ngIf="ulStats" fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <b fxFlex="13">Montant total</b> <span fxFlex="87">{{ulStats.amount}}</span>
+      <b fxFlex="13">Part de Carte Bleue</b> <span fxFlex="87">{{ulStats.amount_cb}}</span>
+      <b fxFlex="13">Objectif de l'année</b> <span fxFlex="87">{{ulStats.amount_year_objective}}</span>
+      <b fxFlex="13">Nombre de jour de quête</b> <span fxFlex="87">{{ulStats.number_of_days_quete}}</span>
+      <b fxFlex="13">Nombre de point de quête ou on a quêté</b> <span fxFlex="87">{{ulStats.number_of_point_quete}}</span>
+      <b fxFlex="13">Nombre de Tronc-Queteur</b> <span fxFlex="87">{{ulStats.number_of_tronc_queteur}}</span>
+      <b fxFlex="13">Numéro de minute passées à quêter</b> <span fxFlex="87">{{ulStats.time_spent_in_minutes}}</span>
+      <b fxFlex="13">Nombre total de point de quête de l'UL</b> <span fxFlex="87">{{ulStats.total_number_of_point_quete}}</span>
+      <b fxFlex="13">ID de l'UL</b> <span fxFlex="87">{{ulStats.ul_id}}</span>
+      <b fxFlex="13">Poids total collecté</b> <span fxFlex="87">{{ulStats.weight}}</span>
+      <b fxFlex="13">Année des stats</b> <span fxFlex="87">{{ulStats.year}}</span>
+
+    </div>
+
+
+
+  </div>
   <div fxLayout="row wrap" fxLayoutAlign="center" fxLayoutGap="50px grid">
     <div *ngFor="let link of links" [routerLink]="[link.route]" fxLayout="column" fxLayoutAlign="center center"
       fxLayoutGap="5px" class="lien">

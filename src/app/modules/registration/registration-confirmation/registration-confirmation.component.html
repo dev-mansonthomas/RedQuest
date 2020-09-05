@@ -2,9 +2,9 @@
   <h2>Mon compte</h2>
   <p class="lead" *ngIf="queteurRegistrationNotApprovedYet()">
     Bienvenue sur RedQuest  <br/>
-    Merci pour votre inscription :)<br/>
+    Merci pour votre inscription :)<br/><br/>
 
-    <strong>Celle-ci est en attente de validation par un cadre de la quête.</strong>
+    <strong style="font-size:20px;color:#7ab800">Celle-ci est en attente de validation par un cadre de la quête.</strong>
 
   </p>
   <p class="lead" *ngIf="queteurRegistrationRefused()">
@@ -13,12 +13,12 @@
   <div *ngIf="queteurRegistrationNotRefused()">
     <h3>Vos informations:</h3>
     <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-      <b fxFlex="20">Prénom</b> <span fxFlex="80">{{queteur.first_name}}</span>
-      <b fxFlex="20">Nom</b> <span fxFlex="80">{{queteur.last_name}}</span>
-      <b fxFlex="20">Email</b> <span fxFlex="80">{{queteur.email}}</span>
-      <b fxFlex="20">Nivol</b> <span fxFlex="80">{{queteur.nivol}}</span>
-      <b fxFlex="20">Date de naissance</b> <span fxFlex="80">{{queteur.birthdate}}</span>
-      <b fxFlex="20">Numéro de téléphone</b> <span fxFlex="80">{{queteur.mobile}}</span>
+      <b fxFlex="13">Prénom</b> <span fxFlex="87">{{queteur.first_name}}</span>
+      <b fxFlex="13">Nom</b> <span fxFlex="87">{{queteur.last_name}}</span>
+      <b fxFlex="13">Email</b> <span fxFlex="87">{{queteur.email}}</span>
+      <b fxFlex="13">Nivol</b> <span fxFlex="87">{{queteur.nivol}}</span>
+      <b fxFlex="13">Date de naissance</b> <span fxFlex="87">{{queteur.birthdate}}</span>
+      <b fxFlex="13">Numéro de téléphone</b> <span fxFlex="87">{{queteur.mobile}}</span>
     </div>
   </div>
 </section>

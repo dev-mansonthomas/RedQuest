@@ -24,10 +24,22 @@
       </mat-form-field>
     </div>
 
-    <mat-radio-group formControlName="man" fxLayout="row" fxLayoutGap="20px">
-      <mat-radio-button [value]="0">Femme</mat-radio-button>
-      <mat-radio-button [value]="1">Homme</mat-radio-button>
-    </mat-radio-group>
+    <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
+
+      <mat-radio-group formControlName="man" fxLayout="row" fxLayoutGap="20px">
+        <mat-radio-button [value]="0">Femme</mat-radio-button>
+        <mat-radio-button [value]="1">Homme</mat-radio-button>
+      </mat-radio-group>
+      <mat-form-field fxFlex>
+        <mat-label>Email</mat-label>
+        <input matInput type="text" formControlName="email" required>
+        <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+          <div *ngIf="email.errors.required"> L'email est requis. </div>
+          <div *ngIf="email.errors.email"> L'email n'est pas valide </div>
+        </mat-error>
+      </mat-form-field>
+
+    </div>
 
     <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
       <mat-form-field fxFlex>
@@ -47,8 +59,13 @@
     <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
       <mat-form-field fxFlex hintLabel="Veuillez entrer votre NIVOL sans les 0 au début." *ngIf="!isBenevole1j">
         <input matInput type="text" placeholder="Nivol" required formControlName="nivol">
-        <a matSuffix target="_blank" href="https://docs.google.com/document/d/1OKUckdQhvPFFo6xH86kPSnL6R7RyVqSz3PZzRIIvgR8"><mat-icon color="warn">info</mat-icon></a>
+        <a matSuffix target="_blank" href="https://docs.google.com/document/d/1OKUckdQhvPFFo6xH86kPSnL6R7RyVqSz3PZzRIIvgR8"><mat-icon color="info">info</mat-icon></a>
       </mat-form-field>
+
+      <mat-form-field fxFlex hintLabel="Veuillez entrer les prénoms et noms, ou le NIVOL, du bénévole qui vous a invité à nous aider pour la quête" *ngIf="isBenevole1j">
+        <input matInput type="text" placeholder="Bénévole Référent"  formControlName="benevole_referent">
+      </mat-form-field>
+
 
       <mat-form-field fxFlex>
         <mat-label>Secteur</mat-label>
