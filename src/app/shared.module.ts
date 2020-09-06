@@ -25,6 +25,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime-ex';
 
@@ -32,29 +33,29 @@ import { TimePipe } from './pipes/time.pipe';
 import { WeightPipe } from './pipes/weight.pipe';
 
 const MatModules = [
-    MatTabsModule, MatInputModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule,
-    MatToolbarModule, MatButtonModule, MatFormFieldModule, MatSelectModule, MatOptionModule,
-    MatMenuModule, MatProgressBarModule, MatCardModule, MatDividerModule, MatDialogModule,
-    MatIconModule, MatTableModule, MatSortModule, MatPaginatorModule, MatCheckboxModule,
-    MatStepperModule, MatExpansionModule, MatChipsModule, MatGridListModule, MatListModule];
+  MatTabsModule, MatInputModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule,
+  MatToolbarModule, MatButtonModule, MatFormFieldModule, MatSelectModule, MatOptionModule,
+  MatMenuModule, MatProgressBarModule, MatCardModule, MatDividerModule, MatDialogModule,
+  MatIconModule, MatTableModule, MatSortModule, MatPaginatorModule, MatCheckboxModule, MatTooltipModule,
+  MatStepperModule, MatExpansionModule, MatChipsModule, MatGridListModule, MatListModule];
 
 @NgModule({
-    declarations: [TimePipe, WeightPipe],
-    imports: [FormsModule, ReactiveFormsModule, FlexLayoutModule, MatModules,
-        OwlDateTimeModule, OwlNativeDateTimeModule],
-    exports: [
-        FormsModule, ReactiveFormsModule, TimePipe, WeightPipe,
-        OwlDateTimeModule, OwlNativeDateTimeModule,
-        MatModules, FlexLayoutModule],
-    providers: [
-        { provide: OWL_DATE_TIME_LOCALE, useValue: 'fr' }
-    ],
+  declarations: [TimePipe, WeightPipe],
+  imports: [FormsModule, ReactiveFormsModule, FlexLayoutModule, MatModules,
+    OwlDateTimeModule, OwlNativeDateTimeModule],
+  exports: [
+    FormsModule, ReactiveFormsModule, TimePipe, WeightPipe,
+    OwlDateTimeModule, OwlNativeDateTimeModule,
+    MatModules, FlexLayoutModule],
+  providers: [
+    { provide: OWL_DATE_TIME_LOCALE, useValue: 'fr' }
+  ],
 })
 export class SharedModule {
-    constructor(private matIconRegistry: MatIconRegistry) {
+  constructor(private matIconRegistry: MatIconRegistry) {
     // Use material Icon as default font for icon
     // register fontawesome as 'fa' for icons (fontSet="fa", fontSet="fa" fontIcon="fa-car")
     //
-        this.matIconRegistry.registerFontClassAlias('fontawesome', 'fa');
-    }
+    this.matIconRegistry.registerFontClassAlias('fontawesome', 'fa');
+  }
 }

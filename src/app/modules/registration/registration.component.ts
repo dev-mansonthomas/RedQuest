@@ -23,6 +23,8 @@ export class RegistrationComponent implements OnInit {
   uuid: string;
   ulDetails: ULDetails;
 
+  hide1 = true;
+  hide2 = true;
   user: firebase.User;
 
   registeredUser: Queteur = Queteur.aQueteur();
@@ -62,7 +64,7 @@ export class RegistrationComponent implements OnInit {
     });
     this.loginForm = new FormGroup({
       'email': new FormControl('', [Validators.required, Validators.email]),
-      'password': new FormControl('', Validators.required),
+      'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
       'confirmPassword': new FormControl('', Validators.required)
     }, [this.checkPasswords]);
 
@@ -118,7 +120,7 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
-  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+  private checkPasswords(group: FormGroup) { // here we have the 'passwords' group
     const pass = group.get('password').value;
     const confirmPass = group.get('confirmPassword').value;
 

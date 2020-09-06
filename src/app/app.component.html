@@ -1,5 +1,5 @@
 <mat-toolbar color="accent" style='position:fixed; z-index:888'>
-  <mat-toolbar-row fxShow fxHide.xs="true" fxLayout="row" fxLayoutAlign="start center" >
+  <mat-toolbar-row fxShow fxHide.xs="true" fxLayout="row" fxLayoutAlign="start center">
     <span [routerLink]="['']" style="cursor: pointer; outline: none">
       <mat-icon fontSet="fa" fontIcon="fa-plus"></mat-icon>
       RedQuest <small class="mat-small projId" *ngIf="!env.production">{{env.firebaseConfig.projectId}}</small>
@@ -14,7 +14,6 @@
       <button mat-button routerLinkActive="selected" [routerLink]="['ranking']"
         *ngIf="ulPrefs!= null && ulPrefs.rq_display_queteur_ranking!='NON'">Qui est au top?</button>
       <button mat-button routerLinkActive="selected" [routerLink]="['local-unit']">Mon unité locale</button>
-      <button mat-button routerLinkActive="selected" [routerLink]="['credits']">A propos</button>
     </ng-container>
     <span fxFlex></span>
     <button *ngIf="authenticated && queteur" mat-button [matMenuTriggerFor]="menuUser" routerLinkActive="selected">
@@ -26,7 +25,9 @@
     </button>
   </mat-toolbar-row>
   <mat-toolbar-row fxShow fxHide.gt-xs="true" fxLayout="row" fxLayoutAlign="space-between center">
-    <span [routerLink]="['']"><mat-icon fontSet="fa" fontIcon="fa-plus"></mat-icon> RedQuest</span>
+    <span [routerLink]="['']">
+      <mat-icon fontSet="fa" fontIcon="fa-plus"></mat-icon> RedQuest
+    </span>
     <button mat-icon-button [matMenuTriggerFor]="menuFull" routerLinkActive="selected">
       <mat-icon>menu</mat-icon>
     </button>
@@ -34,9 +35,15 @@
 </mat-toolbar>
 
 <mat-menu #menuUser="matMenu">
+  <button mat-menu-item [routerLink]="['credits']">
+    <mat-icon>info_outline</mat-icon>
+    <span>A propos</span>
+  </button>
+  <mat-divider></mat-divider>
   <ng-container *ngIf="connected">
     <button mat-menu-item [routerLink]="['registration/compte']">
-      <mat-icon>face</mat-icon>Mon compte
+      <mat-icon>face</mat-icon>
+      <span>Mon compte</span>
     </button>
     <button mat-menu-item (click)="logout()">
       <mat-icon>vpn_key</mat-icon><span>Se déconnecter</span>

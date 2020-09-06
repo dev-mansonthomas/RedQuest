@@ -2,9 +2,8 @@
   <section class="jumb">
     <h2>Inscription</h2>
     <p class="title">
-      <b>Merci !</b> Vous voilà connecté! Pour finaliser votre inscription, nous avons besoin de quelques informations
-      supplémentaires.
-
+      <b>Merci {{prenom?.value|titlecase}},</b> vous voilà connecté{{man.value==0?'e':''}} ! Pour finaliser votre inscription, nous avons
+      besoin de quelques informations supplémentaires.
     </p>
     <mat-divider></mat-divider>
     <p class="title">
@@ -17,22 +16,25 @@
   <form autocomplete="off" [formGroup]="registrationForm" fxLayout="column" fxLayoutGap="20px">
     <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
       <mat-form-field fxFlex>
-        <input matInput type="text" placeholder="Nom" required formControlName="last_name">
+        <mat-label>Nom</mat-label>
+        <input matInput type="text" formControlName="last_name">
       </mat-form-field>
       <mat-form-field fxFlex>
-        <input matInput type="text" placeholder="Prénom" required formControlName="first_name">
+        <mat-label>Prénom</mat-label>
+        <input #prenom matInput type="text" formControlName="first_name">
       </mat-form-field>
     </div>
 
     <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
 
-      <mat-radio-group formControlName="man" fxLayout="row" fxLayoutGap="20px">
+      <mat-radio-group #s fxFlex formControlName="man" fxLayout="row" fxLayoutGap="20px">
         <mat-radio-button [value]="0">Femme</mat-radio-button>
         <mat-radio-button [value]="1">Homme</mat-radio-button>
       </mat-radio-group>
+
       <mat-form-field fxFlex>
         <mat-label>Email</mat-label>
-        <input matInput type="text" formControlName="email" required>
+        <input matInput type="text" formControlName="email">
         <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
           <div *ngIf="email.errors.required"> L'email est requis. </div>
           <div *ngIf="email.errors.email"> L'email n'est pas valide </div>
@@ -43,7 +45,8 @@
 
     <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
       <mat-form-field fxFlex>
-        <input matInput [matDatepicker]="picker" placeholder="Date de naissance" required formControlName="birthdate" (focus)="picker.open()">
+        <mat-label>Date de naissance</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="birthdate" (focus)="picker.open()">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         <mat-hint>Pour nous assurer que les mineurs ne sont pas envoyés sur des lieux de quêtes dans des conditions
@@ -51,25 +54,34 @@
       </mat-form-field>
 
       <mat-form-field fxFlex>
+        <mat-label>Numéro de téléphone portable</mat-label>
         <span matPrefix>+33 &nbsp;</span>
-        <input matInput type="text" placeholder="Numéro de téléphone portable" required formControlName="mobile">
-        <mat-hint>Pour vous contacter pendant vos créneaux de quête, en cas de problème.</mat-hint>
+        <input matInput type="text" formControlName="mobile">
+        <mat-hint>Pour pouvoir vous joindre pendant vos créneaux de quête.</mat-hint>
+        <mat-error *ngIf="mobile.hasError('pattern')">Le numéro de téléphone doit contenir 9 chiffres</mat-error>
       </mat-form-field>
     </div>
     <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
       <mat-form-field fxFlex hintLabel="Veuillez entrer votre NIVOL sans les 0 au début." *ngIf="!isBenevole1j">
-        <input matInput type="text" placeholder="Nivol" required formControlName="nivol">
-        <a matSuffix target="_blank" href="https://docs.google.com/document/d/1OKUckdQhvPFFo6xH86kPSnL6R7RyVqSz3PZzRIIvgR8"><mat-icon color="info">info</mat-icon></a>
+        <mat-label>Nivol</mat-label>
+        <input matInput type="text" placeholder="ex 12345A" formControlName="nivol">
+        <a matSuffix target="_blank" href="https://docs.google.com/document/d/1OKUckdQhvPFFo6xH86kPSnL6R7RyVqSz3PZzRIIvgR8">
+          <mat-icon color="info" matTooltip="Mais où trouver mon Nivol ?">info</mat-icon>
+        </a>
+        <mat-error *ngIf="nivol.hasError('pattern')">Un bon Nivol est un Nivol qui contient entre 4 et 12 chiffres suivis d'une lettre.
+        </mat-error>
       </mat-form-field>
 
-      <mat-form-field fxFlex hintLabel="Veuillez entrer les prénoms et noms, ou le NIVOL, du bénévole qui vous a invité à nous aider pour la quête" *ngIf="isBenevole1j">
-        <input matInput type="text" placeholder="Bénévole Référent"  formControlName="benevole_referent">
+      <mat-form-field fxFlex *ngIf="isBenevole1j">
+        <mat-label>Bénévole Référent</mat-label>
+        <input matInput type="text" formControlName="benevole_referent">
+        <mat-hint>Veuillez entrer les prénoms et noms, ou le NIVOL, du bénévole qui vous a invité à nous aider pour la quête"</mat-hint>
       </mat-form-field>
 
 
       <mat-form-field fxFlex>
         <mat-label>Secteur</mat-label>
-        <mat-select required formControlName="secteur">
+        <mat-select formControlName="secteur">
           <mat-option [value]="1" [disabled]="isBenevole1j">social</mat-option>
           <mat-option [value]="2" [disabled]="isBenevole1j">secours</mat-option>
           <mat-option [value]="3" [disabled]="!isBenevole1j">Bénévole d'un jour</mat-option>
@@ -81,8 +93,8 @@
     </div>
     <mat-progress-bar *ngIf="loading" mode="query" color="warn"></mat-progress-bar>
     <div fxLayout="row" fxLayoutAlign="center">
-      <button [disabled]="registrationForm.invalid" mat-flat-button color="warn" type="button" (click)="registerUser()"
-        data-toggle="modal" data-target="#waiting" data-backdrop="static" data-keyboard="false">S'inscrire </button>
+      <button [disabled]="registrationForm.invalid" mat-flat-button color="warn" type="button" (click)="registerUser()" data-toggle="modal"
+        data-target="#waiting" data-backdrop="static" data-keyboard="false">S'inscrire </button>
     </div>
   </form>
   <br>
