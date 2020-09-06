@@ -1,8 +1,5 @@
 <section class="jumb">
-  <h2>Les rankings</h2>
-  <p *ngIf="!enabled">
-    Cette section est encore en travaux et sera bientôt accessible !
-  </p>
+  <h2>Qui est au top ? </h2>
 </section>
 
 <mat-form-field>
@@ -23,58 +20,50 @@
     <ng-container matColumnDef="last_name">
       <mat-header-cell *matHeaderCellDef>Queteur</mat-header-cell>
       <mat-cell *matCellDef="let ranking" data-label="Queteur">
-        <span *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.first_name|titlecase}} {{ranking.last_name|uppercase}}</span>
-        <span *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.first_name|titlecase}} {{ranking.last_name|uppercase}}</b></span>
+        <span [ngStyle]="{'font-weight':ranking.queteur_id === queteur.queteur_id ? 'bold':'normal'}">{{ranking.first_name|titlecase}} {{ranking.last_name|titlecase}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="number_of_tronc_queteur">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre de troncs</mat-header-cell>
       <mat-cell *matCellDef="let ranking" data-label="Nombre de troncs">
-        <span *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.number_of_tronc_queteur||0}}</span>
-        <span *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.number_of_tronc_queteur||0}}</b></span>
+        <span  [ngStyle]="{'font-weight':ranking.queteur_id === queteur.queteur_id ? 'bold':'normal'}">{{ranking.number_of_tronc_queteur||0}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="amount">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Montant total</mat-header-cell>
       <mat-cell *matCellDef="let ranking" data-label="Montant total">
-        <span
-          *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.amount||0 |number:'1.0-2':'fr-FR' }}&euro;</span>
-        <span
-          *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.amount||0 |number:'1.0-2':'fr-FR' }}&euro;</b></span>
+        <span [ngStyle]="{'font-weight':ranking.queteur_id === queteur.queteur_id ? 'bold':'normal'}"
+        >{{ranking.amount||0 |number:'1.0-2':'fr-FR' }}&euro;</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="weight">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Poids</mat-header-cell>
       <mat-cell *matCellDef="let ranking" data-label="Poids">
-        <span *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.weight||0 | weight}}</span>
-        <span *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.weight||0 | weight}}</b></span>
+        <span  [ngStyle]="{'font-weight':ranking.queteur_id === queteur.queteur_id ? 'bold':'normal'}">{{ranking.weight||0 | weight}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="time_spent_in_minutes">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Temps total</mat-header-cell>
       <mat-cell *matCellDef="let ranking" data-label="Temps total">
-        <span *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.time_spent_in_minutes||0 | time: {small:true} }}</span>
-        <span *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.time_spent_in_minutes||0 | time: {small:true} }}</b></span>
+        <span  [ngStyle]="{'font-weight':ranking.queteur_id === queteur.queteur_id ? 'bold':'normal'}">{{ranking.time_spent_in_minutes||0 | time: {small:true} }}</span>
       </mat-cell>
 
     </ng-container>
     <ng-container matColumnDef="unique_point_quete_count">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Lieux de quête</mat-header-cell>
       <mat-cell *matCellDef="let ranking" data-label="Lieux de quête">
-        <span *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.unique_point_quete_count}}</span>
-        <span *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.unique_point_quete_count}}</b></span>
+        <span  [ngStyle]="{'font-weight':ranking.queteur_id === queteur.queteur_id ? 'bold':'normal'}">{{ranking.number_of_point_quete}}/{{ranking.total_number_of_point_quete}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="year">
       <mat-header-cell *matHeaderCellDef>Année</mat-header-cell>
       <mat-cell *matCellDef="let ranking" data-label="Année">
-        <span *ngIf="ranking.queteur_id !== queteur.queteur_id">{{ranking.year}}</span>
-        <span *ngIf="ranking.queteur_id === queteur.queteur_id"><b>{{ranking.year}}</b></span>
+        <span  [ngStyle]="{'font-weight':ranking.queteur_id === queteur.queteur_id ? 'bold':'normal'}">{{ranking.year}}</span>
       </mat-cell>
     </ng-container>
 

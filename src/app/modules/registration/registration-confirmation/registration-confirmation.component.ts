@@ -32,8 +32,8 @@ export class RegistrationConfirmationComponent implements OnInit {
     return this.queteur && this.queteur.registration_approved === false;
   }
 
-  queteurRegistrationNotRefused() {
-    return this.queteur && this.queteur.registration_approved !== false;
+  queteurRegistrationApproved() {
+    return this.queteur && this.queteur.registration_approved === true;
   }
 
 }

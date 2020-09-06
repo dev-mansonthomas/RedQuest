@@ -26,11 +26,9 @@
     </button>
   </mat-toolbar-row>
   <mat-toolbar-row fxShow fxHide.gt-xs="true" fxLayout="row" fxLayoutAlign="space-between center">
-
-    <span [routerLink]="['']">RedQuest</span>
+    <span [routerLink]="['']"><mat-icon fontSet="fa" fontIcon="fa-plus"></mat-icon> RedQuest</span>
     <button mat-icon-button [matMenuTriggerFor]="menuFull" routerLinkActive="selected">
-      <mat-icon>more_vert
-      </mat-icon>
+      <mat-icon>menu</mat-icon>
     </button>
   </mat-toolbar-row>
 </mat-toolbar>

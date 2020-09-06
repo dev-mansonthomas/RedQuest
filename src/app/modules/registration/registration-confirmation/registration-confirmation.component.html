@@ -10,15 +10,15 @@
   <p class="lead" *ngIf="queteurRegistrationRefused()">
     Votre inscription a été refusée pour la raison suivante: {{queteur.reject_reason}}
   </p>
-  <div *ngIf="queteurRegistrationNotRefused()">
+  <div *ngIf="queteurRegistrationApproved()">
     <h3>Vos informations:</h3>
     <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-      <b fxFlex="13">Prénom</b> <span fxFlex="87">{{queteur.first_name}}</span>
-      <b fxFlex="13">Nom</b> <span fxFlex="87">{{queteur.last_name}}</span>
-      <b fxFlex="13">Email</b> <span fxFlex="87">{{queteur.email}}</span>
-      <b fxFlex="13">Nivol</b> <span fxFlex="87">{{queteur.nivol}}</span>
-      <b fxFlex="13">Date de naissance</b> <span fxFlex="87">{{queteur.birthdate}}</span>
-      <b fxFlex="13">Numéro de téléphone</b> <span fxFlex="87">{{queteur.mobile}}</span>
+      <span style="font-weight:bold;" fxFlex="25">Prénom</span> <span fxFlex="75">{{queteur.first_name}}</span>
+      <span style="font-weight:bold;" fxFlex="25">Nom</span> <span fxFlex="75">{{queteur.last_name}}</span>
+      <span style="font-weight:bold;" fxFlex="25"><mat-icon>contact_mail</mat-icon></span> <span fxFlex="75">{{queteur.email}}</span>
+      <span style="font-weight:bold;" fxFlex="25">Nivol</span> <span fxFlex="75">{{queteur.nivol}}</span>
+      <span style="font-weight:bold;" fxFlex="25"><img src="assets/birth-date.png" style="height: 24px;"></span> <span fxFlex="75">{{queteur.birthdate}}</span>
+      <span style="font-weight:bold;" fxFlex="25"><mat-icon>contact_phone</mat-icon></span> <span fxFlex="75">{{queteur.mobile}}</span>
     </div>
   </div>
 </section>
@@ -26,5 +26,5 @@
   Pour anonymiser vos données, veuillez contacter l'Unité Locale {{ulDetails.name}} par email à l'adresse : <a
   [href]="'mailto:'+ulDetails.email">{{ulDetails.email}}</a>
 </div>
-<a mat-stroked-button href="https://bit.ly/rcq-rgpd" target="_blank" style="margin: 1em;"> Règlement Général sur la Protection des
-  Données</a>
+<a mat-stroked-button href="https://bit.ly/rcq-rgpd" target="_blank" style="margin: 1em;"> Règlement Général<br fxHide.gt-xs="true"/>
+  sur la Protection des Données</a>

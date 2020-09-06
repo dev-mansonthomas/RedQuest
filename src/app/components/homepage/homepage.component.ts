@@ -20,8 +20,6 @@ export class HomepageComponent implements OnInit {
   private connected: boolean;
 
   links = MyLinks;
-  ulPrefs: ULPrefs = null;
-  ulStats: ULStats = null;
   ulPrefs$: Observable<ULPrefs>;
   ulStats$: Observable<ULStats>;
 
@@ -40,9 +38,6 @@ export class HomepageComponent implements OnInit {
       this.queteur = data.queteur;
       this.ulPrefs$ = this.functionsService.getULPrefs$();
       this.ulStats$ = this.functionsService.getULStats$();
-      // TODO do only one call and subscribe to get the value
-      //   this.functionsService.getULPrefs$().subscribe(ulPrefs => this.ulPrefs = ulPrefs);
-      //   this.functionsService.getULStats$().subscribe(ulStats => this.ulStats = ulStats);
     });
   }
 

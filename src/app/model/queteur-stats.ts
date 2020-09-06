@@ -13,7 +13,6 @@ export class QueteurStats {
     public time_spent_in_minutes: number,
     public tronc_count: number,
     public ul_id: number,
-    public unique_point_quete_count: number,
     public weight: number,
     public year: number
   ) {
