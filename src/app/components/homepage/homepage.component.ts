@@ -33,11 +33,13 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit() {
     this.cookieService.set('login-loading', 'false');
+
+    this.ulPrefs$ = this.functionsService.getULPrefs$();
+    this.ulStats$ = this.functionsService.getULStats$();
+
     this.authService.onUserConnected().subscribe(user => this.connected = user !== null);
     this.route.data.subscribe((data: { queteur: Queteur }) => {
       this.queteur = data.queteur;
-      this.ulPrefs$ = this.functionsService.getULPrefs$();
-      this.ulStats$ = this.functionsService.getULStats$();
     });
   }
 

@@ -1,15 +1,5 @@
 <section class="jumb">
   <h2>Mon compte</h2>
-  <p class="lead" *ngIf="queteurRegistrationNotApprovedYet()">
-    Bienvenue sur RedQuest  <br/>
-    Merci pour votre inscription :)<br/><br/>
-
-    <strong style="font-size:20px;color:#7ab800">Celle-ci est en attente de validation par un cadre de la quête.</strong>
-
-  </p>
-  <p class="lead" *ngIf="queteurRegistrationRefused()">
-    Votre inscription a été refusée pour la raison suivante: {{queteur.reject_reason}}
-  </p>
   <div>
     <h3>Vos informations:</h3>
     <div fxLayout="row wrap" fxLayoutAlign="space-between center">

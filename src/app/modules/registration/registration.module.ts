@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { QueteurResolverService } from 'src/app/services/queteur/queteur.service';
+import {QueteurResolverService, RegisteredQueteurResolverService} from 'src/app/services/queteur/queteur.service';
 import { SharedModule } from 'src/app/shared.module';
 
 import { RegistrationConfirmationComponent } from './registration-confirmation/registration-confirmation.component';
@@ -17,14 +17,10 @@ const ROUTES: Routes = [{
 }, {
     path: 'confirmation',
     component: RegistrationConfirmationComponent,
-    resolve: { queteur: QueteurResolverService }
+    resolve: { queteur: RegisteredQueteurResolverService }
 }, {
     path: 'needed',
     component: RegistrationNeededComponent
-}, {
-    path: 'compte',
-    component: RegistrationConfirmationComponent,
-    resolve: { queteur: QueteurResolverService }
 }, {
     path: '**', redirectTo: ''
 }];

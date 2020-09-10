@@ -5,14 +5,14 @@
 <mat-tab-group color="warn" mat-align-tabs="center" animationDuration="1000ms">
   <mat-tab label="Départ">
 
-    <app-register-tronc-state [readOnly]="slotsReadOnly" [type]="'departure'"
+    <app-register-tronc-state [readOnly]="ulPrefs?.rq_autonomous_depart_and_return!=true" [type]="'departure'"
       (troncUpdate)="handleTroncDeparture($event)" [troncs]="getTroncsDeparture()" [confirmation]="confirmation"
       (refreshEvent)="refresh()">
     </app-register-tronc-state>
 
   </mat-tab>
   <mat-tab label="Retour">
-    <app-register-tronc-state [readOnly]="slotsReadOnly" [type]="'arrival'"
+    <app-register-tronc-state [readOnly]="ulPrefs?.rq_autonomous_depart_and_return!=true" [type]="'arrival'"
       (troncUpdate)="handleTroncArrival($event)" [troncs]="getTroncsArrival()" [confirmation]="confirmation"
       (refreshEvent)="refresh()">
     </app-register-tronc-state>

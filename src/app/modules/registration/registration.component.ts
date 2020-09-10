@@ -27,6 +27,8 @@ export class RegistrationComponent implements OnInit {
   hide2 = true;
   user: firebase.User;
 
+  createUserWithPasswordError:string;
+
   registeredUser: Queteur = Queteur.aQueteur();
 
   loginForm: FormGroup;
@@ -114,9 +116,32 @@ export class RegistrationComponent implements OnInit {
   loginWithFacebook = () => this.authService.signInFacebookLogin();
 
 
-  signingUpWithEmailAndPassword() {
-    if (this.loginForm.valid) {
-      this.authService.createUserWithEmailPassword(this.loginForm.get('email').value, this.loginForm.get('password').value);
+  async signingUpWithEmailAndPassword()
+  {
+    if (this.loginForm.valid)
+    {
+      try
+      {
+        await this.authService.createUserWithEmailPassword(
+            this.loginForm.get('email').value,
+            this.loginForm.get('password').value
+        );
+      }
+      catch(exception)
+      {
+        console.log("Error while creating user",exception);
+
+        if(exception.code=='auth/email-already-in-use')
+        {
+          this.createUserWithPasswordError = "Un compte existe déjà avec cet email !";
+        }
+        else
+        {
+          this.createUserWithPasswordError = "Une erreur s'est produite : "+JSON.stringify(exception);
+        }
+
+      }
+
     }
   }
 

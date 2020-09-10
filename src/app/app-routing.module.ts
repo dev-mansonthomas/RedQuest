@@ -10,7 +10,7 @@ import { TipsComponent } from './components/tips/tips.component';
 import { QueteurResolverService } from './services/queteur/queteur.service';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/quest/badges', pathMatch: 'full' },
+  { path: '', redirectTo: '/quest/badges', pathMatch: 'full'},
   { path: 'home', component: HomepageComponent, canActivate: [AuthGuard], resolve: { queteur: QueteurResolverService } },
   { path: 'login', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule) },
   {
@@ -20,6 +20,10 @@ const routes: Routes = [
   {
     path: 'quest', canActivate: [AuthGuard],
     loadChildren: () => import('./modules/quest/quest.module').then(m => m.QuestModule)
+  },
+  {
+    path: 'account', canActivate: [AuthGuard],
+    loadChildren: () => import('./modules/account/account.module').then(m => m.AccountModule)
   },
   { path: 'tips', component: TipsComponent, canActivate: [AuthGuard] },
   { path: 'ranking', component: RankingComponent, canActivate: [AuthGuard], resolve: { queteur: QueteurResolverService } },

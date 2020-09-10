@@ -1,16 +1,28 @@
 <div *ngIf="step === UNKNOWN" fxLayout="column" fxLayoutAlign="center">
   <section class="jumb">
-    <h2>S'enregistrer</h2>
+    <h2>Création de son Compte sur RedQuest !</h2>
     <p class="title">
-      <b>Merci !</b> Vous vous apprêtez à donner de votre temps pour la quête.
-      ...
+      <strong>Merci !</strong> Vous vous apprêtez à donner de votre temps pour la quête de la Croix Rouge :)
+      <br/>
     </p>
-    <mat-divider></mat-divider>
-    <p class="title">Vous pouvez vous connecter avec votre réseau social favori, ou bien vous créer un compte tout
-      neuf.</p>
-    <!--<p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-      </p>-->
+    <strong>Comment se déroule la création de votre compte ?</strong>
+
+      <ol>
+        <li>D'abord vous choisissez une <strong style="font-size:16px;color:midnightblue;">méthode de connexion</strong> :
+          <ul>
+            <li>Avec votre compte gmail</li>
+            <li>Avec votre compte facebook</li>
+            <li>En créant un mot de passe spécifique à RedQuest et votre email est votre login</li>
+          </ul>
+        </li>
+        <li>Ensuite, vous remplissez le <strong style="font-size:16px;color:midnightblue;">formulaire d'inscription</strong> avec vos données personnelles</li>
+        <li>Enfin, vous attendez qu'un administrateur de l'Unité Locale <strong style="font-size:16px;color:midnightblue;">valide votre inscription</strong>.
+          <br/>Vous recevrez un email pour vous prévenir de cette validation.</li>
+        <li>Une fois validé, vous pourrez accéder aux fonctionnalités de RedQuest (vos derniers troncs, vos badges, les astuces)</li>
+      </ol>
+    
+    <mat-divider style="margin-top: 10px;margin-bottom: 10px;"></mat-divider>
+    <p class="title">Si vous êtes déjà inscrit, cliquez sur le bouton ci-dessous</p>
     <button mat-flat-button [routerLink]="['/login']" mat-button>J'ai déjà un compte !</button>
   </section>
 
@@ -19,11 +31,12 @@
     <mat-card-title> </mat-card-title>
     <mat-card-content fxLayout="column" fxLayoutGap="30px">
       <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" style="zoom:1.6" class="socialButtons">
-        <button mat-flat-button class="btn-facebook" title="Facebook" (click)="loginWithFacebook()">
-          <i class="fa fa-facebook fa-lg"></i>
-        </button>
         <button mat-flat-button class="btn-google-plus" title="Google" (click)="loginWithGoogle()">
           <i class="fa fa-google fa-lg"></i>
+        </button>
+
+        <button mat-flat-button class="btn-facebook" title="Facebook" (click)="loginWithFacebook()">
+          <i class="fa fa-facebook fa-lg"></i>
         </button>
       </div>
 
@@ -78,10 +91,16 @@
 
         </div>
       </mat-card-content>
+
+      <mat-error *ngIf="createUserWithPasswordError">
+        {{createUserWithPasswordError}}
+      </mat-error>
+
+
       <mat-card-actions fxLayout="row" fxLayoutAlign="center">
-        <button [disabled]="loginForm.invalid" mat-flat-button color="warn" type="button" (click)="signingUpWithEmailAndPassword()">Créer un
-          compte</button>
+        <button [disabled]="loginForm.invalid" mat-flat-button color="warn" type="button" (click)="signingUpWithEmailAndPassword()">Créer un compte</button>
       </mat-card-actions>
+
     </form>
   </mat-card>
 </div>

@@ -23,6 +23,9 @@
     <button mat-button *ngIf="!authenticated" routerLinkActive="selected" [routerLink]="['login']">
       Se connecter
     </button>
+    <button  mat-button *ngIf="authenticated"  routerLinkActive="selected" (click)="logout()">
+      <mat-icon>vpn_key</mat-icon><span>Se déconnecter</span>
+    </button>
   </mat-toolbar-row>
   <mat-toolbar-row fxShow fxHide.gt-xs="true" fxLayout="row" fxLayoutAlign="space-between center">
     <span [routerLink]="['']">
@@ -40,8 +43,8 @@
     <span>A propos</span>
   </button>
   <mat-divider></mat-divider>
-  <ng-container *ngIf="connected">
-    <button mat-menu-item [routerLink]="['registration/compte']">
+  <ng-container *ngIf="authenticated">
+    <button mat-menu-item [routerLink]="['account']">
       <mat-icon>face</mat-icon>
       <span>Mon compte</span>
     </button>

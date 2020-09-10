@@ -9,6 +9,6 @@ export const AllLinks = [
   ...MyLinks,
   {label: 'Ranking', icon: 'cake', route: 'ranking'},
   {label: 'Mon unité locale', icon: 'add_location', route: '/local-unit'},
-  {label: 'Mon compte', icon: 'face', route: '/registration/compte'},
+  {label: 'Mon compte', icon: 'face', route: '/account'},
   {label: 'A propos', icon: 'bookmark', route: '/credits'}
 ];

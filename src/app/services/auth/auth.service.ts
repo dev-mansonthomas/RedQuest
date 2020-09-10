@@ -52,17 +52,14 @@ export class AuthService {
       );
   }
 
-  createUserWithEmailPassword(email: string, password: string) {
-    return this.angularFireAuth.setPersistence('local')
-      .then(() => {
-        this.angularFireAuth.createUserWithEmailAndPassword(email, password)
-          // .then(user => user.user.sendEmailVerification()) disabled for 2018
-          .catch(error => {
-            if (error.code === this.AUTH_ACCOUNT_ALREADY_EXISTING) {
-              this.signInWithEmailPassword(email, password);
-            }
-          });
-      });
+  async createUserWithEmailPassword(email: string, password: string)
+  {
+    await this.angularFireAuth.setPersistence('local');
+    
+    const user = await this.angularFireAuth.createUserWithEmailAndPassword(email, password)
+
+    return user.user.sendEmailVerification();
+
   }
 
   isLoggedIn(redirect = true): Observable<boolean> {

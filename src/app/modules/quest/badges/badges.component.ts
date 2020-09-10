@@ -74,11 +74,11 @@ export class BadgesComponent implements OnInit {
 
   setCol = (w: number) => this.breakpoint = (w <= 700) ? 1 : w <= 1000 ? 2 : 3;
   onResize = (event) => this.setCol(event.target.innerWidth);
-  count = (level?: number) => this.badges.filter(d => typeof level === 'number' ? d.level === level : true).length;
+  count = (level?: number) => this.badges?.filter(d => typeof level === 'number' ? d.level === level : true).length;
 
   get score() {
     let p = 0;
-    this.badges.forEach(b => {
+    this.badges?.forEach(b => {
       if (b.level) {
         p += this.levels[b.level].mult;
       }

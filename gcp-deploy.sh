@@ -37,8 +37,14 @@ setProject "rq-${COUNTRY}-${ENV}"
 #list current connect google account
 gcloud auth list
 
+firebase use --add "rq-${COUNTRY}-${ENV}"
 
 echo "Deploying rq-${COUNTRY}-${ENV}"
 
-
 ng build --configuration "${ENV}" && firebase deploy
+
+
+
+gcloud functions add-iam-policy-binding ComputeULStats --member="serviceAccount:cf-ULTriggerRecompute@rcq-fr-test.iam.gserviceaccount.com" --role="roles/cloudfunctions.invoker"  --region europe-west1
+
+gcloud functions remove-iam-policy-binding ComputeULStats --member="allUsers" --role="roles/cloudfunctions.invoker"  --region europe-west1

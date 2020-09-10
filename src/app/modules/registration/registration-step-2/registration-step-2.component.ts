@@ -97,10 +97,10 @@ export class RegistrationStep2Component implements OnInit {
         if (this.registeredUser.nivol) {
           this.registeredUser.nivol = this.registeredUser.nivol.toUpperCase();
         }
-        this.functions.registerQueteur$(this.registeredUser)
+        this.functions.registerQueteur$(this.registeredUser) //store the registration in RCQ Backend
           .subscribe(token => {
             this.registeredUser.queteur_registration_token = token.queteur_registration_token;
-            this.storeNewQueteur();
+            this.storeNewQueteur();//store in RedQuest Firestore
           });
       });
   }

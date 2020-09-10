@@ -27,25 +27,30 @@ export class QueteurService {
     o.complete();
   }
 
-  isSlotsUpdateActivated(): Observable<boolean> {
-    return this.getQueteur().pipe(map(queteur => queteur.rqAutonomousDepartAndReturn));
-  }
-
   getQueteur(): Observable<Queteur> {
     return new Observable(observer => {
-      if (this.currentQueteur) {
+      if (this.currentQueteur)
+      {
         console.log('QueteurService getQueteur currentQueteur:', this.currentQueteur);
         this.gotIt<Queteur>(observer, this.currentQueteur);
-      } else {
+      }
+      else
+      {
         const user = this.authService.getConnectedUser();
-        if (user && user.uid) {
+        if (user && user.uid)
+        {
           this.updateAndRetrieveQueteur(user.uid, observer);
-        } else {
+        }
+        else
+        {
           this.authService.onUserConnected().subscribe(connectedUser => {
-            if (connectedUser && connectedUser.uid) {
+            if (connectedUser && connectedUser.uid)
+            {
               this.updateAndRetrieveQueteur(connectedUser.uid, observer);
-            } else {
-              observer.error('Queteur is not found');
+            }
+            else
+            {
+              observer.error('User is not authenticated');
             }
           });
         }
@@ -69,8 +74,8 @@ export class QueteurService {
         queteur.queteur_id = Number(queteur.queteur_id);
         this.gotIt<Queteur>(observer, queteur);
       })
-      .catch(() => {
-        observer.error('Queteur is not found');
+      .catch((exception) => {
+        observer.error('Queteur is not found '+exception);
         if (window.location.pathname.indexOf('login') !== -1) {
           this.router.navigate(['registration/needed']);
         }
@@ -100,5 +105,36 @@ export class QueteurResolverService implements Resolve<Queteur> {
         this.router.navigate(['/registration/needed']);
         return EMPTY;
       }));
+  }
+}
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RegisteredQueteurResolverService implements Resolve<Queteur> {
+  constructor(private qs: QueteurService, private router: Router) {
+  }
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Queteur> | Observable<never> {
+    console.log('RegisteredQueteurResolverService resolve');
+    return this.qs.getQueteur().pipe(
+        take(1),
+        mergeMap(queteur => {
+          if (queteur)
+          {
+            if (queteur.registration_approved)
+            {
+              this.router.navigate(['/']);
+              return EMPTY;
+            }
+
+            return of(queteur);
+          }
+          const url = route.url.toString();
+          console.error('QueteurResolverService not found on route '+url, queteur);
+          this.router.navigate(['/registration/needed']);
+          return EMPTY;
+        }));
   }
 }

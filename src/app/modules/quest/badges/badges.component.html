@@ -7,12 +7,9 @@
       class="ba l4">Rubis</span> !<br><br><br>
       <strong>Collectez les tous !</strong>
   </p>
-  <p *ngIf="!enabled">
-    Cette section est encore en travaux et sera bientôt accessible !
-  </p>
-
-  <span *ngIf="enabled"
-    style="position: absolute; right: 25px; top: 45px; font-size:40px; color:lightblue; font-weight:bolder; text-shadow: 0 0 2px black">{{score/(levels[levels.length-1].mult*badges.length)|percent}}</span>
+  <span
+    style="position: absolute; right: 25px; top: 45px; font-size:40px; color:lightblue; font-weight:bolder; text-shadow: 0 0 2px black"
+  >{{score/(levels[levels.length-1].mult*badges.length)|percent}}</span>
 </section>
 
 

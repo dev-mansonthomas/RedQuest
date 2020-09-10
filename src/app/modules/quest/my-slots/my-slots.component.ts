@@ -7,6 +7,7 @@ import { Queteur } from '../../../model/queteur';
 import { Tronc } from '../../../model/tronc';
 import { CloudFunctionService } from '../../../services/cloud-functions/cloud-function.service';
 import { QueteurService } from '../../../services/queteur/queteur.service';
+import {ULPrefs} from '../../../model/ULPrefs';
 
 export type TroncState = 'departure' | 'arrival';
 
@@ -18,24 +19,19 @@ export class MySlotsComponent implements OnInit {
 
   registerState: TroncState = 'departure';
   troncs: Tronc[];
-
+  ulPrefs: ULPrefs = null;
   confirmation = { error: false, message: '' };
-
-  slotsReadOnly = true;
-
-  ulWithSlotsEditable = [348, 508, 595, 486, 223];
-
 
   constructor(private cloudFunctions: CloudFunctionService,
     private queteurService: QueteurService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+              ) {
   }
 
   ngOnInit() {
     this.loadTroncs();
     this.route.data.subscribe((data: { queteur: Queteur }) => {
-      this.queteurService.isSlotsUpdateActivated()
-        .subscribe(activated => this.slotsReadOnly = (!activated && this.ulWithSlotsEditable.indexOf(data.queteur.ul_id) === -1));
+      this.cloudFunctions.getULPrefs$().subscribe(ulPrefs => this.ulPrefs = ulPrefs);
     });
   }
 
@@ -73,7 +69,14 @@ export class MySlotsComponent implements OnInit {
       tqId: tronc.tronc_queteur_id,
       isDepart: false
     };
-    this.cloudFunctions.troncStateUpdate$(update);
+    this.cloudFunctions.troncStateUpdate$(update).subscribe(
+        next => {
+          this.confirmation.message = 'C\'est validé!';
+        },
+        error => {
+          this.confirmation.error = true;
+          this.confirmation.message = 'Un problème est survenu lors de la mise à jour du tronc';
+        });
   }
 
   getTroncsDeparture() {

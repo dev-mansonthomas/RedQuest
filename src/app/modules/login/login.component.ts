@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] + '&loading=true' || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl']  || '/';
     this.loading = this.cookieService.get('login-loading') === 'true';
     this.authService.onUserConnected().subscribe(user => {
       if (user) {

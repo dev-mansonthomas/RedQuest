@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { ULDetails } from '../../model/ULDetails';
@@ -27,7 +27,7 @@ export class CloudFunctionService {
 
 
   getULPrefs$ = (): Observable<any> => this.firebaseFunctions.httpsCallable('getULPrefs')(ULPrefs);
-  getULStats$ = (): Observable<any> => this.firebaseFunctions.httpsCallable('getULStats')(ULStats);
+  getULStats$ = (): Observable<any> => this.firebaseFunctions.httpsCallable('getULStats')(ULStats).pipe(tap(data=>console.log("getULStats",data)));
 
   registerQueteur$ = (user: Queteur): Observable<any> => this.firebaseFunctions.httpsCallable('registerQueteur')(user)
     .pipe(map(value => JSON.parse(value)))
