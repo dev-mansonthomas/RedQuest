@@ -41,4 +41,9 @@ firebase use --add "rq-${COUNTRY}-${ENV}"
 
 echo "Deploying rq-${COUNTRY}-${ENV}"
 
-ng build --configuration "${ENV}" && firebase deploy
+if [[ ${ENV} != "prod" ]]
+then
+  ng build --configuration "${ENV}" && firebase deploy
+else
+  ng build --prod && firebase deploy
+fi

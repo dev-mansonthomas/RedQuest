@@ -11,6 +11,7 @@ import { FirestoreService } from 'src/app/services/firestore/firestore.service';
 import { RankingDatasource } from './ranking-datasource';
 
 import { environment } from '../../../environments/environment';
+import {ULPrefs} from '../../model/ULPrefs';
 
 @Component({
   templateUrl: './ranking.component.html',
@@ -23,10 +24,11 @@ export class RankingComponent implements AfterViewInit, OnInit {
   dataSource: RankingDatasource;
   displayedColumns = ['last_name', 'number_of_tronc_queteur', 'amount', 'weight', 'time_spent_in_minutes',
     'unique_point_quete_count', 'year'];
-  years = [2016, 2017, 2018, 2019];
+  years = [2016, 2017, 2018, 2019, 2020];
 
   ul_id: number;
   year = new Date().getFullYear();
+  ulPrefs: ULPrefs = null;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -41,6 +43,7 @@ export class RankingComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.dataSource = new RankingDatasource(this.firestoreService);
     this.route.data.subscribe((data: { queteur: Queteur }) => {
+      this.functionsService.getULPrefs$().subscribe(ulPrefs => this.ulPrefs = ulPrefs);
       this.queteur = data.queteur;
       this.ul_id = this.queteur.ul_id;
       this.dataSource.selectUlStats('amount', this.ul_id, this.year, 'desc', 10);
