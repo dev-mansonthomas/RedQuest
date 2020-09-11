@@ -13,12 +13,12 @@ export class WeightBadge extends Badge {
       'Quêter le plus lourd possible.',
       new BadgeLevelsDesc(
         'moins de 600g',
-        'de 600g à 5kg',
-        'de 5 à 15kg',
-        'de 15 à 30kg',
-        'plus de 30kg'
+        'de 600g à 1.6kg',
+        'de 1.6 à 3kg',
+        'de 3 à 7kg',
+        'plus de 7kg'
       ),
-      ['600kg', '5kg', '15kg', '30kg'],
+      ['600g', '1.6kg', '3kg', '7kg'],
       'weight',
       0,
       0,
@@ -26,10 +26,10 @@ export class WeightBadge extends Badge {
     );
   }
 
-  bronzeLowBound = () => 600;
-  argentLowBound = () => 5000;
-  orLowBound = () => 15000;
-  rubisLowBound = () => 30000;
+  bronzeLowBound = () =>  600;
+  argentLowBound = () => 1600;
+  orLowBound     = () => 3000;
+  rubisLowBound  = () => 7000;
   computeDisplayValue = (kpi: number) => new WeightPipe().transform(kpi);
   kpiFromStats = (stats: QueteurStats) => stats.weight;
 }

@@ -10,8 +10,13 @@ export class ObjectivePercentageBadge extends Badge {
       'fas fa-percentage',
       'Objectif de l\'UL',
       'Participer à l\'objectif de l\'UL.',
-      new BadgeLevelsDesc('0%', 'de 0 à 2%', 'de 2 à 4%', 'de 4 à 8%', 'plus de 8%'),
-      ['0%', '2%', '4%', '8%'],
+      new BadgeLevelsDesc(
+          '0%',
+          'de 0 à 1%',
+          'de 1 à 3%',
+          'de 3 à 7%',
+          'plus de 7%'),
+      ['0%', '1%', '3%', '7%'],
       'objective_percentage',
       0,
       0,
@@ -21,9 +26,9 @@ export class ObjectivePercentageBadge extends Badge {
   }
 
   bronzeLowBound = () => 0;
-  argentLowBound = () => 2;
-  orLowBound = () => 4;
-  rubisLowBound = () => 8;
+  argentLowBound = () => 1;
+  orLowBound = () => 3;
+  rubisLowBound = () => 7;
   computeDisplayValue = (kpi: number) => `${kpi}%`;
   kpiFromStats = (stats: QueteurStats) => Math.round((stats.amount / stats.amount_year_objective * 100 + Number.EPSILON) * 100) / 100;
 }

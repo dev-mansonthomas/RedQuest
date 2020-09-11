@@ -12,12 +12,12 @@ export class NumberOfLocationsBadge extends Badge {
       'Quêter dans un maximum de points de quête distincts.',
       new BadgeLevelsDesc(
         'si vous n\'avez pas quêté',
-        'de 0 à 3 lieux (0 à 30% *)',
-        'de 3 à 6 lieux (30 à 60% *)',
-        'de 6 à 10 lieux (60 à 80% *)',
-        'plus de 10 lieux (plus de 80% *)'
+        'de 0 à 2 lieux (0 à 30% *)',
+        'de 2 à 4 lieux (30 à 60% *)',
+        'de 4 à 6 lieux (60 à 80% *)',
+        'plus de 6 lieux (plus de 80% *)'
       ),
-      ['0', '3', '6', '10'],
+      ['0', '2', '4', '6'],
       'number_of_locations',
       0,
       0,
@@ -26,9 +26,9 @@ export class NumberOfLocationsBadge extends Badge {
   }
 
   bronzeLowBound = () => 0;
-  argentLowBound = () => this.totalNumberOfLocations < 10 ? 30 : 3;
-  orLowBound = () => this.totalNumberOfLocations < 10 ? 30 : 6;
-  rubisLowBound = () => this.totalNumberOfLocations < 10 ? 30 : 10;
+  argentLowBound = () => this.totalNumberOfLocations < 10 ? 30 : 2;
+  orLowBound = () => this.totalNumberOfLocations < 10 ? 30 : 4;
+  rubisLowBound = () => this.totalNumberOfLocations < 10 ? 30 : 6;
   computeDisplayValue = (kpi: number) => kpi > 1 ? `${kpi} lieux` : `${kpi} lieu`;
   kpiFromStats(stats: QueteurStats): number {
     this.totalNumberOfLocations = stats.total_number_of_point_quete;

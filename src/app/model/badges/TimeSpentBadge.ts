@@ -14,11 +14,11 @@ export class TimeSpentBadge extends Badge {
       new BadgeLevelsDesc(
         'moins d\'une heure',
         'de 1 à 3h',
-        'de 3 à 6h',
-        'de 6 à 12h',
-        'plus de 12h'
+        'de 3 à 9h',
+        'de 9 à 16h',
+        'plus de 16h'
       ),
-      ['1h', '3h', '6h', '12h'],
+      ['1h', '3h', '9h', '16h'],
       'time_spent',
       0,
       0,
@@ -27,9 +27,9 @@ export class TimeSpentBadge extends Badge {
   }
 
   bronzeLowBound = () => 60;
-  argentLowBound = () => 180;
-  orLowBound = () => 360;
-  rubisLowBound = () => 720;
+  argentLowBound = () => 3*60;
+  orLowBound = () => 9*60;
+  rubisLowBound = () => 16*60;
   computeDisplayValue = (kpi: number) => new TimePipe().transform(kpi);
   kpiFromStats = (stats: QueteurStats) => stats.time_spent_in_minutes;
 }
