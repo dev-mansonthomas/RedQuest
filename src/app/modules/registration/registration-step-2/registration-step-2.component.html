@@ -64,11 +64,15 @@
     <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
       <mat-form-field fxFlex hintLabel="Veuillez entrer votre NIVOL sans les 0 au début." *ngIf="!isBenevole1j">
         <mat-label>Nivol</mat-label>
-        <input matInput type="text" placeholder="ex 12345A" formControlName="nivol">
+        <input matInput
+               type="text"
+               placeholder="ex 12345A"
+               formControlName="nivol"
+        >
         <a matSuffix target="_blank" href="https://docs.google.com/document/d/1OKUckdQhvPFFo6xH86kPSnL6R7RyVqSz3PZzRIIvgR8">
-          <mat-icon color="info" matTooltip="Mais où trouver mon Nivol ?">info</mat-icon>
+          <mat-icon color="info" matTooltip="Mais où trouver mon NIVOL ?">info</mat-icon>
         </a>
-        <mat-error *ngIf="nivol.hasError('pattern')">Un bon Nivol est un Nivol qui contient entre 4 et 12 chiffres suivis d'une lettre.
+        <mat-error *ngIf="nivol.hasError('pattern')">Le NIVOL contient entre 4 et 12 chiffres suivis d'une lettre, sans les premiers 0.
         </mat-error>
       </mat-form-field>
 

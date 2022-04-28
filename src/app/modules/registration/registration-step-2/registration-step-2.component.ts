@@ -73,13 +73,20 @@ export class RegistrationStep2Component implements OnInit {
         'email': new FormControl({ value: this.registeredUser.email, disabled: this.registeredUser.email },
           [Validators.required, Validators.email]),
         'birthdate': new FormControl(this.registeredUser.birthdate, Validators.required),
-        'mobile': new FormControl(this.registeredUser.mobile, [Validators.required, Validators.pattern('[0-9]{9}')]),
+        'mobile': new FormControl(this.registeredUser.mobile, {validators:[Validators.required, Validators.pattern('[0-9]{9}')], updateOn: 'blur'}),
         'nivol': !this.isBenevole1j
-          ? new FormControl(this.registeredUser.nivol, [Validators.required, Validators.pattern('[1-9][0-9]{3,11}[a-zA-Z]')])
-          : new FormControl(),
+          ? new FormControl(this.registeredUser.nivol, {validators:
+                    [
+                        Validators.required,
+                        Validators.pattern('[1-9][0-9]{3,11}[a-zA-Z]')
+                    ], updateOn: 'blur'})
+          : new FormControl(null,{ updateOn: 'blur' }),
         'benevole_referent': new FormControl(),
         'secteur': new FormControl({ value: this.registeredUser.secteur, disabled: this.isBenevole1j }, Validators.required)
       });
+
+      this.mobile.valueChanges.subscribe(p => this.mobile.setValue(p.replace(/^0+/, ''), { emitEvent: false}));
+      this.nivol.valueChanges.subscribe(p => this.nivol.setValue(p.replace(/^0+/, ''), { emitEvent: false}));
   }
 
   registerUser() {

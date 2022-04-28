@@ -24,6 +24,7 @@ import { TipsComponent } from './components/tips/tips.component';
 import { SharedModule } from './shared.module';
 
 import { environment } from '../environments/environment';
+import {MAT_DATE_LOCALE} from '@angular/material/core';
 
 
 registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
@@ -51,6 +52,7 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     providers: [
         AngularFirestore, AngularFireAuth, CookieService,
         { provide: REGION, useValue: 'europe-west1' },
+        { provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
         { provide: SETTINGS, useValue: {} }
     ],
     bootstrap: [AppComponent]
