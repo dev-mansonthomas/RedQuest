@@ -30,7 +30,7 @@
     "elliptic": ">=6.5.3",
     "firebase": "~7.17.2",
     "firebase-admin": "~9.0.0",
-    "moment": "~2.27.0",
+    "moment": "~2.29.4",
     "moment-timezone": "~0.5.31",
     "ng-pick-datetime-ex": "~9.0.8",
     "ngx-cookie-service": "~10.0.1",
