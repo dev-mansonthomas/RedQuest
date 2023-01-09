@@ -29,7 +29,7 @@
     "dot-prop": ">=5.1.1",
     "elliptic": ">=6.5.3",
     "firebase": "~7.17.2",
-    "firebase-admin": "~9.0.0",
+    "firebase-admin": "~11.4.1",
     "moment": "~2.27.0",
     "moment-timezone": "~0.5.31",
     "ng-pick-datetime-ex": "~9.0.8",
