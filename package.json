@@ -27,7 +27,7 @@
     "@angular/router": "~10.0.14",
     "core-js": "~2.6.11",
     "dot-prop": ">=5.1.1",
-    "elliptic": ">=6.5.3",
+    "elliptic": ">=6.5.4",
     "firebase": "~7.17.2",
     "firebase-admin": "~9.0.0",
     "moment": "~2.27.0",
