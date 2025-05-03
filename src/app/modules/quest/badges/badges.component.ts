@@ -68,7 +68,14 @@ export class BadgesComponent implements OnInit {
     this.route.data.subscribe((data: { queteur: Queteur }) => {
       this.queteur = data.queteur;
       this.badgesService.loadQueteurBadgesLevels(this.badges, data.queteur.queteur_id)
-        .subscribe(badges => this.badges = badges);
+          .subscribe(badges => {
+            if (!Array.isArray(badges)) {
+              console.warn('⚠️ BadgesService returned an invalid value:', badges);
+              this.badges = [];
+            } else {
+              this.badges = badges;
+            }
+          });
     });
   }
 

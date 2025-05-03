@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
-import { auth, User } from 'firebase/app';
+import firebase from 'firebase/app';
+import 'firebase/auth'; // nécessaire pour les providers
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -15,10 +16,11 @@ export class AuthService {
   private AUTH_INVALID_PASSWORD = ''; // Le password n'est pas correct
   private AUTH_ACCOUNT_ALREADY_EXISTING = 'auth/email-already-in-use';
 
-  private userDetails: User;
+  private userDetails: firebase.User;
 
   constructor(private router: Router, private angularFireAuth: AngularFireAuth) {
     this.angularFireAuth.getRedirectResult().then(result => {
+      console.log('Redirect result:', result);
       this.userDetails = result.user;
     });
     this.angularFireAuth.setPersistence('local');
@@ -26,40 +28,26 @@ export class AuthService {
 
   signInGoogleLogin() {
     return this.angularFireAuth.setPersistence('local')
-      .then(() => {
-        this.angularFireAuth.signInWithRedirect(
-          new auth.GoogleAuthProvider()
-        );
-      }
-      );
+        .then(() => {
+          this.angularFireAuth.signInWithPopup(
+              new firebase.auth.GoogleAuthProvider()
+          );
+        });
   }
-
-  signInFacebookLogin() {
-    return this.angularFireAuth.setPersistence('local')
-      .then(() => {
-        this.angularFireAuth.signInWithRedirect(
-          new auth.FacebookAuthProvider()
-        );
-      }
-      );
-  }
-
+  
   signInWithEmailPassword(email: string, password: string) {
     return this.angularFireAuth.setPersistence('local')
-      .then(() => {
-        return this.angularFireAuth.signInWithEmailAndPassword(email, password);
-      }
-      );
+        .then(() => {
+          return this.angularFireAuth.signInWithEmailAndPassword(email, password);
+        });
   }
 
-  async createUserWithEmailPassword(email: string, password: string)
-  {
+  async createUserWithEmailPassword(email: string, password: string) {
     await this.angularFireAuth.setPersistence('local');
-    
-    const user = await this.angularFireAuth.createUserWithEmailAndPassword(email, password)
+
+    const user = await this.angularFireAuth.createUserWithEmailAndPassword(email, password);
 
     return user.user.sendEmailVerification();
-
   }
 
   isLoggedIn(redirect = true): Observable<boolean> {

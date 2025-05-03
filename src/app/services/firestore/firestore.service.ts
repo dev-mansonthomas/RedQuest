@@ -7,6 +7,8 @@ import {map} from 'rxjs/operators';
 import {UlRankingByAmount} from '../../model/UlRankingByAmount';
 import {Queteur} from '../../model/queteur';
 
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +45,7 @@ export class FirestoreService {
       .get();
   }
 
-  getUlStatsOrderedBy(orderBy: string, sortDirection: 'desc' | 'asc', ul_id: number, year: number): Observable<UlRankingByAmount[]> {
+  getUlStatsOrderedBy(orderBy: string, sortDirection: firebase.firestore.OrderByDirection, ul_id: number, year: number): Observable<UlRankingByAmount[]> {
     return this.firestoreDB.collection('ul_queteur_stats_per_year',
       ref => ref.where('ul_id', '==', ul_id)
         .where('year', '==', year)

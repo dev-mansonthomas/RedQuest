@@ -45,8 +45,13 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl']  || '/';
     this.loading = this.cookieService.get('login-loading') === 'true';
     this.authService.onUserConnected().subscribe(user => {
-      if (user) {
+      if (user)
+      {
         this.zone.run(() => this.router.navigate(['/']));
+      }
+      else
+      {
+        console.error('Authentication error, "user" parameter to this.authService.onUserConnected().subscribe(user => {} is null');
       }
     });
   }
@@ -62,13 +67,7 @@ export class LoginComponent implements OnInit {
         this.zone.run(() => this.router.navigate([this.returnUrl]));
       });
   }
-
-  loginWithFacebook() {
-    this.loading = true;
-    this.cookieService.set('login-loading', 'true');
-    this.authService.signInFacebookLogin().then(() => this.zone.run(() => this.router.navigate([this.returnUrl])));
-  }
-
+  
   loginWithEmailPassword() {
     this.authService.signInWithEmailPassword(this.email.value, this.password.value)
       .catch((error) => {
