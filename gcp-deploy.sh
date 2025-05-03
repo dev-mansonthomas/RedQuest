@@ -27,6 +27,7 @@ function setProject
 
     echo "GCP Project was '${CURRENT_PROJECT}', updating it to '${TARGET_PROJECT}'"
     #set current project to target project"
+    gcloud auth application-default set-quota-project ${TARGET_PROJECT}
     gcloud config set project ${TARGET_PROJECT}
 
   fi
@@ -40,6 +41,8 @@ gcloud auth list
 firebase use --add "rq-${COUNTRY}-${ENV}"
 
 echo "Deploying rq-${COUNTRY}-${ENV}"
+
+export NODE_OPTIONS=--openssl-legacy-provider
 
 if [[ ${ENV} != "prod" ]]
 then

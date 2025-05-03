@@ -9,6 +9,10 @@ import { Queteur } from '../../model/queteur';
 import { AuthService } from '../../services/auth/auth.service';
 import { CloudFunctionService } from '../../services/cloud-functions/cloud-function.service';
 
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -112,9 +116,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   loginWithGoogle = () => this.authService.signInGoogleLogin();
-
-  loginWithFacebook = () => this.authService.signInFacebookLogin();
-
 
   async signingUpWithEmailAndPassword()
   {

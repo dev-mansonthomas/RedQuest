@@ -17,12 +17,19 @@ export class BadgesService {
 
   loadQueteurBadgesLevels(badges: Badge[], queteur_id: number): Observable<Badge[]> {
     return this.firestore.getQueteurStats(queteur_id)
-      .pipe(map(doc => {
-        const currentYearStats = doc.docs
-          .map(e => e.data() as QueteurStats)
-          .filter(stat => stat.year === new Date().getFullYear())[0];
-        return this.updateBadgesLevels(badges, currentYearStats);
-      }));
+        .pipe(map(doc => {
+          const currentYearStats = doc.docs
+              .map(e => e.data() as QueteurStats)
+              .find(stat => stat.year === new Date().getFullYear());
+
+          if (!currentYearStats) {
+            console.warn(`Queteur stats unavailable for queteur id: ${queteur_id}`);
+            return badges;
+          }
+
+          return this.updateBadgesLevels(badges, currentYearStats);
+        }));
+
   }
 
   private updateBadgesLevels(badges: Badge[], currentYearStats: QueteurStats): Badge[] {

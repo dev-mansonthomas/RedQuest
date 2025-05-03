@@ -10,18 +10,7 @@
             opacity: 1;
         }
     }
-    .btn-facebook {
-        background: #3b5998;
-        transition: all 0.5s ease-in-out;
-        &:hover {
-            background: #172d5e
-        }
-        &:focus {
-            background: #fff;
-            color: #3b5998;
-            border-color: #3b5998;
-        }
-    }
+
     .btn-twitter {
         background: #00aced;
         transition: all 0.5s ease-in-out;

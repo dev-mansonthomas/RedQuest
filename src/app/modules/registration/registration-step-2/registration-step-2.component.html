@@ -46,6 +46,7 @@
     <div fxLayout.lt-sm="column" fxLayout="row" fxLayoutGap="20px">
       <mat-form-field fxFlex>
         <mat-label>Date de naissance</mat-label>
+        <mat-label>Date de naissance</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="birthdate" (focus)="picker.open()">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
