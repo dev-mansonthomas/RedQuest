@@ -13,6 +13,17 @@ export const environment = {
     messagingSenderId: 'MESSAGING_SENDER_ID'
   },
   cloudFunctionsBaseUrl: 'CLOUD_FUNCTIONS_BASE_URL',
+  cloudFunctionsNames: {
+    findQueteurById: 'find-queteur-by-id',
+    findULDetailsByToken: 'find-ul-details-by-token',
+    troncSetDepartOrRetour: 'tronc-set-depart-or-retour',
+    registerQueteur: 'register-queteur',
+    troncListPrepared: 'tronc-list-prepared',
+    resyncQueteurIdToFirestore: 'resync-queteur-id-to-firestore',
+    historiqueTroncQueteur: 'historique-tronc-queteur',
+    getULPrefs: 'get-ul-prefs',
+    getULStats: 'get-ul-stats'
+  },
   google_maps_key: 'YOUR_GOOGLE_MAPS_EMBED_API_KEY',
   ranking_enabled: true,
   history_enabled: true,
