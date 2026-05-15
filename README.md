@@ -1,44 +1,31 @@
-## Getting started
-Install angular-cli : https://cli.angular.io/
+## RedQuest
 
-Run `npm install`
+Angular 10 front-end + Firebase (Firestore + Cloud Functions).
 
-Enjoy
+## Prerequisites
 
-## GCloud setup
+### Tooling
 
-### Install command line tools
+- Node.js + npm (deployment script expects Node 14 available at `/usr/local/opt/node@14/bin`).
+- Angular CLI: `npm install -g @angular/cli`
+- Firebase CLI: `npm install -g firebase-tools`
+- Google Cloud SDK (gcloud): https://cloud.google.com/sdk/docs/install
 
-Install gcloud sdk
+### Google Cloud / Firebase access
 
-see : https://cloud.google.com/sdk/docs/downloads-interactive
+- Your account must be granted access to the target project (IAM owner/editor).
+- Login to gcloud and firebase:
+  - `gcloud init`
+  - `firebase login`
 
-Install firebase tools
+## Install
 
-`npm install -g firebase-tools`
+`npm install`
 
-### Setup rights in Google Cloud Platform with IAM
+## Environments
 
-Add the gmail or GSuite account as project owner
-
-### Login & set default project
-
-Login :
-`gcloud init`
-use the gmail account (or gsuite account) that was used in the previous chapter
-
-Set the correct project : 
-`gcloud config set project rq-fr-dev`
-
-
-# RedQuest
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.5.
-
-## Start a server
-### Prepare environments
-
-Get the environment files from the Google Drive (ask a developer) and put them at `/src/environments/`. Once done you should have : 
+Environment files are not in git. Get them from Google Drive (ask a dev) and place them in `src/environments/`.
+You should have:
 ```bash
 $ ls src/environments/
 environment.dev.ts
@@ -48,20 +35,19 @@ environment.test.ts
 environment.ts
 ```
 
-
-
-### Development server:
+## Start a server
+### Development server
 
 * Run `ng build --configuration dev` to prepare the server with *dev* environment settings.
 * Then run `ng serve --configuration dev` for a dev server. 
 
 
-### Test server:
+### Test server
 
 * Run `ng build --configuration test` to prepare the server with *test* environment settings.
 * Then run `ng serve --configuration test` for a test server.
 
-### Production server:
+### Production server
 ```diff
 - CAUTION: do not use this environment, unless someone asked you to use it !
 ```
@@ -97,22 +83,34 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 
-## To deploy with firebase
+## Deploy
 
-install firebase tools:
+### One-command deploy
 
-`npm install -g firebase-tools`
+The repo ships a helper script:
+```bash
+./gcp-deploy.sh fr dev
+./gcp-deploy.sh fr test
+./gcp-deploy.sh fr prod
+```
 
-`firebase login`
+This script:
+- Sets the target GCP project (`rq-fr-{env}`)
+- Runs `firebase use --add`
+- Builds Angular (`ng build`)
+- Runs `firebase deploy`
 
-To test authentication:
+Requirements: `gcloud`, `firebase` and `ng` must be in your PATH.
 
-`firebase projects:list`
+### Manual deploy
 
-`firebase use --add {project-id}`
+```bash
+ng build --configuration dev   # or test/prod
+firebase deploy
+```
 
+### Troubleshooting
 
-To deploy project:
-
-run `ng build --prod` to generate sources to be deployed
-run `firebase deploy` and follow instructions
+- If you see `firebase: command not found` or `ng: command not found`, install:
+  - `npm install -g firebase-tools @angular/cli`
+- `gcp-deploy.sh` prepends `/usr/local/opt/node@14/bin` to PATH. If you don’t have Node 14 installed there, either install it or edit the script to match your local setup.

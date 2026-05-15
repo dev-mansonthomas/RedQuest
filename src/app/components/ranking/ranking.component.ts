@@ -24,7 +24,7 @@ export class RankingComponent implements AfterViewInit, OnInit {
   dataSource: RankingDatasource;
   displayedColumns = ['last_name', 'number_of_tronc_queteur', 'amount', 'weight', 'time_spent_in_minutes',
     'unique_point_quete_count', 'year'];
-  years = [2016, 2017, 2018, 2019, 2020];
+  years = Array.from({ length: new Date().getFullYear() - 2016 + 1 }, (_, i) => new Date().getFullYear() - i);
 
   ul_id: number;
   year = new Date().getFullYear();

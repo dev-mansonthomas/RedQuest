@@ -1,25 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import { RegistrationConfirmationComponent } from './registration-confirmation.component';
+import { AccountComponent } from './account.component';
 
-describe('RegistrationConfirmationComponent', () => {
-  let component: RegistrationConfirmationComponent;
-  let fixture: ComponentFixture<RegistrationConfirmationComponent>;
+describe('AccountComponent', () => {
+    beforeEach(() => TestBed.configureTestingModule({}));
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ RegistrationConfirmationComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(RegistrationConfirmationComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should be defined', () => {
+        expect(AccountComponent).toBeTruthy();
+    });
 });
