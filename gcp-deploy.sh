@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-COUNTRY=$1
-ENV=$2
+set -euo pipefail
+
+COUNTRY=${1:-}
+ENV=${2:-}
 
 if [[ "${COUNTRY}1" != "fr1" ]]
 then
@@ -14,8 +16,14 @@ then
   exit 1
 fi
 
-#Conflict of Node version 10 is required for RedCrossQuest, and RedQuest can use 14
-PATH="/usr/local/opt/node@14/bin/:$PATH"
+# Node version check (must be >= 22, see .nvmrc)
+NODE_MAJOR=$(node -p "process.versions.node.split('.')[0]" 2>/dev/null || echo "0")
+if [[ "${NODE_MAJOR}" -lt 22 ]]
+then
+  echo "Error: Node >= 22 is required (.nvmrc=22). Current: $(node -v 2>/dev/null || echo 'not installed')"
+  echo "Hint: 'nvm use' if you have nvm, or install Node 22 via Homebrew/installer."
+  exit 1
+fi
 
 function setProject
 {
@@ -38,7 +46,11 @@ setProject "rq-${COUNTRY}-${ENV}"
 #list current connect google account
 gcloud auth list
 
-firebase use --add "rq-${COUNTRY}-${ENV}"
+# firebase-tools is pinned to major v15 via npx so the deploy never
+# silently picks up a new major version (supply-chain hygiene).
+FIREBASE="npx --yes firebase-tools@15"
+
+${FIREBASE} use --add "rq-${COUNTRY}-${ENV}"
 
 echo "Deploying rq-${COUNTRY}-${ENV}"
 
@@ -46,7 +58,7 @@ export NODE_OPTIONS=--openssl-legacy-provider
 
 if [[ ${ENV} != "prod" ]]
 then
-  ng build --configuration "${ENV}" && firebase deploy
+  ng build --configuration "${ENV}" && ${FIREBASE} deploy
 else
-  ng build --prod && firebase deploy
+  ng build --prod && ${FIREBASE} deploy
 fi
