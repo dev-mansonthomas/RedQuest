@@ -145,12 +145,33 @@ Effets attendus si bug : aucun à ce stade (Report-Only n'enforce rien, génère
 
 ### Wave 5 — CI/CD (adaptée, ~45 min)
 
-| Task | Action |
-|---|---|
-| 5.1 | Créer `.github/workflows/security-audit.yml` : run sur PR + cron lundi, `npm audit --audit-level=high`, **pinning des actions par SHA 40-char** (pas par tag — protection tj-actions) |
-| 5.2 | Ajouter `.nvmrc` (`22`) ; dans `gcp-deploy.sh` pinner `firebase-tools` via `npx firebase-tools@13.x` au lieu d'install global ; ajouter check `node -v` au début |
-| 5.3 | Branch protection sur `main` (action manuelle GitHub UI) : require PR review, no force push, status check `security-audit` requis |
-| 5.4 | `.github/dependabot.yml` : weekly, groupage Angular + TS, max 5 PRs ouvertes |
+| Task | Action | Statut |
+|---|---|---|
+| 5.1 | `.github/workflows/security-audit.yml` : run sur PR + cron lundi, ratchet `npm audit` vs baseline, **pinning des actions par SHA 40-char** | ✅ |
+| 5.2 | `.nvmrc` (`22`) ; `gcp-deploy.sh` : `npx --yes firebase-tools@15` au lieu d'install global, check `node -v >= 22` au début, `set -euo pipefail` | ✅ |
+| 5.3 | Branch protection sur `master` (action manuelle GitHub UI) — voir checklist ci-dessous | ⏳ Manuel |
+| 5.4 | `.github/dependabot.yml` : weekly, groupage Angular / TS / Firebase / testing, max 5 PRs npm + 3 PRs github-actions | ✅ |
+
+#### Notes d'implémentation
+
+- **5.1 — ratchet vs baseline** : la commande `npm audit --audit-level=high` du plan initial aurait fait échouer chaque PR (67 high pré-existants liés à Angular 10). Remplacée par une comparaison contre `docs/security-baseline-2026-05-15-post-wave1.json` : **le job échoue uniquement si une PR introduit de NOUVELLES vulnérabilités**. Les pré-existantes ne bloquent rien tant qu'elles ne croissent pas.
+- **5.1 — pinning SHA** : `actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2` et `actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6.4.0`. Dependabot (5.4) maintient ces SHAs à jour via l'écosystème `github-actions`.
+- **5.2 — firebase-tools pinné `@15`** au lieu de `@13.x` du plan initial : `@13` est obsolète, latest stable est `15.18.0`. Le pin major-only (`@15`) garde les patches automatiques sans surprise de major.
+
+#### 5.3 — Checklist Branch Protection (à appliquer manuellement)
+
+Aller sur https://github.com/dev-mansonthomas/RedQuest/settings/branches → "Add branch protection rule" → branch name pattern : `master`. Cocher :
+
+- [x] Require a pull request before merging
+  - [x] Require approvals (1 minimum)
+  - [x] Dismiss stale pull request approvals when new commits are pushed
+- [x] Require status checks to pass before merging
+  - [x] Require branches to be up to date before merging
+  - Add required status check : **`audit`** (le job du workflow `security-audit.yml`, visible après la 1ère exécution)
+- [x] Require conversation resolution before merging
+- [x] Do not allow bypassing the above settings (incl. admins, ou au moins documenter l'exception)
+- [ ] Allow force pushes : **OFF**
+- [ ] Allow deletions : **OFF**
 
 ## Ordonnancement recommandé
 
