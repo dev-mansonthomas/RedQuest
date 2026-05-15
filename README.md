@@ -6,9 +6,9 @@ Angular 10 front-end + Firebase (Firestore + Cloud Functions).
 
 ### Tooling
 
-- Node.js + npm (deployment script expects Node 14 available at `/usr/local/opt/node@14/bin`).
+- Node.js >= 22 (pinned in `.nvmrc`; with `nvm`: `nvm use`).
 - Angular CLI: `npm install -g @angular/cli`
-- Firebase CLI: `npm install -g firebase-tools`
+- Firebase CLI: not required globally — `gcp-deploy.sh` invokes `npx firebase-tools@15`. For ad-hoc `firebase ...` commands, use the same `npx` form.
 - Google Cloud SDK (gcloud): https://cloud.google.com/sdk/docs/install
 
 ### Google Cloud / Firebase access
@@ -123,11 +123,10 @@ Requirements: `gcloud`, `firebase` and `ng` must be in your PATH.
 
 ```bash
 ng build --configuration dev   # or test/prod
-firebase deploy
+npx firebase-tools@15 deploy
 ```
 
 ### Troubleshooting
 
-- If you see `firebase: command not found` or `ng: command not found`, install:
-  - `npm install -g firebase-tools @angular/cli`
-- `gcp-deploy.sh` prepends `/usr/local/opt/node@14/bin` to PATH. If you don’t have Node 14 installed there, either install it or edit the script to match your local setup.
+- If you see `ng: command not found`, install: `npm install -g @angular/cli`.
+- `gcp-deploy.sh` requires Node >= 22 (see `.nvmrc`). If your shell uses an older Node, run `nvm use` first or install Node 22 (e.g. `brew install node@22`).
