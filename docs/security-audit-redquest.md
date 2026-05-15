@@ -61,16 +61,32 @@ Snapshot brut : `/tmp/redquest-audit.json` (à committer dans `docs/security-bas
 
 ## Waves de remédiation
 
-### Wave 1 — Supply chain (CRITIQUE, ~1h30)
+### Wave 1 — Supply chain (CRITIQUE, ~1h30) — ✅ TERMINÉE le 2026-05-15
 
-| Task | Action | Risque |
+| Task | Action | Statut |
 |---|---|---|
-| 1.1 | Snapshot baseline `npm audit --json` → `docs/security-baseline-2026-05-15.json` | 0 |
-| 1.2 | `npm audit fix` (sans `--force`) + `ng build` + `ng test` ; revue diff `package-lock.json` | Faible |
-| 1.3 | Investigation `firebase-admin` : `grep -rn "firebase-admin" src/` puis `npm uninstall` si non utilisé | Faible |
-| 1.4 | Pin exact versions deps runtime sensibles : `firebase`, `@angular/fire` (retirer `^`) | 0 |
-| 1.5 | Documenter dans README : « toujours `npm ci`, jamais `npm install` en CI » | 0 |
-| 1.6 | Snapshot baseline final post-fixes pour comparaison future | 0 |
+| 1.1 | Snapshot baseline `npm audit --json` → `docs/security-baseline-2026-05-15.json` | ✅ |
+| 1.2 | `npm audit fix` (sans `--force`) + `ng build` + `ng test` ; revue diff `package-lock.json` | ✅ -20 vulns |
+| 1.3 | Investigation `firebase-admin` : aucun import dans `src/`, `npm uninstall` | ✅ -14 vulns |
+| 1.4 | Pin exact versions deps runtime sensibles : `firebase` (`^8.10.1`→`8.10.1`), `@angular/fire` (`^6.1.5`→`6.1.5`) | ✅ |
+| 1.5 | Documenter dans README : « toujours `npm ci`, jamais `npm install` en CI » | ✅ |
+| 1.6 | Snapshot baseline final → `docs/security-baseline-2026-05-15-post-wave1.json` | ✅ |
+
+#### Delta vulnérabilités Wave 1
+
+| Sévérité | Avant | Après | Δ | Référence |
+|---|---:|---:|---:|---|
+| Critical | 6 | 4 | **-2 (-33 %)** | `docs/security-baseline-2026-05-15{,-post-wave1}.json` |
+| High | 83 | 67 | **-16 (-19 %)** | idem |
+| Moderate | 71 | 62 | **-9 (-13 %)** | idem |
+| Low | 21 | 14 | **-7 (-33 %)** | idem |
+| **Total** | **181** | **147** | **-34 (-19 %)** | |
+
+Build green, Karma 13/13. Restes structurellement non-fixables sans upgrade Angular 10 → 21 (out of scope Wave 1).
+
+#### Constats latéraux non couverts par le plan initial
+
+- `dot-prop: ">=5.1.1"` et `elliptic: ">=6.5.3"` dans `package.json` utilisent l'opérateur `>=` qui autorise **n'importe quelle version future** (y compris des majeures). Plus permissif que `^` ; à pinner dans une étape ultérieure (proposée en Wave 1bis ou intégrée dans Wave 5).
 
 ### Wave 2 — Secrets / auth client (réduite, ~15 min)
 
