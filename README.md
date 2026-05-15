@@ -20,7 +20,24 @@ Angular 10 front-end + Firebase (Firestore + Cloud Functions).
 
 ## Install
 
-`npm install`
+For local development:
+
+```bash
+npm install
+```
+
+For reproducible installs (CI, deploys, or after pulling on a clean
+clone), always prefer `npm ci`. It honors `package-lock.json` strictly
+and refuses to mutate it, which is what we want for supply-chain
+hygiene:
+
+```bash
+npm ci
+```
+
+Never run `npm install <new-package>` directly when preparing a build
+or a deploy; use `npm ci` instead. New dependencies are added in their
+own commit (with the lockfile diff) and reviewed in PR.
 
 ## Environments
 
