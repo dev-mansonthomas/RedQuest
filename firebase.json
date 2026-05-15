@@ -12,12 +12,18 @@
         "destination": "/index.html"
       }
     ],
-    "headers": [ {
-      "source": "**/*",
-      "headers": [
-        {"key": "X-Frame-Options", "value": "DENY"}
-      ]
-    }]
+    "headers": [
+      {
+        "source": "**/*",
+        "headers": [
+          {"key": "X-Frame-Options", "value": "DENY"},
+          {"key": "X-Content-Type-Options", "value": "nosniff"},
+          {"key": "Referrer-Policy", "value": "strict-origin-when-cross-origin"},
+          {"key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains"},
+          {"key": "Content-Security-Policy-Report-Only", "value": "default-src 'self'; script-src 'self' https://apis.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://use.fontawesome.com; font-src 'self' https://fonts.gstatic.com https://use.fontawesome.com data:; img-src 'self' data: https:; connect-src 'self' https://europe-west1-rq-fr-dev.cloudfunctions.net https://europe-west1-rq-fr-test.cloudfunctions.net https://europe-west1-rq-fr-prod.cloudfunctions.net https://rq-fr-dev.firebaseio.com https://rq-fr-test.firebaseio.com https://rq-fr-prod.firebaseio.com wss://*.firebaseio.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com https://firebaseinstallations.googleapis.com; frame-src 'self' https://www.google.com https://www.youtube.com https://rq-fr-dev.firebaseapp.com https://rq-fr-test.firebaseapp.com https://rq-fr-prod.firebaseapp.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"}
+        ]
+      }
+    ]
   },
   "firestore": {
     "rules": "firestore.rules",

@@ -101,11 +101,43 @@ Backend (JWT, OAuth, password storage) : hors scope, déléguer à `rcq-function
 
 ### Wave 3 — Surface HTTP (ciblée Firebase Hosting, ~30 min + obs 1 sem)
 
-| Task | Action | Précaution |
+| Task | Action | Précaution | Statut |
+|---|---|---|---|
+| 3.1 | Security headers dans `firebase.json` : HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy | — | ✅ |
+| 3.2 | CSP en `Content-Security-Policy-Report-Only` d'abord (1 semaine d'observation) avant enforcement | Risque casse Firebase Auth iframes, Google Maps embed | ✅ Report-Only |
+| 3.3 | CORS Cloud Functions : note pour `rcq-functions-v2` — n'autoriser que `rq-fr-{env}.web.app` + `localhost:4200` (dev only) | Hors scope ce repo | ⏭ Délégué |
+
+#### Headers déployés (post-Wave 3)
+
+| Header | Valeur |
+|---|---|
+| `X-Frame-Options` | `DENY` (déjà présent avant Wave 3) |
+| `X-Content-Type-Options` | `nosniff` |
+| `Referrer-Policy` | `strict-origin-when-cross-origin` |
+| `Strict-Transport-Security` | `max-age=31536000; includeSubDomains` (1 an, pas de `preload` initialement) |
+| `Content-Security-Policy-Report-Only` | voir `firebase.json` |
+
+#### CSP — directives et sources
+
+| Directive | Sources autorisées | Raison |
 |---|---|---|
-| 3.1 | Security headers dans `firebase.json` : HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy | — |
-| 3.2 | CSP en `Content-Security-Policy-Report-Only` d'abord (1 semaine d'observation) avant enforcement | Risque casse Firebase Auth iframes, Google Maps embed |
-| 3.3 | CORS Cloud Functions : note pour `rcq-functions-v2` — n'autoriser que `rq-fr-{env}.web.app` + `localhost:4200` (dev only) | Hors scope ce repo |
+| `default-src` | `'self'` | Baseline restrictive |
+| `script-src` | `'self'` + `apis.google.com` + `www.gstatic.com` | Firebase Auth SDK (Google Sign-In) ; pas de `'unsafe-eval'` (Angular AOT prod) |
+| `style-src` | `'self'` + `'unsafe-inline'` + `fonts.googleapis.com` + `use.fontawesome.com` | Angular Material injecte des styles inline ; Google Fonts + FontAwesome via `<link>` |
+| `font-src` | `'self'` + `fonts.gstatic.com` + `use.fontawesome.com` + `data:` | Fichiers de fonts Google + FontAwesome |
+| `img-src` | `'self'` + `data:` + `https:` | Permissif pour les icônes Material et assets externes |
+| `connect-src` | `'self'` + 3× `cloudfunctions.net` (dev/test/prod) + 3× `firebaseio.com` + `wss://*.firebaseio.com` + Firestore + Identity Toolkit + Secure Token + `googleapis.com` + `firebaseinstallations.googleapis.com` | XHR/WS Firebase et Cloud Functions |
+| `frame-src` | `'self'` + `www.google.com` + `www.youtube.com` + 3× `rq-fr-{env}.firebaseapp.com` | Google Maps embed, tip YouTube, iframe Firebase Auth |
+| `object-src` | `'none'` | Bloquer Flash/Java legacy |
+| `base-uri` | `'self'` | Anti `<base href>` injection |
+| `form-action` | `'self'` | Anti exfiltration POST |
+| `frame-ancestors` | `'none'` | Équivalent moderne de `X-Frame-Options: DENY` |
+
+#### Mode Report-Only — observation 1 semaine
+
+Aucun `report-uri` configuré (pas d'endpoint de collecte). Les violations sont observables via la console DevTools du navigateur en prod. Si après une semaine d'usage réel aucun warning bloquant n'apparaît, basculer en enforcement en renommant le header `Content-Security-Policy-Report-Only` → `Content-Security-Policy` dans une PR séparée.
+
+Effets attendus si bug : aucun à ce stade (Report-Only n'enforce rien, génère uniquement des warnings console).
 
 ### Wave 4 — Données / accès
 
