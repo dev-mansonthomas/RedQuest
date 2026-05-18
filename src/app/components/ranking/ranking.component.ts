@@ -3,10 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 
-import { UlRankingByAmount } from 'src/app/model/UlRankingByAmount';
 import { Queteur } from 'src/app/model/queteur';
 import { CloudFunctionService } from 'src/app/services/cloud-functions/cloud-function.service';
-import { FirestoreService } from 'src/app/services/firestore/firestore.service';
 
 import { RankingDatasource } from './ranking-datasource';
 
@@ -23,10 +21,9 @@ export class RankingComponent implements AfterViewInit, OnInit {
 
   dataSource: RankingDatasource;
   displayedColumns = ['last_name', 'number_of_tronc_queteur', 'amount', 'weight', 'time_spent_in_minutes',
-    'unique_point_quete_count', 'year'];
+    'number_of_point_quete', 'year'];
   years = Array.from({ length: new Date().getFullYear() - 2016 + 1 }, (_, i) => new Date().getFullYear() - i);
 
-  ul_id: number;
   year = new Date().getFullYear();
   ulPrefs: ULPrefs = null;
 
@@ -34,40 +31,36 @@ export class RankingComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   queteur: Queteur;
 
-  constructor(private firestoreService: FirestoreService,
-    private functionsService: CloudFunctionService,
+  constructor(private functionsService: CloudFunctionService,
     private route: ActivatedRoute) {
   }
 
 
   ngOnInit(): void {
-    this.dataSource = new RankingDatasource(this.firestoreService);
+    this.dataSource = new RankingDatasource(this.functionsService);
     this.route.data.subscribe((data: { queteur: Queteur }) => {
       this.functionsService.getULPrefs$().subscribe(ulPrefs => this.ulPrefs = ulPrefs);
       this.queteur = data.queteur;
-      this.ul_id = this.queteur.ul_id;
-      this.dataSource.selectUlStats('amount', this.ul_id, this.year, 'desc', 10);
+      this.dataSource.load(this.year, 10);
     });
   }
 
   ngAfterViewInit() {
-    // reset the paginator after sorting
+    // sort change → in-memory re-sort, no refetch
     this.sort.sortChange.subscribe(() => {
       this.paginator.pageIndex = 0;
-      this.selectPage();
+      this.dataSource.sort(this.sort.active, this.sort.direction as 'asc' | 'desc', 0, this.paginator.pageSize);
     });
-    this.paginator.page.subscribe(() => this.dataSource.selectPage(this.paginator.pageIndex, this.paginator.pageSize));
-    this.dataSource.selectUlStats(
-      this.sort.active,
-      this.ul_id,
-      this.year,
-      this.sort.direction as 'desc' | 'asc',
-      this.paginator.pageSize
-    );
+    this.paginator.page.subscribe(() =>
+      this.dataSource.selectPage(this.paginator.pageIndex, this.paginator.pageSize));
   }
 
   selectPage() {
-    this.dataSource.selectUlStats(this.sort.active, this.ul_id, this.year, this.sort.direction as 'desc' | 'asc', this.paginator.pageSize);
+    // year change → refetch (HTTP cache 15min absorbs repeated calls)
+    if (this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
+    this.dataSource.load(this.year, this.paginator ? this.paginator.pageSize : 10);
   }
 
   whereAmI() {

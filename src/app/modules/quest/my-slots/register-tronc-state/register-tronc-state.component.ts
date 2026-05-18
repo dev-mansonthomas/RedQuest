@@ -54,7 +54,7 @@ export class RegisterTroncStateComponent {
 
   refresh() {
     this.refreshEvent.emit();
-    this.stepper.reset();
+    this.stepper?.reset();
   }
 
   selectTronc() {

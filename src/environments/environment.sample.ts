@@ -22,7 +22,9 @@ export const environment = {
     resyncQueteurIdToFirestore: 'resync-queteur-id-to-firestore',
     historiqueTroncQueteur: 'historique-tronc-queteur',
     getULPrefs: 'get-ul-prefs',
-    getULStats: 'get-ul-stats'
+    getULStats: 'get-ul-stats',
+    getULQueteurRanking: 'get-ul-queteur-ranking',
+    getQueteurStats: 'get-queteur-stats'
   },
   google_maps_key: 'YOUR_GOOGLE_MAPS_EMBED_API_KEY',
   ranking_enabled: true,
