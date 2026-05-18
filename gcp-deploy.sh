@@ -25,6 +25,17 @@ then
   exit 1
 fi
 
+# firebase-tools is pinned to major v15 via npx so the deploy never
+# silently picks up a new major version (supply-chain hygiene).
+FIREBASE="npx --yes firebase-tools@15"
+
+# Fail-fast: avoid wasting a build if no firebase session is active.
+if ${FIREBASE} login:list 2>&1 | grep -q "No authorized accounts"
+then
+  echo "Error: no active firebase session. Run 'firebase login' first."
+  exit 1
+fi
+
 function setProject
 {
   CURRENT_PROJECT=$(gcloud config get-value project)
@@ -46,19 +57,49 @@ setProject "rq-${COUNTRY}-${ENV}"
 #list current connect google account
 gcloud auth list
 
-# firebase-tools is pinned to major v15 via npx so the deploy never
-# silently picks up a new major version (supply-chain hygiene).
-FIREBASE="npx --yes firebase-tools@15"
+# `firebase deploy` (no --only) pushes hosting + firestore.rules +
+# firestore.indexes. Warn explicitly when those Firestore config files have
+# uncommitted local changes, because they WILL be shipped along with hosting.
+# Dev is an iterative validation env: changes are validated there BEFORE
+# being committed, so working-tree warnings are pure noise. Test/prod still
+# enforce the safety prompts.
+if [[ "${ENV}" != "dev" ]] && git rev-parse --git-dir >/dev/null 2>&1
+then
+  if ! git diff --quiet HEAD -- firestore.rules firestore.indexes.json 2>/dev/null
+  then
+    echo "WARNING: Uncommitted changes in firestore.rules and/or firestore.indexes.json."
+    echo "         They WILL be deployed to rq-${COUNTRY}-${ENV} together with hosting."
+    read -r -p "         Proceed anyway? [y/N] " ans
+    [[ "${ans}" =~ ^[Yy]$ ]] || { echo "aborted."; exit 1; }
+  fi
 
-${FIREBASE} use --add "rq-${COUNTRY}-${ENV}"
+  # Non-blocking warning for any other dirty file outside Firestore config.
+  OTHER_DIRTY=$(git status --porcelain 2>/dev/null | grep -vE '(firestore\.rules|firestore\.indexes\.json)$' || true)
+  if [[ -n "${OTHER_DIRTY}" ]]
+  then
+    echo "WARNING: Working tree has other uncommitted changes:"
+    echo "${OTHER_DIRTY}"
+    read -r -p "         Proceed? [y/N] " ans
+    [[ "${ans}" =~ ^[Yy]$ ]] || { echo "aborted."; exit 1; }
+  fi
+fi
 
-echo "Deploying rq-${COUNTRY}-${ENV}"
+# Capture release context for Firebase Console traceability.
+GIT_SHA=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
+GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
+DEPLOY_MSG="deploy ${GIT_BRANCH}@${GIT_SHA} to rq-${COUNTRY}-${ENV}"
+
+echo "Deploying rq-${COUNTRY}-${ENV} (${DEPLOY_MSG})"
 
 export NODE_OPTIONS=--openssl-legacy-provider
 
 if [[ ${ENV} != "prod" ]]
 then
-  ng build --configuration "${ENV}" && ${FIREBASE} deploy
+  ng build --configuration "${ENV}" \
+    && ${FIREBASE} deploy --project "rq-${COUNTRY}-${ENV}" --message "${DEPLOY_MSG}"
 else
-  ng build --prod && ${FIREBASE} deploy
+  ng build --configuration=production \
+    && ${FIREBASE} deploy --project "rq-${COUNTRY}-${ENV}" --message "${DEPLOY_MSG}"
 fi
+
+echo "Deployed to: https://rq-${COUNTRY}-${ENV}.web.app"

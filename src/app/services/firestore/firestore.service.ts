@@ -1,13 +1,8 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore, QueryDocumentSnapshot, QuerySnapshot} from '@angular/fire/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-
-import {UlRankingByAmount} from '../../model/UlRankingByAmount';
 import {Queteur} from '../../model/queteur';
 
-import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 @Injectable({
@@ -16,42 +11,6 @@ import 'firebase/firestore';
 export class FirestoreService {
 
   constructor(private firestoreDB: AngularFirestore) {
-  }
-
-  selectUlStats = (dbname: string,
-                   sortBy: string,
-                   ul: number,
-                   year: number,
-                   asort = 'desc',
-                   pageSize = 10,
-                   startAt = null) => {
-    const sort = ((asort as firebase.firestore.OrderByDirection) ? asort : 'desc') as firebase.firestore.OrderByDirection;
-    return this.firestoreDB.collection(dbname, ref => {
-        let query = ref
-          .where('ul_id', '==', ul)
-          .where('year', '==', year)
-          .orderBy(sortBy, sort);
-        if (startAt) {
-          query = query.startAfter(startAt);
-        }
-        return query.limit(pageSize);
-      }
-    ).get();
-  }
-
-
-  getQueteurStats(queteur_id: number) {
-    return this.firestoreDB.collection('ul_queteur_stats_per_year', ref => ref.where('queteur_id', '==', queteur_id))
-      .get();
-  }
-
-  getUlStatsOrderedBy(orderBy: string, sortDirection: firebase.firestore.OrderByDirection, ul_id: number, year: number): Observable<UlRankingByAmount[]> {
-    return this.firestoreDB.collection('ul_queteur_stats_per_year',
-      ref => ref.where('ul_id', '==', ul_id)
-        .where('year', '==', year)
-        .orderBy(orderBy, sortDirection)
-    ).get()
-      .pipe(map((f: firebase.firestore.QuerySnapshot) => f.docs.map(e => e.data() as UlRankingByAmount)));
   }
 
   registerQueteur(userId: string, user: Queteur) {

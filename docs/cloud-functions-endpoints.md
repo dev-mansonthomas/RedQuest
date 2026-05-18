@@ -23,6 +23,8 @@ Source : lecture directe des handlers `functions/*/main.py` du dépôt `rcq-func
 | `findULDetailsByToken` | `find-ul-details-by-token` | `GET ?token=<uuid>` | **Aucune** (pas de `verify_request`) | query `token` (UUID 36 chars, 4 tirets) | `ULDetails` JSON ou `[]` si non trouvé | 400 invalid token · 500 db error |
 | `getULPrefs` | `get-ul-prefs` | `GET` | Bearer | — | `ULPrefs` JSON (clés `rq_display_*`, `rq_autonomous_*`, `ul_id`) ; **defaults** renvoyés si non trouvé (200 quand même) | 401 · 400 missing/invalid `ul_id` · 500 firestore error |
 | `getULStats` | `get-ul-stats` | `GET` | Bearer | — | `ULStats` JSON ; **`null`** (200) si pas de stats | 401 · 400 missing/invalid `ul_id` · 500 firestore error |
+| `getULQueteurRanking` | `get-ul-queteur-ranking` | `GET ?year=<int>` | Bearer | query `year` (entier, `2000 ≤ year ≤ current_year+1`) | `UlQueteurRanking[]` JSON trié par `amount DESC` ; `[]` si aucune stat. Headers `Cache-Control: private, max-age=900, stale-while-revalidate=60` + `Vary: Authorization` (cf. spec dédiée) | 401 · 400 missing_year/invalid_year · 403 not_registered/not_approved · 500 firestore_error/inconsistent_queteur_record |
+| `getQueteurStats` | `get-queteur-stats` | `GET` | Bearer | — (`queteur_id` dérivé du token via `queteurs/{uid}`) | `QueteurStats[]` JSON trié par `year DESC` ; `[]` si aucune stat. Headers `Cache-Control: private, max-age=900, stale-while-revalidate=60` + `Vary: Authorization` (cf. spec dédiée) | 401 · 403 not_registered/not_approved · 500 firestore_error/inconsistent_queteur_record |
 | `historiqueTroncQueteur` | `historique-tronc-queteur` | `GET` | Bearer | — | `HistoriqueTroncQueteur[]` (cache Firestore TTL 5 min ; renvoie tableau d'objets MySQL avec colonnes `depart_theorique`, `depart`, `retour`, `amount`, `weight`, …) | 401 · 400 missing identifiers · 404 queteur not found · 500 db error |
 | `registerQueteur` | `register-queteur` | `POST` JSON | Bearer | JSON `Queteur` avec champs requis : `first_name, last_name, man, birthdate, email, secteur, nivol, mobile, ul_registration_token, benevole_referent` | **JSON natif** : `{ "queteur_registration_token": "<uuid>" }` ⚠ Plus de `JSON.parse` ! | 401 · 400 missing fields · 500 db error |
 | `troncListPrepared` | `tronc-list-prepared` | `GET` | Bearer | — | Tableau d'objets : `tronc_queteur_id, queteur_id, point_quete_id, tronc_id, depart_theorique` (ISO string), `depart` (ISO string ou null), `name, latitude, longitude, address, postal_code, city, advice, localization` | 401 · 400 missing identifiers · 404 · 500 |
@@ -48,7 +50,9 @@ cloudFunctionsNames: {
   resyncQueteurIdToFirestore: 'resync-queteur-id-to-firestore',
   historiqueTroncQueteur:     'historique-tronc-queteur',
   getULPrefs:                 'get-ul-prefs',  // ⚠ renommé depuis 'getULPrefs'
-  getULStats:                 'get-ul-stats'   // ⚠ renommé depuis 'getULStats'
+  getULStats:                 'get-ul-stats',  // ⚠ renommé depuis 'getULStats'
+  getULQueteurRanking:        'get-ul-queteur-ranking',
+  getQueteurStats:            'get-queteur-stats'
 },
 ```
 
@@ -74,6 +78,8 @@ Recensement exhaustif Phase A3 (`grep` sur `src/app/`).
 | `findULDetailsByToken$` | `modules/registration/registration.component.ts` · `modules/registration/registration-confirmation/registration-confirmation.component.ts` · `modules/account/account.component.ts` · `components/local-unit/local-unit.component.ts` |
 | `getULPrefs$` | `app.component.ts` · `components/homepage/homepage.component.ts` · `components/ranking/ranking.component.ts` · `modules/quest/my-slots/my-slots.component.ts` |
 | `getULStats$` | `components/homepage/homepage.component.ts` |
+| `getULQueteurRanking$` | `components/ranking/ranking-datasource.ts` (via `RankingComponent`) |
+| `getQueteurStats$` | `modules/quest/queteur-history/queteur-history.component.ts` · `modules/quest/badges/badges.service.ts` |
 | `registerQueteur$` | `modules/registration/registration-step-2/registration-step-2.component.ts` |
 | `retrievePreparedTroncs$` | `modules/quest/my-slots/my-slots.component.ts` |
 | `troncStateUpdate$` | `modules/quest/my-slots/my-slots.component.ts` (×2 : départ + retour) |
@@ -165,4 +171,34 @@ Choix retenu : **client HTTP brut + Bearer token**, pour les raisons suivantes :
 | Fichier | Problème pré-existant | Correctif appliqué | Justification |
 |---|---|---|---|
 | `src/app/modules/account/account.component.spec.ts` | Le fichier importait `RegistrationConfirmationComponent` depuis `./registration-confirmation.component` (chemin inexistant dans le dossier `account/`) → erreur TS2307 bloquant la compilation de **toute la suite Karma**. Présent depuis le commit `9857512`. | Remplacé par un test stub minimal alignée sur le pattern du projet (cf. `auth.service.spec.ts`, `firestore.service.spec.ts`) : import + `expect(AccountComponent).toBeTruthy()`. | Sans ce fix, Phase B3 (tests unitaires de l'interceptor) ne peut pas être exécutée via `ng test`. Correctif minimal, périmètre 1 fichier, sans impact fonctionnel. |
+
+## 11. Spécification — nouvelle fonction `get-ul-queteur-ranking`
+
+> **Statut** : à implémenter dans `rcq-functions-v2`.
+>
+> **Objectif** : remplacer l'accès Firestore SDK direct utilisé aujourd'hui par `RankingComponent` / `RankingDatasource` (collection `ul_queteur_stats_per_year`) par un appel HTTP REST aligné sur le pattern des autres fonctions v2. Voir §0/§6 pour la justification architecturale.
+>
+> **📄 Spécification détaillée** : [`docs/specs/get-ul-queteur-ranking.md`](specs/get-ul-queteur-ranking.md) — contrat d'interface complet (endpoint, auth, paramètres, logique métier, format de réponse, cache, codes d'erreur, tests d'acceptation, checklist d'intégration frontend).
+
+### 11.1 Résumé
+
+| | |
+|---|---|
+| Méthode HTTP | `GET /get-ul-queteur-ranking?year=<int>` |
+| Clé Angular | `cloudFunctionsNames.getULQueteurRanking` |
+| Auth | Bearer Firebase ID Token |
+| Tri serveur | `amount DESC` (imposé ; le frontend retrie en mémoire) |
+| Cache | `Cache-Control: private, max-age=900, stale-while-revalidate=60` + `Vary: Authorization` |
+| Réponse | Tableau JSON (10 champs par ligne, cf. spec détaillée §5) |
+
+### 11.2 Conséquences sur la configuration Firestore (côté ce repo)
+
+Une fois la fonction déployée et le frontend migré (PR séparée), les éléments suivants deviennent **obsolètes** et seront supprimés dans une seconde passe :
+
+- **`firestore.indexes.json`** : tous les index composites sur `ul_queteur_stats_per_year` utilisés uniquement par des queries client (tri par `amount`, `weight`, `time_spent_in_minutes`, `unique_point_quete_count`). L'unique index conservé sera celui requis par la query serveur (`ul_id ASC` + `year ASC` + `amount DESC`).
+- **`firestore.rules`** : restreindre la lecture client de `ul_queteur_stats_per_year` (lecture serveur via Admin SDK qui bypass les rules). Bonus sécurité : la collection n'est plus exposée au SDK Firebase JS.
+- **`FirestoreService.getUlStatsOrderedBy`** : à supprimer une fois `RankingDatasource` migré sur le nouvel endpoint.
+
+Ces nettoyages sont **hors scope** de la spec backend mais à tracer dans la même issue côté frontend.
+
 

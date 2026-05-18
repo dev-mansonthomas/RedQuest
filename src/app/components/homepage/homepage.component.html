@@ -2,24 +2,39 @@
   <div fxFlex="300px" class='hero'></div>
   <div fxFlex="300px">
 
-    <div *ngIf="ulPrefs$ | async as prefs">
-      <pre>{{prefs|json}}</pre>
+    <mat-card *ngIf="ulStats$ | async as stats" class="ul-stats-card">
+      <mat-card-title>Statistiques de l'UL — {{stats.year}}</mat-card-title>
+      <mat-card-content fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="0 grid">
+        <b fxFlex="40">Montant total collecté</b>
+        <span fxFlex="60">{{stats.amount | number:'1.0-0':'fr-FR'}} €</span>
 
-    </div>
-    <div *ngIf="ulStats$  | async as stats" fxLayout="row wrap" fxLayoutAlign="space-between center">
-      <b fxFlex="13">Montant total</b> <span fxFlex="87">{{stats.amount}}</span>
-      <b fxFlex="13">Part de Carte Bleue</b> <span fxFlex="87">{{stats.amount_cb}}</span>
-      <b fxFlex="13">Objectif de l'année</b> <span fxFlex="87">{{stats.amount_year_objective}}</span>
-      <b fxFlex="13">Nombre de jour de quête</b> <span fxFlex="87">{{stats.number_of_days_quete}}</span>
-      <b fxFlex="13">Nombre de point de quête ou on a quêté</b> <span fxFlex="87">{{stats.number_of_point_quete}}</span>
-      <b fxFlex="13">Nombre de Tronc-Queteur</b> <span fxFlex="87">{{stats.number_of_tronc_queteur}}</span>
-      <b fxFlex="13">Numéro de minute passées à quêter</b> <span fxFlex="87">{{stats.time_spent_in_minutes}}</span>
-      <b fxFlex="13">Nombre total de point de quête de l'UL</b> <span fxFlex="87">{{stats.total_number_of_point_quete}}</span>
-      <b fxFlex="13">ID de l'UL</b> <span fxFlex="87">{{stats.ul_id}}</span>
-      <b fxFlex="13">Poids total collecté</b> <span fxFlex="87">{{stats.weight}}</span>
-      <b fxFlex="13">Année des stats</b> <span fxFlex="87">{{stats.year}}</span>
+        <b fxFlex="40">Dont carte bleue</b>
+        <span fxFlex="60">{{stats.amount_cb | number:'1.0-0':'fr-FR'}} €</span>
 
-    </div>
+        <b fxFlex="40">Objectif de l'année</b>
+        <span fxFlex="60">
+          {{stats.amount_year_objective | number:'1.0-0':'fr-FR'}} €
+          <ng-container *ngIf="stats.amount_year_objective > 0">
+            ({{(stats.amount / stats.amount_year_objective) | percent:'1.0-1'}})
+          </ng-container>
+        </span>
+
+        <b fxFlex="40">Jours de quête</b>
+        <span fxFlex="60">{{stats.number_of_days_quete}}</span>
+
+        <b fxFlex="40">Points de quête utilisés</b>
+        <span fxFlex="60">{{stats.number_of_point_quete}} / {{stats.total_number_of_point_quete}}</span>
+
+        <b fxFlex="40">Troncs quêtés</b>
+        <span fxFlex="60">{{stats.number_of_tronc_queteur}}</span>
+
+        <b fxFlex="40">Temps passé à quêter</b>
+        <span fxFlex="60">{{stats.time_spent_in_minutes | time}}</span>
+
+        <b fxFlex="40">Poids total collecté</b>
+        <span fxFlex="60">{{stats.weight | weight}}</span>
+      </mat-card-content>
+    </mat-card>
 
 
 

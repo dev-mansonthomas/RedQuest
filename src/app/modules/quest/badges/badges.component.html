@@ -12,6 +12,16 @@
   >{{score/(levels[levels.length-1].mult*badges.length)|percent}}</span>
 </section>
 
+<mat-card *ngIf="loadError" style="background:#ffe5e5; margin-bottom:16px">
+  <mat-icon color="warn">error_outline</mat-icon>
+  Impossible de charger vos statistiques pour le moment. Réessayez plus tard.
+</mat-card>
+
+<mat-card *ngIf="!loadError && !hasStats" style="background:#fffbe5; margin-bottom:16px">
+  <mat-icon color="accent">info</mat-icon>
+  Vous n'avez pas encore quêté cette année. Vos badges seront mis à jour dès que vous aurez quêté.
+</mat-card>
+
 
 <div *ngIf="enabled" fxLayout="row" fxLayoutAlign="center">
   <div fxLayout="row wrap" fxLayoutGap="0 grid" fxLayoutAlign="center center">

@@ -20,7 +20,17 @@ export class QueteurService {
     private firestore: FirestoreService,
     private cloudFunctions: CloudFunctionService,
     private router: Router) {
+    // Drop the cached queteur whenever the authenticated user changes
+    // (logout or account switch) to avoid serving stale data.
+    this.authService.onUserConnected().subscribe(user => {
+      if (!user || !this.currentQueteur || this.lastAuthUid !== user.uid) {
+        this.currentQueteur = undefined;
+      }
+      this.lastAuthUid = user ? user.uid : undefined;
+    });
   }
+
+  private lastAuthUid: string;
 
   gotIt = <T>(o: Subscriber<T>, q: T) => {
     o.next(q);
@@ -72,6 +82,7 @@ export class QueteurService {
     this.firestore.getStoredQueteur(authId)
       .then(queteur => {
         queteur.queteur_id = Number(queteur.queteur_id);
+        this.currentQueteur = queteur;
         this.gotIt<Queteur>(observer, queteur);
       })
       .catch((exception) => {

@@ -57,7 +57,7 @@
         </mat-cell>
 
       </ng-container>
-      <ng-container matColumnDef="unique_point_quete_count">
+      <ng-container matColumnDef="number_of_point_quete">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Lieux de quête</mat-header-cell>
         <mat-cell *matCellDef="let ranking" data-label="Lieux de quête">
           <span  [ngStyle]="{'font-weight':ranking.queteur_id === queteur.queteur_id ? 'bold':'normal'}">{{ranking.number_of_point_quete}}/{{ranking.total_number_of_point_quete}}</span>

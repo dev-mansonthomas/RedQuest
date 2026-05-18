@@ -5,29 +5,32 @@ import { map } from 'rxjs/operators';
 
 import { Badge } from '../../../model/badges/Badge';
 import { QueteurStats } from '../../../model/queteur-stats';
-import { FirestoreService } from '../../../services/firestore/firestore.service';
+import { CloudFunctionService } from '../../../services/cloud-functions/cloud-function.service';
+
+export interface BadgesLoadResult {
+  badges: Badge[];
+  hasStats: boolean;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class BadgesService {
 
-  constructor(private firestore: FirestoreService) {
+  constructor(private cloudFunctions: CloudFunctionService) {
   }
 
-  loadQueteurBadgesLevels(badges: Badge[], queteur_id: number): Observable<Badge[]> {
-    return this.firestore.getQueteurStats(queteur_id)
-        .pipe(map(doc => {
-          const currentYearStats = doc.docs
-              .map(e => e.data() as QueteurStats)
-              .find(stat => stat.year === new Date().getFullYear());
+  loadQueteurBadgesLevels(badges: Badge[], queteur_id: number): Observable<BadgesLoadResult> {
+    return this.cloudFunctions.getQueteurStats$()
+        .pipe(map(rows => {
+          const currentYearStats = rows.find(stat => stat.year === new Date().getFullYear());
 
           if (!currentYearStats) {
             console.warn(`Queteur stats unavailable for queteur id: ${queteur_id}`);
-            return badges;
+            return { badges, hasStats: false };
           }
 
-          return this.updateBadgesLevels(badges, currentYearStats);
+          return { badges: this.updateBadgesLevels(badges, currentYearStats), hasStats: true };
         }));
 
   }

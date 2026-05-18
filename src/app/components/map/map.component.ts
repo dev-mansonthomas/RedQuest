@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 import {environment} from '../../../environments/environment';
 
@@ -8,13 +8,26 @@ import {environment} from '../../../environments/environment';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent {
+export class MapComponent implements OnInit, OnChanges {
 
   @Input() latitude = 0;
   @Input() longitude = 0;
+  safeUrl: SafeResourceUrl;
 
-  constructor(public sanitizer: DomSanitizer) { }
+  constructor(private sanitizer: DomSanitizer) { }
 
-  getUrl = () => `https://www.google.com/maps/embed/v1/search?q=${this.latitude},${this.longitude}&key=${environment.google_maps_key}`;
+  ngOnInit(): void {
+    this.updateSafeUrl();
+  }
+
+  ngOnChanges(): void {
+    this.updateSafeUrl();
+  }
+
+  private updateSafeUrl(): void {
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+      `https://www.google.com/maps/embed/v1/search?q=${this.latitude},${this.longitude}&key=${environment.google_maps_key}`
+    );
+  }
 
 }

@@ -40,6 +40,8 @@ export class BadgesComponent implements OnInit {
   enabled = environment.badges_enabled;
   queteur: Queteur;
   breakpoint: number;
+  hasStats = true;
+  loadError = false;
   levels = [
     { name: 'A collecter', mult: 0 },
     { name: 'Bronze', mult: 1 },
@@ -68,14 +70,15 @@ export class BadgesComponent implements OnInit {
     this.route.data.subscribe((data: { queteur: Queteur }) => {
       this.queteur = data.queteur;
       this.badgesService.loadQueteurBadgesLevels(this.badges, data.queteur.queteur_id)
-          .subscribe(badges => {
-            if (!Array.isArray(badges)) {
-              console.warn('⚠️ BadgesService returned an invalid value:', badges);
-              this.badges = [];
-            } else {
-              this.badges = badges;
-            }
-          });
+          .subscribe(
+            result => {
+              this.hasStats = result.hasStats;
+              this.badges = Array.isArray(result.badges) ? result.badges : [];
+            },
+            err => {
+              console.error('Failed to load badges:', err);
+              this.loadError = true;
+            });
     });
   }
 

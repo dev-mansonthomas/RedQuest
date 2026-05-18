@@ -18,9 +18,13 @@ describe('CloudFunctionService', () => {
         });
         service = TestBed.inject(CloudFunctionService);
         httpMock = TestBed.inject(HttpTestingController);
+        localStorage.clear();
     });
 
-    afterEach(() => httpMock.verify());
+    afterEach(() => {
+        httpMock.verify();
+        localStorage.clear();
+    });
 
     it('should be created', () => {
         expect(service).toBeTruthy();
@@ -41,6 +45,41 @@ describe('CloudFunctionService', () => {
         req.flush({ul_id: 1});
     });
 
+    it('findULDetailsByToken$ caches the response in localStorage on the first call', () => {
+        const token = '11111111-2222-3333-4444-555555555555';
+        service.findULDetailsByToken$(token).subscribe();
+        httpMock.expectOne(`${baseUrl}${names.findULDetailsByToken}?token=${token}`).flush({ul_id: 1, name: 'UL 1'});
+        const cached = JSON.parse(localStorage.getItem('rq:ul-details:' + token));
+        expect(cached.data.ul_id).toBe(1);
+        expect(typeof cached.ts).toBe('number');
+    });
+
+    it('findULDetailsByToken$ serves a cached value without issuing an HTTP request', () => {
+        const token = '11111111-2222-3333-4444-555555555555';
+        localStorage.setItem('rq:ul-details:' + token, JSON.stringify({
+            ts: Date.now(),
+            data: {ul_id: 42, name: 'Cached UL'}
+        }));
+        let received: any;
+        service.findULDetailsByToken$(token).subscribe(res => received = res);
+        httpMock.expectNone(`${baseUrl}${names.findULDetailsByToken}?token=${token}`);
+        expect(received.ul_id).toBe(42);
+    });
+
+    it('findULDetailsByToken$ ignores cache entries older than 30 days and refetches', () => {
+        const token = '11111111-2222-3333-4444-555555555555';
+        const expiredTs = Date.now() - 31 * 24 * 3600 * 1000;
+        localStorage.setItem('rq:ul-details:' + token, JSON.stringify({
+            ts: expiredTs,
+            data: {ul_id: 42, name: 'Stale UL'}
+        }));
+        let received: any;
+        service.findULDetailsByToken$(token).subscribe(res => received = res);
+        const req = httpMock.expectOne(`${baseUrl}${names.findULDetailsByToken}?token=${token}`);
+        req.flush({ul_id: 7, name: 'Fresh UL'});
+        expect(received.ul_id).toBe(7);
+    });
+
     it('getULPrefs$ issues GET on the get-ul-prefs endpoint', () => {
         service.getULPrefs$().subscribe();
         const req = httpMock.expectOne(`${baseUrl}${names.getULPrefs}`);
@@ -53,6 +92,26 @@ describe('CloudFunctionService', () => {
         const req = httpMock.expectOne(`${baseUrl}${names.getULStats}`);
         expect(req.request.method).toBe('GET');
         req.flush({ul_id: 1});
+    });
+
+    it('getULQueteurRanking$ issues GET with the year query param', () => {
+        let received: any[];
+        service.getULQueteurRanking$(2026).subscribe(rows => received = rows);
+        const req = httpMock.expectOne(`${baseUrl}${names.getULQueteurRanking}?year=2026`);
+        expect(req.request.method).toBe('GET');
+        req.flush([{queteur_id: 42, amount: 100}]);
+        expect(received.length).toBe(1);
+        expect(received[0].queteur_id).toBe(42);
+    });
+
+    it('getQueteurStats$ issues GET on the get-queteur-stats endpoint', () => {
+        let received: any[];
+        service.getQueteurStats$().subscribe(rows => received = rows);
+        const req = httpMock.expectOne(`${baseUrl}${names.getQueteurStats}`);
+        expect(req.request.method).toBe('GET');
+        req.flush([{queteur_id: 42, year: 2026, amount: 100}]);
+        expect(received.length).toBe(1);
+        expect(received[0].year).toBe(2026);
     });
 
     it('registerQueteur$ POSTs the queteur and returns the parsed JSON token', () => {
