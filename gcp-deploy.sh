@@ -93,13 +93,24 @@ echo "Deploying rq-${COUNTRY}-${ENV} (${DEPLOY_MSG})"
 
 export NODE_OPTIONS=--openssl-legacy-provider
 
+# Restrict the deploy targets to hosting + firestore.rules. We deliberately
+# exclude firestore:indexes from the default deploy because firebase prompts
+# interactively to delete any server-side index that is missing from
+# firestore.indexes.json, which both breaks unattended runs and is destructive
+# by default. Indexes are deployed explicitly with:
+#   npx firebase-tools@15 deploy --only firestore:indexes --project rq-${COUNTRY}-${ENV}
+# after reviewing the diff between the live indexes and firestore.indexes.json.
+DEPLOY_TARGETS="hosting,firestore:rules"
+
 if [[ ${ENV} != "prod" ]]
 then
   ng build --configuration "${ENV}" \
-    && ${FIREBASE} deploy --project "rq-${COUNTRY}-${ENV}" --message "${DEPLOY_MSG}"
+    && ${FIREBASE} deploy --only "${DEPLOY_TARGETS}" --non-interactive \
+         --project "rq-${COUNTRY}-${ENV}" --message "${DEPLOY_MSG}"
 else
   ng build --configuration=production \
-    && ${FIREBASE} deploy --project "rq-${COUNTRY}-${ENV}" --message "${DEPLOY_MSG}"
+    && ${FIREBASE} deploy --only "${DEPLOY_TARGETS}" --non-interactive \
+         --project "rq-${COUNTRY}-${ENV}" --message "${DEPLOY_MSG}"
 fi
 
 echo "Deployed to: https://rq-${COUNTRY}-${ENV}.web.app"
