@@ -15,6 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthTokenInterceptor } from './services/auth/auth-token.interceptor';
+import { HttpErrorInterceptor } from './services/auth/http-error.interceptor';
 import { CreditsComponent } from './components/credits/credits.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { LocalUnitComponent } from './components/local-unit/local-unit.component';
@@ -52,7 +53,8 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
         AngularFirestore, AngularFireAuth, CookieService,
         { provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
         { provide: SETTINGS, useValue: {} },
-        { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
     ],
     bootstrap: [AppComponent]
 })
