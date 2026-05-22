@@ -16,3 +16,26 @@ section.jumb {
 }
 
 .full { background:#f44336 }
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin: 12px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.alert-danger {
+  background-color: #fdecea;
+  border: 1px solid #f5c6cb;
+  color: #842029;
+}
+.alert-danger a {
+  color: inherit;
+  text-decoration: underline;
+}
+.alert-meta {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #a0a0a0;
+}

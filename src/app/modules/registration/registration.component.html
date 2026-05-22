@@ -1,3 +1,10 @@
+<div *ngIf="ulDetailsError" class="alert alert-danger" role="alert" style="margin: 12px 15%;">
+  Impossible de récupérer les informations de votre Unité Locale. Veuillez contacter le support :
+  <a [href]="'mailto:' + supportEmail">{{supportEmail}}</a>
+  <span class="alert-meta">
+    {{ulDetailsError.timestamp | date:'dd/MM/yyyy HH:mm:ss'}} &middot; {{ulDetailsError.source}}
+  </span>
+</div>
 <div *ngIf="step === UNKNOWN" fxLayout="column" fxLayoutAlign="center">
   <section class="jumb">
     <h2>Création de son Compte sur RedQuest !</h2>

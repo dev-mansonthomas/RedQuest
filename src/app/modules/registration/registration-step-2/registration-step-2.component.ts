@@ -4,9 +4,16 @@ import { Router } from '@angular/router';
 
 import * as moment from 'moment';
 
+import { environment } from '../../../../environments/environment';
 import { Queteur } from '../../../model/queteur';
 import { CloudFunctionService } from '../../../services/cloud-functions/cloud-function.service';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
+
+export interface RegistrationError {
+  message: string;
+  source: string;
+  timestamp: Date;
+}
 
 @Component({
   selector: 'app-registration-step-2',
@@ -59,6 +66,8 @@ export class RegistrationStep2Component implements OnInit {
   }
 
   error: string;
+  errorDetails: RegistrationError;
+  readonly supportEmail = 'support.redcrossquest@croix-rouge.fr';
 
   constructor(
     private router: Router, private zone: NgZone, private functions: CloudFunctionService, private firestore: FirestoreService) { }
@@ -90,35 +99,47 @@ export class RegistrationStep2Component implements OnInit {
   }
 
   registerUser() {
+    this.error = undefined;
+    this.errorDetails = undefined;
     this.loading = true;
-    this.firestore.isQueteurAlreadyRegistered(this.nivol.value as string)
+    const nivolValue = this.nivol.value as string;
+
+    this.firestore.isQueteurAlreadyRegistered(nivolValue)
       .then(alreadyRegistered => {
         if (alreadyRegistered) {
           this.error = `Vous êtes déjà inscris sous cette adresse: ${alreadyRegistered.email}`;
           this.loading = false;
           return;
         }
-        Object.assign(this.registeredUser, this.registrationForm.value);
-        this.registeredUser.birthdate = moment(new Date(this.registeredUser.birthdate)).format('YYYY-MM-DD');
-        this.registeredUser.mobile = '+33' + this.registeredUser.mobile;
-        if (this.registeredUser.nivol) {
-          this.registeredUser.nivol = this.registeredUser.nivol.toUpperCase();
-        }
-        this.functions.registerQueteur$(this.registeredUser) //store the registration in RCQ Backend
-          .subscribe(token => {
-            this.registeredUser.queteur_registration_token = token.queteur_registration_token;
-            this.storeNewQueteur();//store in RedQuest Firestore
-          });
-      });
+        this.submitRegistration();
+      })
+      .catch(err => this.handleError('firestore: queteurs.where(nivol)', err));
+  }
+
+  private submitRegistration() {
+    // Build a fresh payload from form values so retries don't compound side-effects
+    // (e.g. '+33' prefix accumulating to '+33+33...' on the mobile field).
+    const formValues = this.registrationForm.value;
+    const payload: Queteur = Object.assign({}, this.registeredUser, formValues, {
+      birthdate: moment(new Date(formValues.birthdate)).format('YYYY-MM-DD'),
+      mobile: '+33' + formValues.mobile,
+      nivol: formValues.nivol ? (formValues.nivol as string).toUpperCase() : null
+    });
+
+    this.functions.registerQueteur$(payload).subscribe(
+      token => {
+        payload.queteur_registration_token = token.queteur_registration_token;
+        this.registeredUser = payload;
+        this.storeNewQueteur();
+      },
+      err => this.handleError(environment.cloudFunctionsNames.registerQueteur, err)
+    );
   }
 
   private storeNewQueteur() {
     this.firestore.registerQueteur(this.userAuthId, this.registeredUser)
       .then(() => this.closeModalAndConfirmRegistration())
-      .catch(onrejected => {
-        this.closeModalAndDisplayError();
-        throw onrejected;
-      });
+      .catch(err => this.handleError('firestore: queteurs.set', err));
   }
 
   closeModalAndConfirmRegistration() {
@@ -126,8 +147,13 @@ export class RegistrationStep2Component implements OnInit {
     this.zone.run(() => this.router.navigate(['registration/confirmation']));
   }
 
-  closeModalAndDisplayError() {
+  private handleError(source: string, err: any) {
     this.loading = false;
-    this.error = 'Erreur lors de l\'inscription !';
+    this.errorDetails = {
+      message: `Une erreur est survenue lors de votre inscription. Veuillez contacter le support : ${this.supportEmail}`,
+      source,
+      timestamp: new Date()
+    };
+    console.error(`[registration:${source}]`, err);
   }
 }
