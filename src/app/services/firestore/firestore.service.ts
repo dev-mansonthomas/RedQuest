@@ -29,21 +29,13 @@ export class FirestoreService {
   }
 
   isQueteurAlreadyRegistered(nivol: string): Promise<Queteur> {
-    return new Promise<Queteur>(resolve => {
-      if (nivol) {
-        this.firestoreDB.firestore
-          .collection('queteurs')
-          .where('nivol', '==', nivol.toUpperCase())
-          .get()
-          .then(query => {
-            if (query.docs.length !== 0) {
-              resolve(query.docs[0].data() as Queteur);
-            }
-            resolve(undefined);
-          });
-      } else {
-        resolve(undefined);
-      }
-    });
+    if (!nivol) {
+      return Promise.resolve(undefined);
+    }
+    return this.firestoreDB.firestore
+      .collection('queteurs')
+      .where('nivol', '==', nivol.toUpperCase())
+      .get()
+      .then(query => query.docs.length === 0 ? undefined : (query.docs[0].data() as Queteur));
   }
 }

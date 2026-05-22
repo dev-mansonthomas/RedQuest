@@ -1,13 +1,16 @@
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
+import { environment } from '../../../environments/environment';
 import { ULDetails } from '../../model/ULDetails';
 import { Queteur } from '../../model/queteur';
 import { AuthService } from '../../services/auth/auth.service';
 import { CloudFunctionService } from '../../services/cloud-functions/cloud-function.service';
+import { RegistrationError } from './registration-step-2/registration-step-2.component';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -18,7 +21,7 @@ import 'firebase/auth';
   templateUrl: './registration.component.html',
   styleUrls: ['../../../_social.scss']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
   UNKNOWN = 'unknown';
   REGISTERING = 'registering';
 
@@ -32,6 +35,8 @@ export class RegistrationComponent implements OnInit {
   user: firebase.User;
 
   createUserWithPasswordError:string;
+  ulDetailsError: RegistrationError;
+  readonly supportEmail = 'support.redcrossquest@croix-rouge.fr';
 
   registeredUser: Queteur = Queteur.aQueteur();
 
@@ -51,6 +56,8 @@ export class RegistrationComponent implements OnInit {
 
   userAuthId: string;
 
+  private readonly destroy$ = new Subject<void>();
+
   constructor(private route: ActivatedRoute,
     private functions: CloudFunctionService,
     private router: Router,
@@ -59,40 +66,50 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.onUserConnected().subscribe(user => {
-      if (user !== null) {
-        this.route.data.subscribe((data: { queteur: Queteur }) => {
-          if (data.queteur) {
-            this.zone.run(() => this.router.navigate(['registration/confirmation']));
-          }
-        });
-      }
-    });
     this.loginForm = new FormGroup({
       'email': new FormControl('', [Validators.required, Validators.email]),
       'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
       'confirmPassword': new FormControl('', Validators.required)
     }, [this.checkPasswords]);
 
+    this.authService.onUserConnected().pipe(takeUntil(this.destroy$)).subscribe(user => {
+      if (!user) { return; }
+      this.registeredUser = this.initUser();
+      this.step = this.REGISTERING;
+      this.user = user;
+      this.registeredUser.email = this.user.email;
+      this.userAuthId = user.uid;
+      this.route.data.pipe(takeUntil(this.destroy$)).subscribe((data: { queteur: Queteur }) => {
+        if (data.queteur) {
+          this.zone.run(() => this.router.navigate(['registration/confirmation']));
+        }
+      });
+    });
 
-    this.route.queryParamMap.subscribe(queryParams => {
+    this.route.queryParamMap.pipe(takeUntil(this.destroy$)).subscribe(queryParams => {
       this.uuid = queryParams.get('uuid');
       this.getULDetails(this.uuid)
-        .subscribe(details => {
-          this.ulDetails = details;
-        });
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          details => {
+            this.ulDetails = details;
+            this.ulDetailsError = undefined;
+          },
+          err => {
+            this.ulDetailsError = {
+              message: `Impossible de récupérer les informations de votre Unité Locale. Veuillez contacter le support : ${this.supportEmail}`,
+              source: environment.cloudFunctionsNames.findULDetailsByToken,
+              timestamp: new Date()
+            };
+            console.error('[registration:findULDetailsByToken]', err);
+          }
+        );
     });
+  }
 
-
-    this.authService.onUserConnected().subscribe(user => {
-      if (user) {
-        this.registeredUser = this.initUser();
-        this.step = this.REGISTERING;
-        this.user = user;
-        this.registeredUser.email = this.user.email;
-        this.userAuthId = user.uid;
-      }
-    });
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private initUser(): Queteur {
@@ -138,12 +155,22 @@ export class RegistrationComponent implements OnInit {
         }
         else
         {
-          this.createUserWithPasswordError = "Une erreur s'est produite : "+JSON.stringify(exception);
+          this.createUserWithPasswordError = "Une erreur s'est produite : " + this.sanitizeAuthException(exception);
         }
 
       }
 
     }
+  }
+
+  private sanitizeAuthException(exception: any): string {
+    if (!exception) { return 'erreur inconnue'; }
+    const code = exception.code || '';
+    const message = exception.message || '';
+    const stackHead = typeof exception.stack === 'string'
+      ? exception.stack.split('\n').slice(0, 2).join(' | ').slice(0, 200)
+      : '';
+    return [code, message, stackHead].filter(p => !!p).join(' — ');
   }
 
   private checkPasswords(group: FormGroup) { // here we have the 'passwords' group

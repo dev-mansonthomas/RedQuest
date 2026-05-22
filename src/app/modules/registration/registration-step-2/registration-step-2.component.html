@@ -96,6 +96,13 @@
     <div *ngIf="error" class="alert alert-danger" role="alert">
       {{error}}
     </div>
+    <div *ngIf="errorDetails" class="alert alert-danger" role="alert">
+      Une erreur est survenue lors de votre inscription. Veuillez contacter le support :
+      <a [href]="'mailto:' + supportEmail">{{supportEmail}}</a>
+      <span class="alert-meta">
+        {{errorDetails.timestamp | date:'dd/MM/yyyy HH:mm:ss'}} &middot; {{errorDetails.source}}
+      </span>
+    </div>
     <mat-progress-bar *ngIf="loading" mode="query" color="warn"></mat-progress-bar>
     <div fxLayout="row" fxLayoutAlign="center">
       <button [disabled]="registrationForm.invalid" mat-flat-button color="warn" type="button" (click)="registerUser()" data-toggle="modal"
