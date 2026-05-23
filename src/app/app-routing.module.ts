@@ -7,10 +7,11 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { LocalUnitComponent } from './components/local-unit/local-unit.component';
 import { RankingComponent } from './components/ranking/ranking.component';
 import { TipsComponent } from './components/tips/tips.component';
+import { RootRedirectGuard } from './root-redirect.guard';
 import { QueteurResolverService } from './services/queteur/queteur.service';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/quest/badges', pathMatch: 'full'},
+  { path: '', canActivate: [RootRedirectGuard], children: [], pathMatch: 'full' },
   { path: 'home', component: HomepageComponent, canActivate: [AuthGuard], resolve: { queteur: QueteurResolverService } },
   { path: 'login', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule) },
   {
