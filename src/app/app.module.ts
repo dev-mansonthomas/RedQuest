@@ -5,7 +5,6 @@ import localeFr from '@angular/common/locales/fr';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestore, SETTINGS } from '@angular/fire/firestore';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -46,7 +45,6 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
         AppRoutingModule,
         SharedModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
-        AngularFireDatabaseModule,
         BrowserAnimationsModule
     ],
     providers: [
