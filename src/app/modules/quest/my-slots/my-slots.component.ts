@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import * as moment from 'moment-timezone';
+import * as moment from 'moment';
 
 import { Queteur } from '../../../model/queteur';
 import { Tronc } from '../../../model/tronc';
