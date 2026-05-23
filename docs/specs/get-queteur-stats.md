@@ -161,7 +161,7 @@ Une fois la fonction déployée et le frontend migré (PR séparée), l'ensemble
 - **`FirestoreService.getQueteurStats`** : à supprimer (plus aucun appelant après migration).
 - **`FirestoreService.selectUlStats`** : déjà du code mort (aucun appelant) — à supprimer dans la même passe.
 
-Ces nettoyages sont **hors scope** de la spec backend ; ils sont tracés dans `scripts/firestore-cleanup.sh` (phase `--rules`) et dans la checklist §11 ci-dessous.
+Ces nettoyages sont **hors scope** de la spec backend ; ils sont tracés dans la checklist §11 ci-dessous.
 
 ## 11. Checklist d'intégration frontend (RedQuest)
 
@@ -173,4 +173,4 @@ Pour mémoire, à exécuter dans le repo RedQuest après déploiement de la fonc
 - [ ] `BadgesService.loadQueteurBadgesLevels` : remplacer `firestore.getQueteurStats(id)` par `cloudFunctions.getQueteurStats$()` (filtre `year === currentYear` inchangé).
 - [ ] Supprimer `FirestoreService.getQueteurStats` et `FirestoreService.selectUlStats` (plus aucun appelant).
 - [ ] Mise à jour du tableau §1 de `docs/cloud-functions-endpoints.md` avec la nouvelle ligne `getQueteurStats` / `get-queteur-stats`.
-- [ ] Exécuter `scripts/firestore-cleanup.sh --rules --project rq-fr-dev --deploy` puis `--project rq-fr-test` puis `--project rq-fr-prod` (dans cet ordre, après validation à chaque étape).
+- [ ] Déployer la version restreinte de `firestore.rules` (bloc `match /ul_queteur_stats_per_year/{doc} { allow read, write: if false; }`) via `gcp-deploy.sh` dans l'ordre `rq-fr-dev` → `rq-fr-test` → `rq-fr-prod`, avec validation manuelle entre chaque étape.
