@@ -1,11 +1,16 @@
-# This file is currently used by autoprefixer to adjust CSS to support the below specified browsers
-# For additional information regarding the format and rule options, please see:
-# https://github.com/browserslist/browserslist#queries
+# This file is used by Angular CLI (differential loading) and by autoprefixer.
+# Format reference: https://github.com/browserslist/browserslist#queries
 #
-# For IE 9-11 support, please remove 'not' from the last line of the file and adjust as needed
+# Targets evergreen browsers only (all support ES2017 natively), which lets
+# Angular emit a single modern bundle and skip the legacy ES5 + polyfill path.
+# Dropped vs Angular default: Edge Legacy (<=18), Safari <=11, iOS <=11,
+# Chrome <=60, Firefox <=60 (except ESR which is on ES2017), KaiOS, Opera
+# Mini, UC Browser. IE 9-11 was already excluded.
 
-> 0.5%
-last 2 versions
+last 1 Chrome version
+last 1 Firefox version
+last 2 Edge major versions
+last 2 Safari major versions
+last 2 iOS major versions
 Firefox ESR
-not dead
 not IE 9-11
