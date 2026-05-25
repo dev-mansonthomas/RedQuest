@@ -75,12 +75,22 @@ export class CloudFunctionService {
 
   private parseTroncDates(row: any): Tronc {
     if (row.depart_theorique) {
-      row.depart_theorique = new Date(row.depart_theorique);
+      row.depart_theorique = this.parseAsUtcIfNaive(row.depart_theorique);
     }
     if (row.depart) {
-      row.depart = new Date(row.depart);
+      row.depart = this.parseAsUtcIfNaive(row.depart);
     }
     return row as Tronc;
+  }
+
+  private parseAsUtcIfNaive(value: string | Date): Date {
+    if (value instanceof Date) {
+      return value;
+    }
+    if (/Z|[+\-]\d{2}:?\d{2}$/.test(value)) {
+      return new Date(value);
+    }
+    return new Date(value.replace(' ', 'T') + 'Z');
   }
 
   private readULDetailsFromCache(token: string): ULDetails | null {

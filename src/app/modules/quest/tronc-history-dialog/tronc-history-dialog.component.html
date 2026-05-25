@@ -4,10 +4,10 @@
   <ul>
     <li>Point de quête: {{troncStat.point_quete}}</li>
     <li>Tronc n° {{troncStat.tronc_id}}</li>
-    <li>Départ théorique: {{troncStat.depart_theorique|date:'medium':'+0200':'fr-FR'}}</li>
-    <li>Départ: {{troncStat.depart|date:'medium':'+0200':'fr-FR'}}</li>
-    <li>Retour: {{troncStat.retour|date:'medium':'+0200':'fr-FR'}}</li>
-    <li>Comptage: {{troncStat.comptage|date:'medium':'+0200':'fr-FR'}}</li>
+    <li>Départ théorique: {{troncStat.depart_theorique|parisDate}}</li>
+    <li>Départ: {{troncStat.depart|parisDate}}</li>
+    <li>Retour: {{troncStat.retour|parisDate}}</li>
+    <li>Comptage: {{troncStat.comptage|parisDate}}</li>
     <li>Total: {{troncStat.amount}}€</li>
     <li>Don CB: {{troncStat.don_creditcard}}€</li>
     <li>Don chèque: {{troncStat.don_cheque}}€</li>
