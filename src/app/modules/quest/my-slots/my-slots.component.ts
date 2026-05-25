@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import * as moment from 'moment';
-
 import { Queteur } from '../../../model/queteur';
 import { Tronc } from '../../../model/tronc';
 import { CloudFunctionService } from '../../../services/cloud-functions/cloud-function.service';
@@ -49,7 +47,7 @@ export class MySlotsComponent implements OnInit {
 
   handleTroncDeparture(tronc: Tronc) {
     const update = {
-      date: moment(tronc.depart).subtract(2, 'hours').format('YYYY-MM-DD HH:mm:ss'),
+      date: new Date(tronc.depart).toISOString(),
       tqId: tronc.tronc_queteur_id,
       isDepart: true
     };
@@ -65,7 +63,7 @@ export class MySlotsComponent implements OnInit {
 
   handleTroncArrival(tronc: Tronc) {
     const update = {
-      date: moment(tronc.arrivee).subtract(2, 'hours').format('YYYY-MM-DD HH:mm:ss'),
+      date: new Date(tronc.arrivee).toISOString(),
       tqId: tronc.tronc_queteur_id,
       isDepart: false
     };

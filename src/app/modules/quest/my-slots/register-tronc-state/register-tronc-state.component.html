@@ -23,13 +23,13 @@
               <li>Tronc n° {{tronc.value.tronc_id}}</li>
               <li *ngIf="type === 'arrival'">
                 Parti depuis
-                <b>{{tronc.value.depart| date:'H'}}h{{tronc.value.depart| date:'mm'}}</b> le
-                <b>{{tronc.value.depart| date:'fullDate':'+0200':'fr-FR'}}</b>
+                <b>{{tronc.value.depart| parisDate:'H'}}h{{tronc.value.depart| parisDate:'mm'}}</b> le
+                <b>{{tronc.value.depart| parisDate:'fullDate'}}</b>
               </li>
               <li *ngIf="type === 'departure'">
                 Départ planifié à
-                <b>{{tronc.value.depart_theorique| date:'H'}}h{{tronc.value.depart_theorique| date:'mm'}}</b> le
-                <b>{{tronc.value.depart_theorique| date:'fullDate':'+0200':'fr-FR'}}</b>
+                <b>{{tronc.value.depart_theorique| parisDate:'H'}}h{{tronc.value.depart_theorique| parisDate:'mm'}}</b> le
+                <b>{{tronc.value.depart_theorique| parisDate:'fullDate'}}</b>
               </li>
             </ul>
           </div>
@@ -65,14 +65,14 @@
       <div *ngIf="tronc.value && type == 'departure'">
 
         Enregister un départ du tronc n° {{tronc.value.tronc_id}} à
-        <b>{{startDate.value| date:'H'}}h{{startDate.value| date:'mm'}}</b> le
-        <b>{{startDate.value| date:'fullDate':'+0200':'fr-FR'}}</b> à destination de
+        <b>{{startDate.value| parisDate:'H'}}h{{startDate.value| parisDate:'mm'}}</b> le
+        <b>{{startDate.value| parisDate:'fullDate'}}</b> à destination de
         {{tronc.value.name}}
       </div>
       <div *ngIf="tronc.value && type != 'departure'">
         Enregister un retour du tronc n° {{tronc.value.tronc_id}} à
-        <b>{{startDate.value| date:'H'}}h{{startDate.value| date:'mm'}}</b> le
-        <b>{{startDate.value| date:'fullDate':'+0200':'fr-FR'}}</b> en provenance de
+        <b>{{startDate.value| parisDate:'H'}}h{{startDate.value| parisDate:'mm'}}</b> le
+        <b>{{startDate.value| parisDate:'fullDate'}}</b> en provenance de
         {{tronc.value.name}}
       </div>
       <div>

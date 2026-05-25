@@ -29,6 +29,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime-ex';
 
+import { ParisDatePipe } from './pipes/paris-date.pipe';
 import { TimePipe } from './pipes/time.pipe';
 import { WeightPipe } from './pipes/weight.pipe';
 
@@ -40,11 +41,11 @@ const MatModules = [
   MatStepperModule, MatExpansionModule, MatChipsModule, MatGridListModule, MatListModule];
 
 @NgModule({
-  declarations: [TimePipe, WeightPipe],
+  declarations: [ParisDatePipe, TimePipe, WeightPipe],
   imports: [FormsModule, ReactiveFormsModule, FlexLayoutModule, MatModules,
     OwlDateTimeModule, OwlNativeDateTimeModule],
   exports: [
-    FormsModule, ReactiveFormsModule, TimePipe, WeightPipe,
+    FormsModule, ReactiveFormsModule, ParisDatePipe, TimePipe, WeightPipe,
     OwlDateTimeModule, OwlNativeDateTimeModule,
     MatModules, FlexLayoutModule],
   providers: [
