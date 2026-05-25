@@ -201,4 +201,33 @@ Une fois la fonction déployée et le frontend migré (PR séparée), les élém
 
 Ces nettoyages sont **hors scope** de la spec backend mais à tracer dans la même issue côté frontend.
 
+## 12. Index Firestore (`firestore.indexes.json`)
+
+Catalogue des index composites requis par les Cloud Functions v2. Sans ces index, les requêtes serveur renvoient `400 The query requires an index` et la page concernée tombe en erreur côté client.
+
+| # | Collection | Champs (ordre) | Cloud Function | Requête | Consommateur final |
+|---|---|---|---|---|---|
+| 1 | `ul_queteur_stats_per_year` | `queteur_id` ASC + `year` DESC | `get-queteur-stats` | `.where('queteur_id','==',X).order_by('year', DESC)` | `QueteurHistoryComponent` (Mon historique), `BadgesService` (Mes quêtes) |
+| 2 | `ul_queteur_stats_per_year` | `ul_id` ASC + `year` ASC + `amount` DESC | `get-ul-queteur-ranking` | `.where('ul_id','==',X).where('year','==',Y).order_by('amount', DESC)` | `RankingComponent` / `RankingDatasource` (Classement UL) |
+
+### 12.1 Déploiement
+
+Le déploiement standard (`./gcp-deploy.sh fr <env>`) **n'inclut pas** `firestore:indexes` (`DEPLOY_TARGETS="hosting,firestore:rules"`) pour éviter qu'une modification locale supprime un index serveur de manière silencieuse. Les index ont leur propre sous-commande :
+
+```
+./gcp-deploy.sh fr <env> indexes
+```
+
+Cette commande appelle `firebase deploy --only firestore:indexes --non-interactive --force`. `firestore.indexes.json` est la source de vérité unique : tout écart côté serveur sera réconcilié sans prompt, créations et suppressions confondues. À lancer après chaque modification du fichier, sur les trois environnements (`dev` → `test` → `prod`).
+
+Après création, un index passe par un état `CREATING` (5-15 min selon le volume de documents) avant de devenir `READY` et de servir les requêtes.
+
+### 12.2 Ajouter un nouvel index
+
+1. Ajouter l'entrée dans `firestore.indexes.json` (ordre des champs important — il doit matcher la query exacte).
+2. Ajouter une ligne dans le tableau §12 ci-dessus en référençant la Cloud Function et le composant Angular consommateur.
+3. `./gcp-deploy.sh fr dev indexes` → vérifier dans la Firebase Console que l'état passe à `READY`.
+4. Tester la query côté application (page concernée doit charger sans 400).
+5. Répéter sur `test` puis `prod`.
+
 
