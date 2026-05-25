@@ -3,6 +3,7 @@ set -euo pipefail
 
 COUNTRY=${1:-}
 ENV=${2:-}
+COMMAND=${3:-}
 
 if [[ "${COUNTRY}1" != "fr1" ]]
 then
@@ -13,6 +14,12 @@ fi
 if  [[ "${ENV}1" != "dev1" ]] && [[ "${ENV}1" != "test1" ]] && [[ "${ENV}1" != "prod1" ]]
 then
   echo "'${ENV}' the second parameter (env) is not valid. Valid values are ['dev', 'test', 'prod']"
+  exit 1
+fi
+
+if [[ -n "${COMMAND}" ]] && [[ "${COMMAND}" != "indexes" ]]
+then
+  echo "'${COMMAND}' the third parameter (command) is not valid. Valid values: 'indexes' (or omit for the standard hosting+rules deploy)"
   exit 1
 fi
 
@@ -57,6 +64,22 @@ setProject "rq-${COUNTRY}-${ENV}"
 #list current connect google account
 gcloud auth list
 
+# Indexes-only subcommand. firestore.indexes.json is the single source of
+# truth: --non-interactive --force applies all diffs (creations AND
+# deletions) without prompting. Run this after every change to
+# firestore.indexes.json, on each environment. See §12 of
+# docs/cloud-functions-endpoints.md for the index catalogue.
+if [[ "${COMMAND}" == "indexes" ]]
+then
+  echo "Deploying Firestore indexes to rq-${COUNTRY}-${ENV} (force, non-interactive)"
+  ${FIREBASE} deploy --only firestore:indexes \
+    --project "rq-${COUNTRY}-${ENV}" \
+    --non-interactive --force
+  echo "Indexes deployed to rq-${COUNTRY}-${ENV}"
+  echo "Note: new indexes go through a CREATING phase (~5-15 min) before serving queries."
+  exit 0
+fi
+
 # `firebase deploy` (no --only) pushes hosting + firestore.rules +
 # firestore.indexes. Warn explicitly when those Firestore config files have
 # uncommitted local changes, because they WILL be shipped along with hosting.
@@ -95,11 +118,11 @@ export NODE_OPTIONS=--openssl-legacy-provider
 
 # Restrict the deploy targets to hosting + firestore.rules. We deliberately
 # exclude firestore:indexes from the default deploy because firebase prompts
-# interactively to delete any server-side index that is missing from
+# interactively to delete any server-side index missing from
 # firestore.indexes.json, which both breaks unattended runs and is destructive
-# by default. Indexes are deployed explicitly with:
-#   npx firebase-tools@15 deploy --only firestore:indexes --project rq-${COUNTRY}-${ENV}
-# after reviewing the diff between the live indexes and firestore.indexes.json.
+# by default. Indexes are deployed explicitly via the dedicated subcommand:
+#   ./gcp-deploy.sh fr <env> indexes
+# See §12 of docs/cloud-functions-endpoints.md for the index catalogue.
 DEPLOY_TARGETS="hosting,firestore:rules"
 
 if [[ ${ENV} != "prod" ]]
